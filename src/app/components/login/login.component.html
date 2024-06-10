@@ -1,0 +1,44 @@
+<div class="login-form body">
+   <div class="header-text">
+      <h1>Inicia sesión</h1>
+      <!-- <p>Regístrate para comprar en mi tienda y recibe ofertas exclusivas!</p> -->
+   </div>
+
+   <form [formGroup]="form" (ngSubmit)="onSubmit()">
+      
+      <div *ngIf="loginError" class="error-message">
+         Credenciales incorrectas. Por favor, verifica tu email y contraseña.
+     </div>
+
+      <!-- EMAIL -->
+      <div class="form-group">
+         <input placeholder="Email" type="text" formControlName="email" class="form-control"
+            [ngClass]="{ 'is-invalid': submitted && f['email'].errors }" />
+         @if (submitted && f['email'].errors) {
+         <div class="invalid-feedback">
+            @if (f['email'].errors['required']) { <div>Campo obligatorio</div> }
+            @if (f['email'].errors['email']) { <div>Por favor, inserte un email válido</div> }
+         </div>
+         }
+      </div>
+
+      <!-- PWD -->
+      <div class="form-group">
+         <input placeholder="Contraseña" type="password" formControlName="pwd" class="form-control"
+            [ngClass]="{ 'is-invalid': submitted && f['pwd'].errors }" />
+         @if (submitted && f['pwd'].errors) {
+         <div class="invalid-feedback">
+            @if (f['pwd'].errors['required']) { <div>Campo obligatorio</div> }
+         </div>
+         }
+      </div>
+
+      <div class="account">
+         <p>¿No tienes cuenta? <a href="/registro">Regístrate</a></p>
+      </div>
+
+      <div class="form-group" id="buttondiv">
+         <button type="submit" class="btn btn-primary">Entrar</button>
+      </div>
+   </form>
+</div>

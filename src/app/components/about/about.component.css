@@ -1,0 +1,67 @@
+#body {
+    display: flex;
+    flex-wrap: nowrap;
+    justify-content: center;
+    margin-top: 100px;
+    margin-bottom: 100px;
+    padding: 0 50px;
+}
+
+#aboutImg {
+    height: auto;
+    width: 300px;
+    margin-right: 50px;
+
+    background-position: center;
+    background-size: cover;
+    animation: rtl 2s forwards
+}
+
+#aboutTxt {
+    width: 500px;
+    height: fit-content;
+}
+
+#aboutTxt > pre {
+    width: 100%;
+    font-size: large;
+    margin: 25px 0 0 0;
+    line-height: 1.5em;
+
+    overflow: hidden;
+    text-wrap: wrap;
+
+
+}
+
+.a_ltr{
+    animation: ltr 2s forwards;
+}
+
+@keyframes ltr {
+    0% {
+        transform: translateX(20%); /* El texto está fuera del área visible, a la derecha */
+    }
+    100% {
+        transform: translateX(0); /* El texto se mueve hacia la izquierda, hasta su posición original */
+    }
+}
+@keyframes rtl {
+    0% {
+        transform: translateX(-20%);
+    }
+    100% {
+        transform: translateX(0); 
+    }
+}
+
+/* La pantalla es demasiado pequeña como para mostrar la imagen */
+@media (width <= 720px) {
+    #body {
+        margin-top: 40px;
+    }
+    #aboutImg {
+        display: none;
+        
+    }
+}

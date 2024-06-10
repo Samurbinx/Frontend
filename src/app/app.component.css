@@ -1,0 +1,21 @@
+html {
+    scroll-behavior: smooth;
+}
+.wrapper {
+    width: 100%;
+    max-width: 2000px;
+
+    min-height: 100vh;
+    height: 100%;
+    margin: 0px auto;
+}
+.content {
+    min-height: 82vh;
+}
+/* --- RESPONSIVE DESINGS BREAKPOINTS --- */
+@media screen and (max-width: 576px){}
+@media screen and (max-width: 768px){}
+@media screen and (max-width: 992px){}
+@media screen and (max-width: 1200px){}
+@media screen and (max-width: 1400px){}
+

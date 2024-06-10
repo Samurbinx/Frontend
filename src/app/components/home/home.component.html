@@ -1,0 +1,9 @@
+<div id="content" *ngIf="homePage">
+	<div class="headerImg">
+		<div [ngStyle]="{'background-image': 'url(' + homePage.url + ')'}"></div>
+	</div>
+
+	<div id="statement">
+		<p>{{ homePage.subtitle }}</p>
+	</div>
+</div>

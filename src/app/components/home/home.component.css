@@ -1,0 +1,59 @@
+ #content {
+    width: 100vw;
+    max-width: 2000px;
+    height: 100%;
+}
+
+ /* --- HEADER IMAGE --- */
+ .headerImg > div {
+    min-width: 320px;
+    width: 100%;
+    max-width: 2000px;
+
+    height: 100vh;
+    max-height: 1100px;
+
+    position: absolute;
+    top: 0px;
+    left: 0;
+    right: 0;
+
+    margin: 0px auto;
+
+    background-repeat: no-repeat;
+    background-size: cover;  
+    background-position: center; 
+    z-index: 1;
+}
+/* This container occupies the absolute position of the image above */
+.headerImg {
+    height: 90vh;
+    max-height: 1050px;
+}
+
+/* --- STATEMENT DIV --- */
+#statement {
+    min-width: 325px;
+    width: 80%;
+    max-width: 1900px;
+
+    min-height: 0px;
+    height: 100%;
+
+    margin: 0px auto;
+    text-align: justify;
+}
+
+pre {
+    overflow: hidden;
+    text-wrap: wrap;
+
+    font-size: large;
+    line-height: 1.5em;
+}
+
+@media (width < 350px) {
+    #statement {
+        padding: 0px 3em;
+    }
+}

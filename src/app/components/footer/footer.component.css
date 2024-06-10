@@ -1,0 +1,36 @@
+p {
+    margin: 0px;
+}
+footer {
+    max-width: 2000px;
+
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+
+    padding: 25px 25px;
+
+    border-top: 1px solid gray;
+    margin-top: 30px;
+
+}
+
+footer :nth-child(2) > a {
+    padding: 0 5px;
+}
+
+@media (width <= 500px) {
+    footer {
+        margin: 10px 0px;
+        padding: 0px;
+        min-width: 325px;
+    }
+    span {
+        display: flex;
+        justify-content: center;
+        width: 100%;
+        margin: 10px 0px;
+        padding: 0px;
+        min-width: 325px;
+    }
+}

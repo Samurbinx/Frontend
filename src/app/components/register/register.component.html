@@ -1,0 +1,97 @@
+<div class="register-form body">
+	<div class="header-text">
+		<h1>Registrarse</h1>
+		<p>Regístrate para recibir una ilustración hecha por mí GRATIS</p>
+	</div>
+
+	<form [formGroup]="form" (ngSubmit)="onSubmit()">
+		<!-- NAME -->
+		<div class="form-group-comp">
+			<div class="form-group">
+				<input placeholder="Nombre" type="text" formControlName="name" class="form-control"
+					[ngClass]="{ 'is-invalid': submitted && f['name'].errors }" />
+				@if (submitted && f['name'].errors) {
+				<div class="invalid-feedback">
+					@if (f['name'].errors['required']) { <div>Campo obligatorio</div> }
+				</div>
+				}
+			</div>
+
+			<!-- SURNAME -->
+			<div class="form-group">
+				<input placeholder="Apellidos" type="text" formControlName="surname" class="form-control"
+					[ngClass]="{ 'is-invalid': submitted && f['surname'].errors }" />
+				@if (submitted && f['surname'].errors) {
+				<div class="invalid-feedback">
+					@if (f['surname'].errors['required']) { <div>Campo obligatorio</div> }
+				</div>
+				}
+			</div>
+		</div>
+		<!-- EMAIL -->
+		<div class="form-group">
+			<input placeholder="Email" type="text" formControlName="email" class="form-control"
+				[ngClass]="{ 'is-invalid': submitted && f['email'].errors }" />
+			@if (submitted && f['email'].errors) {
+			<div class="invalid-feedback">
+				@if (f['email'].errors['required']) { <div>Campo obligatorio</div> }
+				@if (f['email'].errors['email']) { <div>Email no es válido</div> }
+			</div>
+			}
+		</div>
+
+		<!-- NICKNAME -->
+		<div class="form-group">
+			<input placeholder="Nombre de usuario" type="text" formControlName="nickname" class="form-control"
+				[ngClass]="{ 'is-invalid': submitted && f['nickname'].errors }" />
+			@if (submitted && f['nickname'].errors) {
+			<div class="invalid-feedback">
+				@if (f['nickname'].errors['required']) { <div>Campo obligatorio</div> }
+				@if (f['nickname'].errors['minlength'] || f['nickname'].errors['maxlength']) { <div>Minimo 6 caracteres
+					-
+					máximo 20 caracteres</div> }
+			</div> }
+		</div>
+
+		<!-- PHONE -->
+		<div class="form-group">
+			<input placeholder="Teléfono" type="text" formControlName="phone" class="form-control" pattern="[0-9 ]+"
+				[ngClass]="{ 'is-invalid': submitted && f['phone'].errors }" />
+			@if (submitted && f['phone'].errors) { <div class="invalid-feedback">
+				@if (f['phone'].errors['required']) { <div>Campo obligatorio</div> }
+				@if (f['phone'].errors['pattern']) { <div>Teléfono no válido</div> }
+			</div>
+			}
+		</div>
+
+		<!-- PASSWORD -->
+		<div class="form-group">
+			<input placeholder="Contraseña" type="password" formControlName="pwd" class="form-control"
+				[ngClass]="{ 'is-invalid': submitted && f['pwd'].errors }" />
+			@if (submitted && f['pwd'].errors) { <div class="invalid-feedback">
+				@if (f['pwd'].errors['required']) { <div>Campo obligatorio</div> }
+				@if (f['pwd'].errors['minlength']) { <div>Mínimo 6 caracteres</div> }
+				@if (f['pwd'].errors['maxlength']) { <div>Máximo 40 caracteres</div> }
+			</div> }
+		</div>
+
+		<!-- CONFIRM PASSWORD -->
+		<div class="form-group">
+			<input placeholder="Repita la contraseña" type="password" formControlName="pwdConfirm" class="form-control"
+				[ngClass]="{ 'is-invalid': submitted && f['pwdConfirm'].errors }" />
+			@if (submitted && f['pwdConfirm'].errors) { <div class="invalid-feedback">
+				@if (f['pwdConfirm'].errors['required']) { <div>Campo obligatorio</div> }
+				@if (f['pwdConfirm'].errors['matching']) { <div>Las contraseñas no coinciden</div> }
+			</div>
+			}
+		</div>
+
+    <div class="account">
+      <p>¿Ya tienes cuenta? <a href="/login">Inicia sesión</a></p>
+    </div>
+
+		<div class="form-group" id="buttondiv">
+			<button type="submit" class="btn btn-primary">Registrarse</button>
+		</div>
+	</form>
+</div>

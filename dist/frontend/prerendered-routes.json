@@ -1,0 +1,11 @@
+{
+  "routes": [
+    "/contacto",
+    "/home",
+    "/login",
+    "/proyectos",
+    "/registro",
+    "/sobremi",
+    "/tienda"
+  ]
+}

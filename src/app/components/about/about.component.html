@@ -1,0 +1,7 @@
+<div id="body" *ngIf="aboutPage">
+    <div id="aboutImg" [ngStyle]="{'background-image': 'url(' + aboutPage.url + ')'}"></div>
+    <div id="aboutTxt" class="a_ltr">
+        <h2>{{ aboutPage.title }}</h2>
+        <pre>{{ aboutPage.subtitle }}</pre>
+    </div>
+</div>

@@ -50,7 +50,7 @@ a {
 }
 
 .btnReg {
-   background-color: rgba(90, 179, 179, 0.616);
+   background-color: var(--primary-300);
    cursor: pointer;
    border-radius: 5px;
    margin: 10px auto 30px;

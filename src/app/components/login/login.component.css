@@ -33,20 +33,21 @@
 }
 
 button {
-  background-color: rgb(68, 129, 159);
+  background-color: var(--primary-600);
+  border-color: var(--primary-700);
 }
 
 .account {
   text-align: center;
-  color: gray;
+  color: var(--neutral-800);
 }
 .account  > p > a {
-  color:   rgb(32, 90, 119);
-  border-color:   rgb(32, 90, 119);
+  color: var(--primary-600);
+  border-color: var(--primary-700);
 }
 
 .error-message {
-  color: red;
+  color: var(--error-500);
   font-size: 14px;
   margin-bottom: 10px; 
 }

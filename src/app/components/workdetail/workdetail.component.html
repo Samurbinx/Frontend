@@ -28,7 +28,7 @@
                 <div *ngIf="piece.title != 'CarruselPortada' && piece.title != 'Detalle'" id="images">
                     <img *ngFor="let image of piece.images" [src]="'http://127.0.0.1:8080/piece/' + piece.id + '/' + image" alt="">
                 </div>
-                <div *ngIf="piece.title != 'CarruselPortada' && piece.title != 'Detalle'" id="images">
+                <div *ngIf="piece.title != 'CarruselPortada' && piece.title != 'Detalle'" id="desc">
                     <p>
                         <ng-container *ngIf="piece.title">{{ piece.title }}, </ng-container>
                         <ng-container *ngIf="piece.creation_date">{{ piece.creation_date }}. </ng-container>

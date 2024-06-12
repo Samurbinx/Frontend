@@ -23,11 +23,11 @@ export class UserService {
   }
 
   setToken(token: string): void {
-    // localStorage.setItem('token', token);
+      localStorage.setItem('token', token);
   }
 
   getToken(): any {
-    // return localStorage.getItem('token');
+    return localStorage.getItem('token');      
   }
 
   isLoggedIn(): boolean {
@@ -35,7 +35,7 @@ export class UserService {
   }
 
   logout(): void {
-    // localStorage.removeItem('token');
+    localStorage.removeItem('token');
   }
 
   private handleError(error: HttpErrorResponse) {

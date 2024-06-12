@@ -126,7 +126,18 @@ a {
     font-size: small;
 }
 
-
+.welcome {
+    display: flex;
+    flex-direction: column;
+    text-align: right;
+}
+.welcome > p {
+    margin: 0px;
+    padding: 0px;
+}
+.welcome > p:last-child {
+    cursor: pointer;
+}
 /* --- ASIDE DROP MENU --- */
 /* .offcanvas[aria-modal="true"] {
     min-width: fit-content;

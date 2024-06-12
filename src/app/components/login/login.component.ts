@@ -19,6 +19,7 @@ import {
   NavigationEnd,
 } from '@angular/router';
 import { filter, Observable } from 'rxjs';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 @Component({
   selector: 'app-login',
@@ -31,7 +32,8 @@ export class LoginComponent implements OnInit {
   constructor(
     private formBuilder: FormBuilder,
     private _userService: UserService,
-    private router: Router
+    private router: Router,
+    private snackBar: MatSnackBar
   ) { }
 
   form: FormGroup = new FormGroup({
@@ -76,10 +78,9 @@ export class LoginComponent implements OnInit {
           (token: string) => {
             console.log(token); // Handle token here
             // Set token to localStorage
+            this.snackBar.open('Usted ha iniciado sesión con éxito');
             this._userService.setToken(token);
             this.router.navigate(['/home']);
-
-
           },
           (error) => {
             this.loginError = error

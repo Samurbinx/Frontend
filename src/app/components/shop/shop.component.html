@@ -1,14 +1,42 @@
-
-<div class="body">
-   <div>
-      <h1>¡Estamos trabajando en mi futura tienda!</h1>
-      <h2>Regístrate y te avisaremos cuando esté lista</h2>
-      <div class="btnReg">
-         <h2><a href="/registro">REGISTRARSE</a></h2>
-      </div>
-      <h1>Además, si te registras ahora obtendras:</h1>
-      <h2>50% de descuento en tu primera compra</h2>
-      <h2>Una ilustración exclusiva GRATIS</h2>
+<div id="body">
+   <div class="filter-bar" id="toolbar">
+     
+     <div class="search-container">
+       <mat-form-field appearance="outline" class="search-input">
+         <mat-icon matPrefix>search</mat-icon>
+         <input matInput placeholder="Buscar productos..." class="search-input-field">
+       </mat-form-field>
+     </div>
+ 
+     <mat-form-field appearance="outline" class="order-select">
+       <mat-label>Ordenar por</mat-label>
+       <mat-select>
+         <mat-option value="default">Seleccionar</mat-option>
+         <mat-option value="priceLow">Precio: Bajo a Alto</mat-option>
+         <mat-option value="priceHigh">Precio: Alto a Bajo</mat-option>
+         <mat-option value="newest">Nuevos</mat-option>
+         <mat-option value="bestSelling">Más Vendidos</mat-option>
+       </mat-select>
+     </mat-form-field>
+ 
+     <div class="divider"></div>
    </div>
-</div>
-<div class="img"></div>
+ 
+   <div id="items">
+     <div *ngFor="let illustration of illustrations" class="illustration">
+       <div class="image">{{ illustration.image }}</div>
+       <div class="inf">
+         <h5 class="title">{{ illustration.title }}</h5>
+         <p class="collection">{{ illustration.collection }}</p>
+         <div>
+           <p class="price">{{ illustration.price }}</p>
+           <div class="icons">
+             <p><3</p>
+             <p>U</p>
+           </div>
+         </div>
+       </div>
+     </div>
+   </div>
+ </div>
+ 

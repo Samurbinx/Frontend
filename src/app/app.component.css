@@ -2,9 +2,6 @@ html {
     scroll-behavior: smooth;
 }
 .wrapper {
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
 
     width: 100%;
     max-width: 2000px;
@@ -17,7 +14,6 @@ html {
 
 .content {
     /* min-height: 82vh; */
-
 }
 
 /* --- RESPONSIVE DESINGS BREAKPOINTS --- */

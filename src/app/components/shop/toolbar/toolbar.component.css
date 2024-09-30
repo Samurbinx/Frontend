@@ -1,0 +1,39 @@
+#toolbar {
+   align-items: center;
+   display: flex;
+   justify-content: center;
+   width: 100%;
+}
+
+.orderby {
+   position: relative;
+
+   min-width: fit-content;
+   width: 50px;
+   z-index: 1;
+}
+
+.search {
+   width: 300px;
+   margin: 0px auto;
+
+   position: absolute;
+
+   display: flex;
+   flex-direction: row;
+   align-items: center;
+   z-index: 1;
+
+}
+.search > span {
+   position: absolute;
+   right: 5px;
+   cursor: pointer;
+}
+
+#divider {
+   z-index: 0;
+   height: 1px;
+   background-color: rgb(216, 216, 216);
+   width: 100%;
+}

@@ -49,19 +49,21 @@ pre {
 
 #pieces {
     width: 100%;
-    height: 100%;    
+    height: 100%;  
+      
     display: flex;
     flex-direction: row;
     flex-wrap: wrap;
     justify-content: center;
+    align-items: baseline;
 }
 #piece {
     min-width: fit-content;
     max-width: 100%;
     display: flex;
     flex-direction: column;
-    justify-content: space-between;
     margin-top: 50px;
+    height: fit-content;
 }
 #images {
     display: flex;

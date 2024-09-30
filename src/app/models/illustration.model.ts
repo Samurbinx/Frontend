@@ -7,5 +7,7 @@ export class IllustrationModel {
         public image: string,
         public price: number,
         public stock: number,
+        public fav: boolean,
+        public cart: boolean
     ){  }
 }

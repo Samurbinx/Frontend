@@ -1,42 +1,65 @@
-#toolbar {
+#body {
    margin: 50px 100px;
 }
-
-.filter-bar {
+#items {
    display: flex;
-   align-items: center;
+   width: 100%;
+   flex-wrap: wrap;
+   justify-content: center;
+}
+.illustration {
+   display: flex;
+   flex-direction: column;
+   margin: 30px;
+   width: 200px;
+}
+.title {
+   display: -webkit-box;         /* Para WebKit */
+   -webkit-box-orient: vertical; /* Orientación vertical */
+   -webkit-line-clamp: 2;       /* Número de líneas a mostrar */
+   overflow: hidden;             /* Oculta el overflow */
+   text-overflow: ellipsis;      /* Muestra "..." al final */
+   max-height: 4.5em;           /* Ajusta la altura máxima */
+   line-height: 1.5em;          /* Altura de línea */
+ }
+ 
+
+.image > div {
+   background-color: #dbdbdb;
+   height: 215px;
+   margin-bottom: 10px;
+   width: 180px;
+}
+.inf {
+   display: flex;
+   flex-direction: column;
    justify-content: space-between;
-   position: relative;
-   padding: 0 150px;
+   height: 100%;
 }
-
-mat-form-field {
-   background-color: #fff;
+.inf > div > h3 {
+   font-weight: 500;
+   margin: 0px;
 }
-
-.order-select {
-   width: 200px; /* Ancho del select */
-   position: relative; /* Para que los elementos estén en el frente */
-   z-index: 1; /* Asegura que los elementos queden encima de la línea */
-}
-
-.search-container {
+.bottominf {
    display: flex;
-   position: relative; 
-   z-index: 1; 
-   border: none;
+   justify-content: space-between;
+}
+.bottominf p{
+   margin: 0px;
+}
+.icons {
+   display: flex;
+}
+.icons > span {
+   margin-left: 5px;
+}
+.material-symbols-outlined{
+   cursor: pointer;
+   font-variation-settings:
+   'FILL' 0
 }
 
-.search-input {
-   width: 100%; /* Para que ocupe todo el espacio disponible */
-}
-
-.divider {
-   position: absolute;
-   top: 50%; /* Centrar verticalmente */
-   left: 0;
-   right: 0;
-   height: 1px; /* Grosor de la línea */
-   background-color: #ccc; /* Color de la línea */
-   z-index: 0; /* Asegúrate de que esté detrás de los elementos */
+.fav {
+  font-variation-settings:
+  'FILL' 1
 }

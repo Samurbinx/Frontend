@@ -1,42 +1,23 @@
 <div id="body">
-   <div class="filter-bar" id="toolbar">
-     
-     <div class="search-container">
-       <mat-form-field appearance="outline" class="search-input">
-         <mat-icon matPrefix>search</mat-icon>
-         <input matInput placeholder="Buscar productos..." class="search-input-field">
-       </mat-form-field>
-     </div>
- 
-     <mat-form-field appearance="outline" class="order-select">
-       <mat-label>Ordenar por</mat-label>
-       <mat-select>
-         <mat-option value="default">Seleccionar</mat-option>
-         <mat-option value="priceLow">Precio: Bajo a Alto</mat-option>
-         <mat-option value="priceHigh">Precio: Alto a Bajo</mat-option>
-         <mat-option value="newest">Nuevos</mat-option>
-         <mat-option value="bestSelling">Más Vendidos</mat-option>
-       </mat-select>
-     </mat-form-field>
- 
-     <div class="divider"></div>
-   </div>
- 
+	<app-toolbar></app-toolbar>
+
    <div id="items">
-     <div *ngFor="let illustration of illustrations" class="illustration">
-       <div class="image">{{ illustration.image }}</div>
-       <div class="inf">
-         <h5 class="title">{{ illustration.title }}</h5>
-         <p class="collection">{{ illustration.collection }}</p>
-         <div>
-           <p class="price">{{ illustration.price }}</p>
-           <div class="icons">
-             <p><3</p>
-             <p>U</p>
-           </div>
-         </div>
-       </div>
+		<div *ngFor="let illustration of illustrations" class="illustration">
+			<div class="image"><div></div></div>
+			<div class="inf">
+				<div>
+					<h3 class="title">{{ illustration.title }}</h3>
+					<p class="collection">{{ illustration.collection }}</p>
+				</div>
+				<div class="bottominf">
+					<p class="price">{{ illustration.price }}</p>
+					<div class="icons">
+						<span id="fav-icon" class="material-symbols-outlined" [class.fav]="illustration.fav" (click)="toggleFav(illustration)">favorite</span>
+						<span class="material-symbols-outlined" (click)="toggleCart(illustration)">{{ illustration.cart ? 'remove_shopping_cart' : 'add_shopping_cart' }}</span>
+					</div>
+				</div>
+			</div>
      </div>
    </div>
+
  </div>
- 

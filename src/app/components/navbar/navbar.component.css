@@ -121,22 +121,49 @@ a {
     position: absolute;
     padding: 5px 10px;
 }
-.dropdown-menu > li > a {
+#dropicon {
+    margin: 0 10px 0 0 !important;
+}
+.logOptions {
     margin: 5px;
     font-size: small;
+}
+
+.mine {
+    margin: 5px;
+    font-size: small;
+    font-weight: 500;
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+}
+.logout {
+    margin-top: 15px;
 }
 
 .welcome {
     display: flex;
     flex-direction: column;
     text-align: right;
+    align-items: end;
 }
 .welcome > p {
     margin: 0px;
-    padding: 0px;
 }
-.welcome > p:last-child {
-    cursor: pointer;
+.welcome > div {
+    display: flex;
+    flex-direction: row;
+    width: 100%;
+    justify-content: space-between;
+    align-items: baseline;
+}
+.shopping_bag {
+    color: black;
+    font-variation-settings:
+    'FILL' 0,
+    'wght' 300,
+    'GRAD' 0,
+    'opsz' 24
 }
 /* --- ASIDE DROP MENU --- */
 /* .offcanvas[aria-modal="true"] {

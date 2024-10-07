@@ -16,20 +16,25 @@
 .title {
    display: -webkit-box;         /* Para WebKit */
    -webkit-box-orient: vertical; /* Orientación vertical */
-   -webkit-line-clamp: 2;       /* Número de líneas a mostrar */
+   -webkit-line-clamp: 1;       /* Número de líneas a mostrar */
    overflow: hidden;             /* Oculta el overflow */
    text-overflow: ellipsis;      /* Muestra "..." al final */
    max-height: 4.5em;           /* Ajusta la altura máxima */
    line-height: 1.5em;          /* Altura de línea */
  }
- 
 
-.image > div {
-   background-color: #dbdbdb;
-   height: 215px;
+.image {
+   min-height: 215px;
    margin-bottom: 10px;
-   width: 180px;
-}
+   width: 100%;
+
+   background-position: center;
+   background-position-x: center;
+   background-position-y: center;
+   background-size: cover;
+   background-color: rgb(209, 209, 209);
+} 
+
 .inf {
    display: flex;
    flex-direction: column;

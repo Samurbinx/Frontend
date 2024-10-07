@@ -8,6 +8,7 @@ export class IllustrationModel {
         public price: number,
         public stock: number,
         public fav: boolean,
-        public cart: boolean
+        public cart: boolean,
+        public url: string = ''
     ){  }
 }

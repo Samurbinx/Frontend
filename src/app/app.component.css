@@ -1,19 +1,21 @@
 html {
     scroll-behavior: smooth;
 }
-.wrapper {
 
+.wrapper {
     width: 100%;
     max-width: 2000px;
 
     min-height: 100vh;
-    height: 100vh;
     
     margin: 0px auto;
+
+    display: flex;
+    flex-direction: column;
 }
 
 .content {
-    /* min-height: 82vh; */
+    flex: 1;
 }
 
 /* --- RESPONSIVE DESINGS BREAKPOINTS --- */

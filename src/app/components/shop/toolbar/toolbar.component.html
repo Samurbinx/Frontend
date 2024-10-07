@@ -1,17 +1,27 @@
 <div id="toolbar">
 	<div class="orderby">
-		<select class="form-select" aria-label="Default select example">
+		<select class="form-select" aria-label="Default select example" (change)="onOrderByChange($event)">
 			<option selected value="1">Favoritos</option>
 			<option value="2">Más vendidos</option>
-			<option value="3">Precio: mayor a menor</option>
+			<option value="3">Alfabéticamente</option>
 			<option value="4">Precio: menor a mayor</option>
+			<option value="5">Precio: mayor a menor</option>
 		</select>
 	</div>
 		
 	<div class="search">
-		<input class="form-control" placeholder="Buscar..." aria-label="Buscar">
-		<span id="fav-icon" class="material-symbols-outlined">search</span>
+		<input class="form-control" placeholder="Buscar..." aria-label="Buscar" id="searchbar" [(ngModel)]="searchBar" (keyup.enter)="search()">
+		<span id="searchIcon" class="material-symbols-outlined" (click)="search()">search</span>
 	</div>
-	<div id="divider"></div>
 
+
+	<div class="orderby">
+		<select class="form-select" aria-label="Default select example" (change)="onCollectionChange($event)">
+		  <option selected value="AllCollections">Todas las colecciones</option>
+		  <option *ngFor="let collection of collections" [value]="collection">{{ collection }}</option>
+		</select>
+	</div>
+  
+	 
+	<div id="divider"></div>
 </div>

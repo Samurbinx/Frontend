@@ -54,7 +54,7 @@
 
 			  <!-- If is not logged -->
 			  <div *ngIf="!isLoggedIn" class="welcome" id="userDrop">
-				
+				<div>
 						<a href="" class="shopping_bag"><span class="material-symbols-outlined shopping_bag">local_mall</span></a>
 
 						<ul class="navbar-nav">
@@ -72,10 +72,11 @@
 							</li>
 						</ul>
 					</div>
+					</div>
 
 			  <!-- If is logged -->
 			  <div class="navbar-nav welcome" *ngIf="isLoggedIn" id="userDrop">
-					<p>Hola! (nombre)</p>
+					<p>Hola! {{user?.name}}</p>
 					<div>
 						<a href="" class="shopping_bag"><span class="material-symbols-outlined shopping_bag">local_mall</span></a>
 								
@@ -88,11 +89,11 @@
 
 									<!-- Dropdown actions -->
 									<ul class="dropdown-menu dropdown-menu-end">
-										<li class="mine"><a class="dropdown-item" href="/registro">Mis datos</a></li>
-										<li class="mine"><a class="dropdown-item" href="/registro">Lista de deseos</a></li>
-										<li class="mine"><a class="dropdown-item" href="/registro">Pedidos</a></li>
-										<li class="mine"><a class="dropdown-item" href="/registro">Pago</a></li>
-										<li class="mine logout"><a class="dropdown-item" href="/registro" (click)="logout()">Cerrar sesión</a><span class="material-symbols-outlined">logout</span></li>
+										<li class="mine"><a class="dropdown-item" href="/perfil/misdatos">Mis datos</a></li>
+										<li class="mine"><a class="dropdown-item" href="/perfil/wishlist">Lista de deseos</a></li>
+										<li class="mine"><a class="dropdown-item" href="/perfil/pedidos">Pedidos</a></li>
+										<li class="mine"><a class="dropdown-item" href="/perfil/pago">Pago</a></li>
+										<li class="mine logout" (click)="logout()"><a class="dropdown-item" href="/home">Cerrar sesión</a><span class="material-symbols-outlined">logout</span></li>
 									</ul>
 							</li>
 						</ul>

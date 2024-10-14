@@ -1,0 +1,67 @@
+<H1>Mis datos</H1>
+<form [formGroup]="form" (ngSubmit)="onSubmit()">
+   <!-- NAME -->
+   <div class="form-group-comp">
+      
+      <!-- NAME -->
+      <div class="form-group">
+         <label for="name">Nombre</label>
+         <input placeholder="Nombre" type="text" formControlName="name" class="form-control"
+            [ngClass]="{ 'is-invalid': submitted && f['name'].errors }" />
+         @if (submitted && f['name'].errors) {
+         <div class="invalid-feedback">
+            @if (f['name'].errors['required']) { <div>Campo obligatorio</div> }
+         </div>
+         }
+      </div>
+      
+      <!-- SURNAME -->
+      <div class="form-group">
+         <label for="surname">Apellidos</label>
+         <input placeholder="Apellidos" type="text" formControlName="surname" class="form-control"
+            [ngClass]="{ 'is-invalid': submitted && f['surname'].errors }" />
+         @if (submitted && f['surname'].errors) {
+         <div class="invalid-feedback">
+            @if (f['surname'].errors['required']) { <div>Campo obligatorio</div> }
+         </div>
+         }
+      </div>
+
+      <!-- NICK -->
+      <div class="form-group">
+         <label for="nick">Nick</label>
+         <input placeholder="Nick" type="text" formControlName="nick" class="form-control"
+            [ngClass]="{ 'is-invalid': submitted && f['nick'].errors }" />
+         @if (submitted && f['nick'].errors) {
+         <div class="invalid-feedback">
+            @if (f['nick'].errors['required']) { <div>Campo obligatorio</div> }
+         </div>
+         }
+      </div>
+
+      <!-- EMAIL -->
+      <div class="form-group">
+         <label for="email">Email</label>
+         <input placeholder="Email" type="text" formControlName="email" class="form-control"
+            [ngClass]="{ 'is-invalid': submitted && f['email'].errors }" />
+         @if (submitted && f['email'].errors) {
+         <div class="invalid-feedback">
+            @if (f['email'].errors['required']) { <div>Campo obligatorio</div> }
+         </div>
+         }
+      </div>
+
+      <!-- PHONE -->
+      <div class="form-group">
+         <label for="phone">Teléfono</label>
+         <input placeholder="Teléfono" type="text" formControlName="phone" class="form-control" pattern="[0-9 ]+"
+            [ngClass]="{ 'is-invalid': submitted && f['phone'].errors }" />
+         @if (submitted && f['phone'].errors) { <div class="invalid-feedback">
+            @if (f['phone'].errors['required']) { <div>Campo obligatorio</div> }
+            @if (f['phone'].errors['pattern']) { <div>Teléfono no válido</div> }
+         </div>
+         }
+      </div>
+   </div>
+   <button class="btn" type="submit">Guardar cambios</button>
+</form>

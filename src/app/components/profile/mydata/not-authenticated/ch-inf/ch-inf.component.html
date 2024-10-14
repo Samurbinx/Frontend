@@ -1,0 +1,22 @@
+<div class="content">
+   <h2 mat-dialog-title>Confirma tu contraseña</h2>
+
+   <mat-dialog-content class="form">
+   <p>Por favor, introduzca su contraseña para poder avanzar</p>
+
+      <div>
+         <mat-form-field>
+            <input matInput [(ngModel)]="pwd" placeholder="Contraseña"/>
+         </mat-form-field>
+         <a href="">¿Has olvidado tu contraseña?</a>
+      </div>
+   
+   </mat-dialog-content>
+   
+   <mat-dialog-actions>
+     <button mat-button (click)="onNoClick()">No Thanks</button>
+     <button mat-button (click)="authenticate()">autenticar</button>
+     <button mat-button [mat-dialog-close]=""  cdkFocusInitial>Ok</button>
+   </mat-dialog-actions>
+   
+   </div>

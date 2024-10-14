@@ -1,0 +1,12 @@
+.content {
+   padding: 20px;
+   width: 500px;
+}
+.form > div {
+   display: flex;
+   flex-direction: column;
+}
+
+a {
+   margin-bottom: 50px;
+}

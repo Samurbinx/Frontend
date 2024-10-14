@@ -1,10 +1,9 @@
 import { CommonModule, DOCUMENT } from '@angular/common';
 import { Component, OnInit, Inject } from '@angular/core';
 import { RouterLink, RouterLinkActive, RouterOutlet } from '@angular/router';
-import {MatIconModule} from '@angular/material/icon';
+import { MatIconModule } from '@angular/material/icon';
 import { HttpClientModule } from '@angular/common/http';
-import { BrowserModule } from '@angular/platform-browser';
-import { NgModule } from '@angular/core';
+
 import { FormsModule } from '@angular/forms'
 
 // LOCAL
@@ -34,13 +33,7 @@ import { MessageService } from './services/message.service';
   styleUrl: './app.component.css'
 })
 
-export class AppComponent implements OnInit {
+export class AppComponent {
   title = 'Frontend';
-  bodyH: number | string | undefined;
-  constructor(@Inject(DOCUMENT) private document: Document) {
-  }
 
-  ngOnInit(): void {
-    this.bodyH = this.document.getElementById("body")?.offsetHeight;
-  }
 }

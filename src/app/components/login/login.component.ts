@@ -66,28 +66,32 @@ export class LoginComponent implements OnInit {
   }
 
   onSubmit(): void {
-    this.submitted = true
+    this.submitted = true;
 
     if (this.form.invalid) {
-      return;
+        return;
     }
 
-    if (this.form.valid) {
-      this._userService.login(this.form.value.email, this.form.value.pwd)
-        .subscribe(
-          (token: string) => {
-            console.log(token); // Handle token here
-            // Set token to localStorage
-            this.snackBar.open('Usted ha iniciado sesión con éxito');
-            this._userService.setToken(token);
+    this._userService.login(this.form.value.email, this.form.value.pwd).subscribe(
+        (response) => {
+            const token = response.token; // Obtener el token
+            const user = response.user;   // Obtener los datos del usuario
+            console.log(token, user);      // Imprimir ambos para verificar
+            this._userService.setToken(token); // Almacenar el token
+            this._userService.setUser(response.user); // Almacenar el user
+            // Guardar los datos del usuario en algún lugar si es necesario
             this.router.navigate(['/home']);
-          },
-          (error) => {
-            this.loginError = error
-          }
-        );
-    }
-  }
+            this.snackBar.open('Usted ha iniciado sesión con éxito', '', { duration: 3000 });
+        },
+        (error) => {
+            this.loginError = error;
+            console.error('Error al iniciar sesión:', error);
+            this.snackBar.open('Error al iniciar sesión. Por favor, verifica tus credenciales.', '', { duration: 3000 });
+        }
+    );
+}
+
+
 
   //To access form controls using -> (ex: f.username)
   get f(): { [key: string]: AbstractControl } {

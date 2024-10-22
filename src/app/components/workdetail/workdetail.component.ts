@@ -34,7 +34,8 @@ export class WorkdetailComponent implements OnInit {
             if (work != undefined) {
                this.work = work;
                work.pieces.forEach(piece => {
-                  if (piece.title === "CarruselPortada") {
+                  console.log(piece.display);
+                  if (piece.display === "covercarousel") {
                      this.hasdetails = true;
                   }
                });

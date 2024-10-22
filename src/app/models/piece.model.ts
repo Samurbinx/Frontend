@@ -11,6 +11,9 @@ export class PieceModel {
         public width: number,
         public height: number,
         public depth: number,
-        public images: ImageModel[]
+        public images: ImageModel[],
+        public price: number,
+        public sold: boolean,
+        public display: string
     ){  }
 }

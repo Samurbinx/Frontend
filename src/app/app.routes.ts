@@ -6,7 +6,6 @@ import { AboutComponent } from './components/about/about.component';
 import { WorkdetailComponent } from './components/workdetail/workdetail.component';
 import { RegisterComponent } from './components/register/register.component';
 import { LoginComponent } from './components/login/login.component';
-import { ShopComponent } from './components/shop/shop.component';
 import { ProfileComponent } from './components/profile/profile.component';
 import { MydataComponent } from './components/profile/mydata/mydata.component';
 import { WishlistComponent } from './components/profile/wishlist/wishlist.component';
@@ -23,7 +22,6 @@ export const routes: Routes = [
     { path: 'sobremi', component: AboutComponent },
     { path: 'registro', component: RegisterComponent },
     { path: 'login', component: LoginComponent },
-    { path: 'tienda', component: ShopComponent },
     { path: 'perfil', component: ProfileComponent, 
         children: [
             { path: 'misdatos', component: MydataComponent,

@@ -6,7 +6,7 @@
 
     <div class="headerImg" *ngIf="hasdetails">
         <div *ngFor="let piece of work.pieces">
-            <ngb-carousel *ngIf="piece.title === 'CarruselPortada'">
+            <ngb-carousel *ngIf="piece.display === 'covercarousel'">
                 <ng-template ngbSlide *ngFor="let image of piece.images">
                     <div class="picsum-img-wrapper" 
                         [style.backgroundImage]="'url(http://127.0.0.1:8080/piece/' + piece.id + '/' + image + ')'">
@@ -25,10 +25,10 @@
         <div id="pieces">
             <div id="piece" *ngFor="let piece of work.pieces">
                 <!-- <video controls *ngIf="piece.title === 'Cuna'"><source src="../../../assets/cuna/cabina.mp4" type="video/mp4"></video> -->
-                <div *ngIf="piece.title != 'CarruselPortada' && piece.title != 'Detalle'" id="images">
+                <div *ngIf="piece.display != 'covercarousel' && piece.display != 'detail'" id="images">
                     <img *ngFor="let image of piece.images" [src]="'http://127.0.0.1:8080/piece/' + piece.id + '/' + image" alt="">
                 </div>
-                <div *ngIf="piece.title != 'CarruselPortada' && piece.title != 'Detalle'" id="desc">
+                <div *ngIf="piece.display != 'covercarousel' && piece.display != 'detail'" id="desc">
                     <p>
                         <ng-container *ngIf="piece.title">{{ piece.title }}, </ng-container>
                         <ng-container *ngIf="piece.creation_date">{{ piece.creation_date }}. </ng-container>
@@ -43,7 +43,7 @@
         </div>
 
         <div id="carousel" *ngFor="let piece of work.pieces">
-            <ngb-carousel *ngIf="piece.title === 'Detalle'">
+            <ngb-carousel *ngIf="piece.display === 'detail'">
                 <ng-template ngbSlide *ngFor="let image of piece.images">
                     <div class="picsum-img-wrapper"
                         [style.backgroundImage]="'url(http://127.0.0.1:8080/piece/' + piece.id + '/' + image + ')'">

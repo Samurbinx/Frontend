@@ -3,7 +3,7 @@ import { CommonModule } from '@angular/common';
 import { PageService } from '../../services/page.service';
 import { PageModel } from '../../models/page.model';
 import { error } from 'console';
-import { FooterComponent } from '../footer/footer.component';
+import { FooterComponent } from '../commons/footer/footer.component';
 
 @Component({
   selector: 'app-home',

@@ -2,8 +2,8 @@ import { RouterModule } from '@angular/router';
 import { Component, OnInit } from '@angular/core';
 import { MatIconModule } from '@angular/material/icon';
 import { CommonModule } from '@angular/common';
-import { UserService } from '../../services/user.service';
-import { UserModel } from '../../models/user.model';
+import { UserService } from '../../../services/user.service';
+import { UserModel } from '../../../models/user.model';
 import { Observable } from 'rxjs';
 
 @Component({

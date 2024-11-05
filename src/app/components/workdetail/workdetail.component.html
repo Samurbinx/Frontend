@@ -1,10 +1,10 @@
 <div id="content" *ngIf="work">
 
-    <div class="headerImg" *ngIf="!hasdetails">
+    <div class="headerImg">
         <div id="workImg" [ngStyle]="{'background-image': 'url(' + work.url + ')'}"></div>
     </div>
 
-    <div class="headerImg" *ngIf="hasdetails">
+    <!-- <div class="headerImg" *ngIf="hasdetails">
         <div *ngFor="let piece of work.pieces">
             <ngb-carousel *ngIf="piece.display === 'covercarousel'">
                 <ng-template ngbSlide *ngFor="let image of piece.images">
@@ -14,7 +14,7 @@
                 </ng-template>
             </ngb-carousel>
         </div>
-    </div>
+    </div> -->
 
     <div id="body">
         <div id="inf">
@@ -22,9 +22,88 @@
             <pre *ngIf="work.statement">{{ work.statement }}</pre>
         </div>
 
-        <div id="pieces">
+        <div id="artworks">
+            <ng-container *ngFor="let artwork of work.artworks">
+                <div id="artwork"
+                    *ngIf="artwork.display != 'covercarousel' && artwork.display != 'detail'">
+                    <div id="pieces">
+                        <div id="piece" *ngFor="let piece of artwork.pieces">
+                            <div id="images">
+                                <img *ngFor="let image of piece.images"
+                                    [src]="'http://127.0.0.1:8080/piece/' + piece.id + '/' + image" alt="">
+                            </div>
+                            <!-- Información oculta de las piezas -->
+                            <div id="piece_inf" class="hidden">
+                                <p>
+                                    <b>Título: </b>
+                                    <ng-container *ngIf="piece.title; else noTitle">{{ piece.title }}</ng-container>
+                                    <ng-template #noTitle>Sin título</ng-template>
+                                </p>
+                                <p>
+                                    <b>Materiales: </b>
+                                    <ng-container *ngIf="piece.materials.length > 0; else noMaterials">
+                                        {{ piece.materials.join(', ') }}
+                                    </ng-container>
+                                    <ng-template #noMaterials>No especificado</ng-template>
+                                </p>
+                                <p>
+                                    <b>Dimensiones: </b>
+                                    <ng-container *ngIf="piece.height || piece.width || piece.depth; else noDimensions">
+                                        <ng-container *ngIf="piece.height">{{ piece.height }}</ng-container>
+                                        <ng-container *ngIf="piece.width"> x {{ piece.width }}</ng-container>
+                                        <ng-container *ngIf="piece.depth"> x {{ piece.depth }}</ng-container> cm
+                                    </ng-container>
+                                    <ng-template #noDimensions>No especificadas</ng-template>
+                                </p>
+                            </div>
+
+                        </div>
+                    </div>
+                    <!-- <div id="artwork_inf">
+                        <p>
+                            <ng-container *ngIf="work.title">{{ work.title }} - </ng-container>
+                            <ng-container *ngIf="artwork.title">{{ artwork.title }}, </ng-container>
+                            <ng-container *ngIf="artwork.creation_date">{{ artwork.creation_date }}. </ng-container>
+                            <ng-container *ngIf="artwork.dimensions">{{ artwork.dimensions }}</ng-container>
+                        </p>
+                    </div> -->
+                    <div id="artwork_shop" class="hidden">
+                        <h3>
+                            <ng-container *ngIf="artwork.creation_date">{{ artwork.creation_date }}</ng-container>
+                            <span> - </span>
+                            <ng-container *ngIf="work.title">{{ work.title }}</ng-container>
+                        </h3>
+                        <h1>
+                            <b><ng-container *ngIf="artwork.title">{{ artwork.title }}</ng-container></b>
+                        </h1>
+
+                        <!-- <p>
+                            <ng-container *ngIf="artwork.dimensions">{{ artwork.dimensions }}</ng-container>
+                        </p> -->
+
+                        <div id="art_shop_bottom">
+                            <p *ngIf="artwork.sold;">
+                                <ng-container *ngIf="artwork.sold;">Vendido</ng-container>
+                            </p>
+                            <p *ngIf="!artwork.sold;">
+                                <ng-container *ngIf="artwork.price else noPrice">{{ artwork.price }} €</ng-container>
+                                <ng-template #noPrice>No aplica</ng-template>
+                                
+                            </p>
+                            <div>
+                                <span class="material-symbols-outlined favorite">favorite</span>
+                                <span class="material-symbols-outlined" *ngIf="!artwork.sold;">add_shopping_cart</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </ng-container>
+        </div>
+    </div>
+</div>
+
+<!-- <div id="pieces">
             <div id="piece" *ngFor="let piece of work.pieces">
-                <!-- <video controls *ngIf="piece.title === 'Cuna'"><source src="../../../assets/cuna/cabina.mp4" type="video/mp4"></video> -->
                 <div *ngIf="piece.display != 'covercarousel' && piece.display != 'detail'" id="images">
                     <img *ngFor="let image of piece.images" [src]="'http://127.0.0.1:8080/piece/' + piece.id + '/' + image" alt="">
                 </div>
@@ -48,12 +127,9 @@
                     <div class="picsum-img-wrapper"
                         [style.backgroundImage]="'url(http://127.0.0.1:8080/piece/' + piece.id + '/' + image + ')'">
                     </div>
-                    <!-- <div class="carousel-caption">
+                     <div class="carousel-caption">
                         <h3>Detalle</h3>
-                    </div> -->
+                    </div> 
                 </ng-template>
             </ngb-carousel>
-        </div>
-
-    </div>
-</div>
+        </div> -->

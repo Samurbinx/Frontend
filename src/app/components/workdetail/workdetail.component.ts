@@ -15,37 +15,37 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 })
 export class WorkdetailComponent implements OnInit {
    work: WorkModel;
-   hasdetails: boolean;
 
 
 
    constructor(private router: Router, private route: ActivatedRoute, private workService: WorkService, private pieceService: PieceService) {
       this.work = new WorkModel(0, "Sin título", "", "", "", []);
-      this.hasdetails = false;
    }
 
    ngOnInit() {
-      // Coge la ruta, la divide y almacena el id
+      // Obtiene el id del trabajo de los parámetros de la ruta
       const workID = this.route.snapshot.queryParams["id"];
-
-      // Busca el proyecto mediante la ruta
+   
+      // Verifica si `workID` existe antes de continuar
+      if (!workID) {
+         console.error('No work ID found in route.');
+         return;
+      }
+   
+      // Obtiene el proyecto usando el servicio
       this.workService.getWorkById(workID).subscribe(
-         (work: WorkModel) => {
-            if (work != undefined) {
-               this.work = work;
-               work.pieces.forEach(piece => {
-                  console.log(piece.display);
-                  if (piece.display === "covercarousel") {
-                     this.hasdetails = true;
-                  }
-               });
+         (response: any) => {
+            if (response) {
+               // Convierte el JSON recibido a una instancia de WorkModel
+               this.work = WorkModel.fromJson(response);
             }
          },
          (error) => {
-            console.error('Error fetching works:', error);
+            console.error('Error fetching work:', error);
          }
       );
    }
+   
 
 
 

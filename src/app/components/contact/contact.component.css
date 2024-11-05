@@ -4,7 +4,6 @@
     justify-content: center;
     margin-top: 60px;
     padding: 0 50px;
-
 }
 
 #contactImg {
@@ -24,6 +23,9 @@
     flex-direction: column;
     justify-content: space-between;
     animation: ltr 2s forwards;
+    background-color: var(--neutral-300);
+    padding: 25px;
+    border-radius: 10px;
 }
 
 #contactForm > span > h2 {
@@ -61,7 +63,10 @@ textarea {
 
 button {
     margin-top: 25px;
-    background-color: var(--neutral-600);
+    background-color: var(--primary-200);
+}
+button:hover {
+    background-color: var(--primary-500);
 }
 
 /* La pantalla es demasiado pequeña como para mostrar la imagen */

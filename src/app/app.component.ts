@@ -7,9 +7,9 @@ import { HttpClientModule } from '@angular/common/http';
 import { FormsModule } from '@angular/forms'
 
 // LOCAL
-import { FooterComponent } from './components/footer/footer.component';
+import { FooterComponent } from './components/commons/footer/footer.component';
 import { HomeComponent } from './components/home/home.component';
-import { NavbarComponent } from './components/navbar/navbar.component';
+import { NavbarComponent } from './components/commons/navbar/navbar.component';
 import { MessageService } from './services/message.service';
 
 

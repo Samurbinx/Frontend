@@ -11,6 +11,7 @@ import { FooterComponent } from './components/commons/footer/footer.component';
 import { HomeComponent } from './components/home/home.component';
 import { NavbarComponent } from './components/commons/navbar/navbar.component';
 import { MessageService } from './services/message.service';
+import { UserService } from './services/user.service';
 
 
 @Component({
@@ -33,7 +34,14 @@ import { MessageService } from './services/message.service';
   styleUrl: './app.component.css'
 })
 
-export class AppComponent {
+export class AppComponent implements OnInit {
   title = 'Frontend';
 
+  constructor(private _userService: UserService){}
+
+  ngOnInit(): void {
+    if (this._userService.getToken()) {
+      
+    }
+  }
 }

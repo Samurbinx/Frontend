@@ -3,12 +3,12 @@ import { CommonModule } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 
-import { UserService } from '../../services/user.service';
 import { UserModel } from '../../models/user.model';
 import Validation from '../../utils/validation';
 
 
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { UserService } from '../../services/user.service';
 
 
 @Component({

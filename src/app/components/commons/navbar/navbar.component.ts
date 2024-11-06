@@ -1,10 +1,10 @@
-import { RouterModule } from '@angular/router';
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { MatIconModule } from '@angular/material/icon';
 import { CommonModule } from '@angular/common';
-import { UserService } from '../../../services/user.service';
+import { RouterModule } from '@angular/router';
 import { UserModel } from '../../../models/user.model';
-import { Observable } from 'rxjs';
+import { UserService } from '../../../services/user.service';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-navbar',
@@ -13,24 +13,30 @@ import { Observable } from 'rxjs';
   templateUrl: './navbar.component.html',
   styleUrls: ['./navbar.component.css']
 })
-export class NavbarComponent implements OnInit {
-  isLoggedIn: boolean = false; // Inicializar como false
-  user: UserModel | null = null; // Para almacenar los datos del usuario
+export class NavbarComponent implements OnInit, OnDestroy {
+  isLoggedIn = false;
+  user: UserModel | null = null;
+  private userSubscription: Subscription | null = null;
 
-  constructor(private $userservice: UserService) {}
+  constructor(private userService: UserService) {}
 
   ngOnInit(): void {
-    // Suscribirse al observable del estado de inicio de sesión
-    this.$userservice.getUserObservable().subscribe(user => {
-      this.user = user; // Actualiza los datos del usuario
-      this.isLoggedIn = !!user; // Verifica si hay un usuario autenticado
+    // Subscribe to the user observable to get user data and login status reactively
+    this.userSubscription = this.userService.user$.subscribe(user => {
+      this.user = user;
+      this.isLoggedIn = !!user;
     });
   }
 
   logout(): void {
-    this.$userservice.logout();
-    // No es necesario recargar la página; los cambios se reflejarán automáticamente
-    this.user = null; // Limpiar los datos del usuario localmente
-    this.isLoggedIn = false; // Actualizar el estado de inicio de sesión
+    this.userService.logout();
+    // User and login status will be updated automatically through the observable subscription
+  }
+
+  ngOnDestroy(): void {
+    // Unsubscribe to avoid memory leaks
+    if (this.userSubscription) {
+      this.userSubscription.unsubscribe();
+    }
   }
 }

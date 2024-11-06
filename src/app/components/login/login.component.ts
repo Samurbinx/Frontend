@@ -8,9 +8,7 @@ import {
   AbstractControl,
 } from '@angular/forms';
 import { CommonModule } from '@angular/common';
-import { UserService } from '../../services/user.service';
-import { UserModel } from '../../models/user.model';
-import Validation from '../../utils/validation';
+
 
 import {
   Router,
@@ -20,6 +18,7 @@ import {
 } from '@angular/router';
 import { filter, Observable } from 'rxjs';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { UserService } from '../../services/user.service';
 
 @Component({
   selector: 'app-login',
@@ -41,7 +40,8 @@ export class LoginComponent implements OnInit {
     pwd: new FormControl(''),
   });
   submitted = false;
-  loginError = null;
+  loginError: string | null = null;
+
 
   ngOnInit(): void {
     this.form = this.formBuilder.group({
@@ -54,15 +54,6 @@ export class LoginComponent implements OnInit {
       ],
     });
 
-    // if (typeof localStorage !== 'undefined') {
-    //   const registeredEmail = localStorage.getItem('registeredEmail');
-    //   if (registeredEmail) {
-    //     this.form.patchValue({ email: registeredEmail });
-    //   }
-    // }
-    // window.addEventListener('beforeunload', function (event) {
-    //   localStorage.removeItem('registeredEmail');
-    // });
   }
 
   onSubmit(): void {
@@ -73,21 +64,17 @@ export class LoginComponent implements OnInit {
     }
 
     this._userService.login(this.form.value.email, this.form.value.pwd).subscribe(
-        (response) => {
-            const token = response.token; // Obtener el token
-            const user = response.user;   // Obtener los datos del usuario
-            console.log(token, user);      // Imprimir ambos para verificar
-            this._userService.setToken(token); // Almacenar el token
-            this._userService.setUser(response.user); // Almacenar el user
-            // Guardar los datos del usuario en algún lugar si es necesario
-            this.router.navigate(['/home']);
-            this.snackBar.open('Usted ha iniciado sesión con éxito', '', { duration: 3000 });
-        },
-        (error) => {
-            this.loginError = error;
-            console.error('Error al iniciar sesión:', error);
-            this.snackBar.open('Error al iniciar sesión. Por favor, verifica tus credenciales.', '', { duration: 3000 });
-        }
+      (response) => {
+        // Navigate to home on successful login
+        this.router.navigate(['/home']);
+        this.snackBar.open('Usted ha iniciado sesión con éxito', '', { duration: 3000 });
+        this.loginError = null; // Clear any previous error
+      },
+      (error) => {
+        this.loginError = 'Error al iniciar sesión. Por favor, verifica tus credenciales.';
+        console.error('Error al iniciar sesión:', error);
+        this.snackBar.open(this.loginError, '', { duration: 3000 });
+      }
     );
 }
 

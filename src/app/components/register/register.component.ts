@@ -8,7 +8,7 @@ import Validation from '../../utils/validation';
 
 
 import { MatSnackBar } from '@angular/material/snack-bar';
-import { UserService } from '../../services/user.service';
+import { AuthService } from '../../services/auth.service';
 
 
 @Component({
@@ -23,7 +23,7 @@ export class RegisterComponent implements OnInit {
 
 	successMessage = "";
 	errorMessage = "";
-	constructor(private formBuilder: FormBuilder, private _userService: UserService, private route: ActivatedRoute, private router: Router, private snackBar: MatSnackBar) { }
+	constructor(private formBuilder: FormBuilder, private _authService: AuthService, private route: ActivatedRoute, private router: Router, private snackBar: MatSnackBar) { }
 
 	form: FormGroup = new FormGroup({
 		email: new FormControl(''),
@@ -89,7 +89,7 @@ export class RegisterComponent implements OnInit {
 			)
 
 
-			this._userService.addUser(user).subscribe({
+			this._authService.addUser(user).subscribe({
 				next: (response) => {
 					this.successMessage = 'Usuario añadido correctamente';
 					this.form.reset();

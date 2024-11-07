@@ -1,6 +1,6 @@
 import { CommonModule, DOCUMENT } from '@angular/common';
 import { Component, OnInit, Inject, OnDestroy } from '@angular/core';
-import { RouterLink, RouterLinkActive, RouterOutlet } from '@angular/router';
+import { Router, RouterLink, RouterLinkActive, RouterOutlet } from '@angular/router';
 import { MatIconModule } from '@angular/material/icon';
 import { HttpClientModule } from '@angular/common/http';
 
@@ -11,9 +11,9 @@ import { FooterComponent } from './components/commons/footer/footer.component';
 import { HomeComponent } from './components/home/home.component';
 import { NavbarComponent } from './components/commons/navbar/navbar.component';
 import { MessageService } from './services/message.service';
-import { UserService } from './services/user.service';
 import { UserModel } from './models/user.model';
-import { Subscription } from 'rxjs';
+import { Observable, share, Subscription } from 'rxjs';
+import { AuthService } from './services/auth.service';
 
 
 @Component({
@@ -36,27 +36,22 @@ import { Subscription } from 'rxjs';
   styleUrl: './app.component.css'
 })
 
-export class AppComponent {
-  title = 'Frontend';
-
+export class AppComponent implements OnInit {
+  user$: Observable<UserModel> = new Observable();
   user: UserModel | null = null;
-  private userSubscription!: Subscription;
 
-  constructor(private userService: UserService) {}
+  constructor(private authService: AuthService,
+              private router: Router) {}
 
   ngOnInit(): void {
-    this.userSubscription = this.userService.user$.subscribe(user => {
-      this.user = user; // Asigna el usuario a la variable local
+    this.user$ = this.authService.getCurrentUser().pipe(share());
+    this.user$.subscribe((user: UserModel) => {
+      this.user = user;  // Assign the user to the component's `user` property
     });
-    console.log(this.user);
-
   }
 
-  ngOnDestroy(): void {
-    // No olvides limpiar la suscripción cuando el componente se destruya
-    if (this.userSubscription) {
-      this.userSubscription.unsubscribe();
-    }
+  logout(): void {
+    this.authService.logout();
+    this.router.navigate(['/login']);
   }
-  
 }

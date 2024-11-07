@@ -1,14 +1,15 @@
+import { StorageService } from './../services/storage.service';
 import { Injectable } from '@angular/core';
 import { HttpRequest, HttpHandler, HttpEvent, HttpInterceptor } from '@angular/common/http';
 import { Observable } from 'rxjs';
-import { UserService } from '../services/user.service';
+import { AuthService } from '../services/auth.service';
 
 @Injectable()
 export class JwtInterceptor implements HttpInterceptor {
-  constructor(private userService: UserService) {}
+  constructor(private authService: AuthService, private storageService: StorageService) {}
 
   intercept(request: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
-    const token = this.userService.getToken();
+    const token = this.storageService.getCookie('token');
     if (token) {
       request = request.clone({
         setHeaders: {

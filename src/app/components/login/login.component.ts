@@ -18,7 +18,7 @@ import {
 } from '@angular/router';
 import { filter, Observable } from 'rxjs';
 import { MatSnackBar } from '@angular/material/snack-bar';
-import { UserService } from '../../services/user.service';
+import { AuthService } from '../../services/auth.service';
 
 @Component({
   selector: 'app-login',
@@ -29,10 +29,7 @@ import { UserService } from '../../services/user.service';
 })
 export class LoginComponent implements OnInit {
   constructor(
-    private formBuilder: FormBuilder,
-    private _userService: UserService,
-    private router: Router,
-    private snackBar: MatSnackBar
+    private formBuilder: FormBuilder, private authService: AuthService, private router: Router, private snackBar: MatSnackBar
   ) { }
 
   form: FormGroup = new FormGroup({
@@ -63,7 +60,7 @@ export class LoginComponent implements OnInit {
         return;
     }
 
-    this._userService.login(this.form.value.email, this.form.value.pwd).subscribe(
+    this.authService.login(this.form.value.email, this.form.value.pwd).subscribe(
       (response) => {
         // Navigate to home on successful login
         this.router.navigate(['/home']);

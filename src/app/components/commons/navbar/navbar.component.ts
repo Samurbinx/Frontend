@@ -3,8 +3,8 @@ import { MatIconModule } from '@angular/material/icon';
 import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
 import { UserModel } from '../../../models/user.model';
-import { UserService } from '../../../services/user.service';
 import { Observable, Subscription } from 'rxjs';
+import { AuthService } from '../../../services/auth.service';
 
 @Component({
   selector: 'app-navbar',
@@ -18,11 +18,11 @@ export class NavbarComponent implements OnInit{
   user: UserModel | null = null;  // Guardar el usuario
   private userSubscription!: Subscription;  // Suscripción
 
-  constructor(private userService: UserService) {}
+  constructor(private authService: AuthService) {}
 
   ngOnInit(): void {
-    // Subscribirse al observable user$ del UserService
-    this.userSubscription = this.userService.user$.subscribe(user => {
+    // Subscribirse al observable user$ del authService
+    this.userSubscription = this.authService.user$.subscribe(user => {
       this.user = user;  // Asigna el usuario a la propiedad
     });
   }
@@ -34,6 +34,6 @@ export class NavbarComponent implements OnInit{
     }
   }
   logout(): void {
-    this.userService.logout();
+    this.authService.logout();
   }
 }

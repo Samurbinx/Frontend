@@ -9,9 +9,20 @@ import { StorageService } from './storage.service';
 })
 export class UserService {
   private URL_API = 'http://localhost:8080/user';
-  private userSubject = new BehaviorSubject<UserModel | null>(this.getUserFromStorage());
+  private userSubject: BehaviorSubject<UserModel | null> = new BehaviorSubject<UserModel | null>(null);
+  private isLoggedSubject = new BehaviorSubject<boolean>(this.hasToken());
 
   constructor(private _http: HttpClient, private storageService: StorageService) { }
+
+    // --- USER MANAGEMENT --- /
+  // User management methods
+  setUser(user: UserModel): void {
+    this.userSubject.next(user); // Emit the new user data to subscribers
+  }
+
+  getUser(): UserModel | null {
+    return this.userSubject.value; // Access the current value of the user
+  }
 
   // Observable to expose the user data to other components
   get user$(): Observable<UserModel | null> {
@@ -25,31 +36,53 @@ export class UserService {
     );
   }
 
-  // Login method
+    // --- LOG MANAGEMENT --- //
   login(email: string, pwd: string): Observable<{ token: string; user: UserModel }> {
     return this._http.post<{ token: string; user: UserModel }>(`${this.URL_API}/login`, { email, pwd }).pipe(
       tap(response => {
-        this.setUser(response.user); // Store user in session storage
+        console.log(response);
+        this.setUser(response.user);
         this.setToken(response.token); // Store token in cookies
+        this.isLoggedSubject.next(true);
       }),
       catchError(this.handleError)
     );
   }
 
 
-  // Método para iniciar sesión con token en Angular
-  loginWithToken(token: string): Observable<{ token: string; user: UserModel }> {
+  // Login by token
+  loginWithToken(): Observable<{ token: string; user: UserModel }> {
+    let token = this.getToken(); // Make sure the token is extracted properly
+    if (!token) {
+        throw new Error('Token is required');
+    }
+    console.log('Sending token to backend:', token);
+    
     return this._http.post<{ token: string; user: UserModel }>(`${this.URL_API}/login-token`, { token }).pipe(
-      tap(response => {
-        this.setUser(response.user); // Guarda el usuario en sessionStorage
-        this.setToken(response.token); // Guarda el token en cookies
-      }),
-      catchError(this.handleError)
+        tap(response => {
+            this.setUser(response.user); // Save user data
+            this.setToken(response.token); // Store token
+            console.log('Logged in successfully with user:', response.user);
+        }),
+        catchError(this.handleError) // Handle any errors that occur during the request
     );
+}
+
+  logout(): void {
+    this.storageService.removeCookie('token');
+    this.isLoggedSubject.next(false);
+    this.userSubject.next(null);
   }
 
+  isLoggedIn(): Observable<boolean> {
+    return this.isLoggedSubject.asObservable();
+  }
 
-  // Token management
+  get isLoggedIn$(): Observable<boolean | null> {
+    return this.isLoggedSubject.asObservable();
+  }
+
+  // --- TOKEN MANAGEMENT --- /
   setToken(token: string): void {
     this.storageService.setCookie('token', token, 7); // 7 days
   }
@@ -58,37 +91,12 @@ export class UserService {
     return this.storageService.getCookie('token');
   }
 
-  // Check if user is logged in based on token presence
-  isLoggedIn(): boolean {
-    const token = this.getToken();
-    return !!token;
+  hasToken(): boolean {
+    return !!this.storageService.getCookie('token');
   }
 
-  // Logout method
-  logout(): void {
-    this.storageService.removeCookie('token');
-    this.clearUser();
-  }
 
-  // User management methods
-  setUser(user: UserModel): void {
-    this.storageService.setSessionItem('user', JSON.stringify(user));
-    this.userSubject.next(user); // Emit the new user data to subscribers
-  }
 
-  getUser(): UserModel | null {
-    return this.userSubject.value; // Access the current value of the user
-  }
-
-  private getUserFromStorage(): UserModel | null {
-    const user = this.storageService.getSessionItem('user');
-    return user ? JSON.parse(user) : null;
-  }
-
-  private clearUser(): void {
-    this.storageService.removeSessionItem('user');
-    this.userSubject.next(null); // Emit null to signify user is logged out
-  }
 
   // Centralized error handling
   private handleError(error: HttpErrorResponse) {

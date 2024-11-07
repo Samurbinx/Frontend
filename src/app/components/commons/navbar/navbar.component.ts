@@ -17,6 +17,7 @@ export class NavbarComponent implements OnInit, OnDestroy {
   isLoggedIn = false;
   user: UserModel | null = null;
   private userSubscription: Subscription | null = null;
+  private isLoggedSubject: Subscription | null = null;
 
   constructor(private userService: UserService) {}
 
@@ -24,7 +25,10 @@ export class NavbarComponent implements OnInit, OnDestroy {
     // Subscribe to the user observable to get user data and login status reactively
     this.userSubscription = this.userService.user$.subscribe(user => {
       this.user = user;
-      this.isLoggedIn = !!user;
+      console.log(this.user);
+    });
+    this.isLoggedSubject = this.userService.isLoggedIn$.subscribe(logged => {
+      this.isLoggedIn = !!logged;
     });
   }
 
@@ -34,9 +38,7 @@ export class NavbarComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy(): void {
-    // Unsubscribe to avoid memory leaks
-    if (this.userSubscription) {
-      this.userSubscription.unsubscribe();
-    }
+    this.userSubscription?.unsubscribe();
+    this.isLoggedSubject?.unsubscribe();
   }
 }

@@ -55,7 +55,9 @@ pre {
     display: flex;
     flex-direction: row;
     flex-wrap: wrap;
+    max-width: 85vw;
     justify-content: space-around;
+    margin: 0 auto;
 }
 #artwork {
     scroll-snap-align: start;

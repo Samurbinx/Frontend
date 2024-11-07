@@ -4,7 +4,7 @@ import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
 import { UserModel } from '../../../models/user.model';
 import { UserService } from '../../../services/user.service';
-import { Subscription } from 'rxjs';
+import { Observable, Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-navbar',
@@ -13,32 +13,27 @@ import { Subscription } from 'rxjs';
   templateUrl: './navbar.component.html',
   styleUrls: ['./navbar.component.css']
 })
-export class NavbarComponent implements OnInit, OnDestroy {
+export class NavbarComponent implements OnInit{
   isLoggedIn = false;
-  user: UserModel | null = null;
-  private userSubscription: Subscription | null = null;
-  private isLoggedSubject: Subscription | null = null;
+  user: UserModel | null = null;  // Guardar el usuario
+  private userSubscription!: Subscription;  // Suscripción
 
   constructor(private userService: UserService) {}
 
   ngOnInit(): void {
-    // Subscribe to the user observable to get user data and login status reactively
+    // Subscribirse al observable user$ del UserService
     this.userSubscription = this.userService.user$.subscribe(user => {
-      this.user = user;
-      console.log(this.user);
+      this.user = user;  // Asigna el usuario a la propiedad
     });
-    this.isLoggedSubject = this.userService.isLoggedIn$.subscribe(logged => {
-      this.isLoggedIn = !!logged;
-    });
-  }
-
-  logout(): void {
-    this.userService.logout();
-    // User and login status will be updated automatically through the observable subscription
   }
 
   ngOnDestroy(): void {
-    this.userSubscription?.unsubscribe();
-    this.isLoggedSubject?.unsubscribe();
+    // Limpiar la suscripción al destruir el componente
+    if (this.userSubscription) {
+      this.userSubscription.unsubscribe();
+    }
+  }
+  logout(): void {
+    this.userService.logout();
   }
 }

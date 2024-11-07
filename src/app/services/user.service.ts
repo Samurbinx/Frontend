@@ -40,7 +40,6 @@ export class UserService {
   login(email: string, pwd: string): Observable<{ token: string; user: UserModel }> {
     return this._http.post<{ token: string; user: UserModel }>(`${this.URL_API}/login`, { email, pwd }).pipe(
       tap(response => {
-        console.log(response);
         this.setUser(response.user);
         this.setToken(response.token); // Store token in cookies
         this.isLoggedSubject.next(true);
@@ -48,25 +47,6 @@ export class UserService {
       catchError(this.handleError)
     );
   }
-
-
-  // Login by token
-  loginWithToken(): Observable<{ token: string; user: UserModel }> {
-    let token = this.getToken(); // Make sure the token is extracted properly
-    if (!token) {
-        throw new Error('Token is required');
-    }
-    console.log('Sending token to backend:', token);
-    
-    return this._http.post<{ token: string; user: UserModel }>(`${this.URL_API}/login-token`, { token }).pipe(
-        tap(response => {
-            this.setUser(response.user); // Save user data
-            this.setToken(response.token); // Store token
-            console.log('Logged in successfully with user:', response.user);
-        }),
-        catchError(this.handleError) // Handle any errors that occur during the request
-    );
-}
 
   logout(): void {
     this.storageService.removeCookie('token');

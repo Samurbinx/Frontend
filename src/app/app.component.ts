@@ -36,33 +36,27 @@ import { Subscription } from 'rxjs';
   styleUrl: './app.component.css'
 })
 
-export class AppComponent implements OnInit, OnDestroy {
+export class AppComponent {
   title = 'Frontend';
 
-  isLoggedIn = false;
   user: UserModel | null = null;
-  private userSubscription: Subscription | null = null;
-  private isLoggedSubscription: Subscription | null = null;
+  private userSubscription!: Subscription;
 
   constructor(private userService: UserService) {}
 
   ngOnInit(): void {
     this.userSubscription = this.userService.user$.subscribe(user => {
-      this.user = user;
+      this.user = user; // Asigna el usuario a la variable local
     });
+    console.log(this.user);
 
-    const token = this.userService.getToken(); // Retrieve token once
-    if (token) {
-        this.userService.loginWithToken().subscribe({
-          next: response => console.log('User logged in', response),
-          error: err => console.error('Login failed', err)
-        });
-      }
-    }
+  }
 
   ngOnDestroy(): void {
-    this.userSubscription?.unsubscribe();
-    this.isLoggedSubscription?.unsubscribe();
+    // No olvides limpiar la suscripción cuando el componente se destruya
+    if (this.userSubscription) {
+      this.userSubscription.unsubscribe();
+    }
   }
   
 }

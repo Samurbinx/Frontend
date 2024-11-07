@@ -54,7 +54,7 @@
 			</button>
 
 			<!-- If is logged -->
-			<div *ngIf="isLoggedIn; else notLogged" class="navbar-nav welcome">
+			<div *ngIf="isLoggedIn; else notLogged" class="navbar-nav welcome userDrop">
 				<p>Hola! {{user?.name}}</p>
 				<div>
 					<a href="" class="shopping_bag"><span
@@ -63,8 +63,8 @@
 					<!-- User dropdown -->
 					<ul class="navbar-nav">
 						<li class="nav-item dropdown">
-							<a id="dropicon" class="nav-link dropdown-toggle" href="#" role="button"
-								data-bs-toggle="dropdown" aria-expanded="false">
+							<a id="dropicon" class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown"
+								aria-expanded="false">
 								<mat-icon aria-hidden="false" aria-label="person" fontIcon="person"></mat-icon>
 							</a>
 
@@ -83,9 +83,9 @@
 			</div>
 
 			<!-- If is not logged -->
-			<ng-template #notLogged id="userDrop" class="welcome">
-					<a href="" class="shopping_bag"><span
-							class="material-symbols-outlined shopping_bag">local_mall</span></a>
+			<ng-template #notLogged>
+				<div class="userDrop" id="notLogged">
+					<a href="" class="shopping_bag"><span class="material-symbols-outlined shopping_bag">local_mall</span></a>
 
 					<ul class="navbar-nav">
 						<!-- User dropdown -->
@@ -102,6 +102,7 @@
 							</ul>
 						</li>
 					</ul>
+				</div>
 			</ng-template>
 		</div>
 	</div>

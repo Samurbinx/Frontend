@@ -34,14 +34,7 @@ import { UserService } from './services/user.service';
   styleUrl: './app.component.css'
 })
 
-export class AppComponent implements OnInit {
+export class AppComponent  {
   title = 'Frontend';
 
-  constructor(private _userService: UserService){}
-
-  ngOnInit(): void {
-    if (this._userService.getToken()) {
-      
-    }
-  }
 }

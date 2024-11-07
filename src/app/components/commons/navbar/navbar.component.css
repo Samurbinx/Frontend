@@ -164,6 +164,9 @@ a {
     'GRAD' 0,
     'opsz' 24
 }
+#notLogged {
+    display: flex;
+}
 /* --- ASIDE DROP MENU --- */
 /* .offcanvas[aria-modal="true"] {
     min-width: fit-content;
@@ -174,7 +177,7 @@ a {
 
 /* First wrap (Main pages dissapears, menu button appears) */
 @media (width <= 991px) {
-    #userDrop {
+    .userDrop {
         display: none;
     }
     #menu2 {

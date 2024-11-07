@@ -11,7 +11,7 @@ export class UserService {
   private URL_API = 'http://localhost:8080/user';
   private userSubject = new BehaviorSubject<UserModel | null>(this.getUserFromStorage());
 
-  constructor(private _http: HttpClient, private storageService: StorageService) {}
+  constructor(private _http: HttpClient, private storageService: StorageService) { }
 
   // Observable to expose the user data to other components
   get user$(): Observable<UserModel | null> {
@@ -35,7 +35,19 @@ export class UserService {
       catchError(this.handleError)
     );
   }
-  
+
+
+  // Método para iniciar sesión con token en Angular
+  loginWithToken(token: string): Observable<{ token: string; user: UserModel }> {
+    return this._http.post<{ token: string; user: UserModel }>(`${this.URL_API}/login-token`, { token }).pipe(
+      tap(response => {
+        this.setUser(response.user); // Guarda el usuario en sessionStorage
+        this.setToken(response.token); // Guarda el token en cookies
+      }),
+      catchError(this.handleError)
+    );
+  }
+
 
   // Token management
   setToken(token: string): void {
@@ -59,7 +71,7 @@ export class UserService {
   }
 
   // User management methods
-  private setUser(user: UserModel): void {
+  setUser(user: UserModel): void {
     this.storageService.setSessionItem('user', JSON.stringify(user));
     this.userSubject.next(user); // Emit the new user data to subscribers
   }

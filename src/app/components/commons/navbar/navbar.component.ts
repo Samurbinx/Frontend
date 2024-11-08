@@ -28,7 +28,6 @@ export class NavbarComponent implements OnInit{
       // Llamamos al loginByToken y suscribimos a la respuesta
       this.authService.loginByToken(token).subscribe(
         (response) => {
-          console.log('Login successful', response);
           this.user = response.user;
           this.isLoggedIn = true;
           this.router.navigate(['/home']); // Redirigimos a la página de inicio o dashboard

@@ -39,36 +39,6 @@ export class AuthService {
     this.user$.next(null);
   }
 
-  getCurrentUser(): Observable<UserModel> {
-    return this.user$.pipe(
-      switchMap(user => {
-        // If user exists, return it
-        if (user) {
-          return of(user);
-        }
-  
-        const token = this.storageService.getCookie('token');
-        // If there is a token, fetch the current user
-        if (token) {
-          return this.fetchCurrentUser();
-        }
-  
-        // If no user and no token, return null, but filter out null values later
-        return of(null);
-      }),
-      filter((user): user is UserModel => user !== null) // Ensure user is not null
-    );
-  }
-
-  fetchCurrentUser(): Observable<UserModel> {
-    return this.http.get<UserModel>(`${this.URL_API}/current-user`)
-      .pipe(
-        tap(user => {
-          this.user$.next(user);
-        })
-      );
-  }
-
   addUser(user: UserModel): Observable<UserModel> {
     return this.http.post<UserModel>(`${this.URL_API}/new`, user).pipe(
       catchError(this.handleError)

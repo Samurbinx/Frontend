@@ -44,7 +44,6 @@ export class AppComponent implements OnInit {
               private router: Router) {}
 
   ngOnInit(): void {
-    this.user$ = this.authService.getCurrentUser().pipe(share());
     this.user$.subscribe((user: UserModel) => {
       this.user = user;  // Assign the user to the component's `user` property
     });

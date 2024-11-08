@@ -1,3 +1,4 @@
+import { StorageService } from './services/storage.service';
 import { CommonModule, DOCUMENT } from '@angular/common';
 import { Component, OnInit, Inject, OnDestroy } from '@angular/core';
 import { Router, RouterLink, RouterLinkActive, RouterOutlet } from '@angular/router';
@@ -36,21 +37,22 @@ import { AuthService } from './services/auth.service';
   styleUrl: './app.component.css'
 })
 
-export class AppComponent implements OnInit {
-  user$: Observable<UserModel> = new Observable();
-  user: UserModel | null = null;
+export class AppComponent {
+  // user: UserModel | null = null;
 
-  constructor(private authService: AuthService,
-              private router: Router) {}
+  // constructor(private authService: AuthService,
+  //             private router: Router,
+  //             private storageService: StorageService) {}
 
-  ngOnInit(): void {
-    this.user$.subscribe((user: UserModel) => {
-      this.user = user;  // Assign the user to the component's `user` property
-    });
-  }
+  // ngOnInit(): void {
+  //   let token = this.storageService.getCookie('token');
+  //   if (token) {
+  //     this.authService.loginByToken(token);
+  //   }
+  // }
 
-  logout(): void {
-    this.authService.logout();
-    this.router.navigate(['/login']);
-  }
+  // logout(): void {
+  //   this.authService.logout();
+  //   this.router.navigate(['/login']);
+  // }
 }

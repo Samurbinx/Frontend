@@ -1,10 +1,11 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { MatIconModule } from '@angular/material/icon';
 import { CommonModule } from '@angular/common';
-import { RouterModule } from '@angular/router';
+import { Router, RouterModule } from '@angular/router';
 import { UserModel } from '../../../models/user.model';
 import { Observable, Subscription } from 'rxjs';
 import { AuthService } from '../../../services/auth.service';
+import { StorageService } from '../../../services/storage.service';
 
 @Component({
   selector: 'app-navbar',
@@ -15,25 +16,33 @@ import { AuthService } from '../../../services/auth.service';
 })
 export class NavbarComponent implements OnInit{
   isLoggedIn = false;
-  user: UserModel | null = null;  // Guardar el usuario
-  private userSubscription!: Subscription;  // Suscripción
+  user: UserModel | null = null;
 
-  constructor(private authService: AuthService) {}
+  constructor(private authService: AuthService,
+              private router: Router,
+              private storageService: StorageService) {}
 
   ngOnInit(): void {
-    // Subscribirse al observable user$ del authService
-    this.userSubscription = this.authService.user$.subscribe(user => {
-      this.user = user;  // Asigna el usuario a la propiedad
-    });
-  }
-
-  ngOnDestroy(): void {
-    // Limpiar la suscripción al destruir el componente
-    if (this.userSubscription) {
-      this.userSubscription.unsubscribe();
+    let token = this.storageService.getCookie('token');
+    if (token) {
+      // Llamamos al loginByToken y suscribimos a la respuesta
+      this.authService.loginByToken(token).subscribe(
+        (response) => {
+          console.log('Login successful', response);
+          this.user = response.user;
+          this.isLoggedIn = true;
+          this.router.navigate(['/home']); // Redirigimos a la página de inicio o dashboard
+        },
+        (error) => {
+          console.error('Error during login', error);
+          // Manejar error de sesión o token inválido
+        }
+      );
     }
   }
+
   logout(): void {
     this.authService.logout();
+    this.router.navigate(['/login']);
   }
 }

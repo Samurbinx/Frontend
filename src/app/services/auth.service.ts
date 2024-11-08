@@ -1,7 +1,7 @@
+import { UserModel } from './../models/user.model';
 import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { StorageService } from './storage.service';
-import { UserModel } from '../models/user.model';
 import { BehaviorSubject, Observable, of, throwError } from 'rxjs';
 import { catchError, filter, switchMap, tap } from 'rxjs/operators';
 import { User } from '../interfaces/user.interface';
@@ -18,26 +18,38 @@ interface LoginResponse {
 })
 export class AuthService {
   private URL_API = 'http://localhost:8080/user';
-  user$ = new BehaviorSubject<UserModel | null>(null);  // Explicitly declare type
-
+  private user: UserModel | null = null;
 
   constructor(private http: HttpClient, private storageService: StorageService) { }
 
   login(email: string, pwd: string): Observable<LoginResponse> {
-    return this.http.post<LoginResponse>(`${this.URL_API}/login`,  { email, pwd })
+    return this.http.post<LoginResponse>(`${this.URL_API}/login`, { email, pwd })
       .pipe(
         tap(response => {
           console.log(response);
-          this.user$.next(response.user);
-          this.setToken(response.token);
+          this.user = response.user;
+          this.storageService.setCookie('token', response.token, 7);
         })
       );
   }
 
   logout(): void {
     this.storageService.removeCookie('token');
-    this.user$.next(null);
+    this.user = null;
   }
+
+  loginByToken(token: string): Observable<LoginResponse> {
+    return this.http.post<LoginResponse>(`${this.URL_API}/login-token`, { "token": token })
+      .pipe(
+        tap(response => {
+          console.log(response);
+          this.user = response.user;
+          this.storageService.setCookie('token', response.token, 7);
+          this.storageService.setCookie('user', response.user.email, 7);
+        })
+      );
+  }
+  
 
   addUser(user: UserModel): Observable<UserModel> {
     return this.http.post<UserModel>(`${this.URL_API}/new`, user).pipe(
@@ -45,29 +57,23 @@ export class AuthService {
     );
   }
 
+  // Centralized error handling
+  private handleError(error: HttpErrorResponse) {
+    let errorMessage = 'Unknown error occurred!';
 
+    if (error.status === 0) {
+      errorMessage = 'Network error occurred. Please try again later.';
+      console.error('An error occurred:', error.error);
 
-  private setToken(token: string): void {
-    this.storageService.setCookie('token', token, 7);
-  }
+    } else if (error.status === 500) {
+      errorMessage = 'An account with this email already exists.';
+      console.error(`Backend returned code ${error.status}, message: ${errorMessage}`);
 
-    // Centralized error handling
-    private handleError(error: HttpErrorResponse) {
-      let errorMessage = 'Unknown error occurred!';
-  
-      if (error.status === 0) {
-        errorMessage = 'Network error occurred. Please try again later.';
-        console.error('An error occurred:', error.error);
-  
-      } else if (error.status === 500) {
-        errorMessage = 'An account with this email already exists.';
-        console.error(`Backend returned code ${error.status}, message: ${errorMessage}`);
-  
-      } else {
-        errorMessage = `Error: ${error.status}, Message: ${error.message}`;
-        console.error(`Backend returned code ${error.status}, message: ${errorMessage}`);
-      }
-  
-      return throwError(() => new Error(errorMessage));
+    } else {
+      errorMessage = `Error: ${error.status}, Message: ${error.message}`;
+      console.error(`Backend returned code ${error.status}, message: ${errorMessage}`);
     }
+
+    return throwError(() => new Error(errorMessage));
+  }
 }

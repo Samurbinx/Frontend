@@ -23,7 +23,7 @@ export class WorksComponent implements OnInit {
     this.workService.getAllWorks().subscribe(
       (works: WorkModel[]) => {
         this.works = works;
-        console.log(works);
+        // console.log(works);
       },
       (error) => {
         console.error('Error fetching works:', error);

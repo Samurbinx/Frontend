@@ -26,7 +26,7 @@ export class AuthService {
     return this.http.post<LoginResponse>(`${this.URL_API}/login`, { email, pwd })
       .pipe(
         tap(response => {
-          console.log(response);
+          // console.log(response);
           this.user = response.user;
           this.storageService.setCookie('token', response.token, 7);
         })
@@ -42,7 +42,7 @@ export class AuthService {
     return this.http.post<LoginResponse>(`${this.URL_API}/login-token`, { "token": token })
       .pipe(
         tap(response => {
-          console.log(response);
+          // console.log(response);
           this.user = response.user;
           this.storageService.setCookie('token', response.token, 7);
         })

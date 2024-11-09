@@ -43,5 +43,26 @@ export class WorkService {
         })
       );
   }
+  toggleFavorite(userId: string, artworkId: string, shouldAdd: boolean) {
+    return this._http.post(`${this.URL_API}/fav`, {
+      user_id: userId,
+      artwork_id: artworkId,
+      shouldAdd: shouldAdd
+    }, {
+      headers: {
+        'Authorization': `Bearer ${this.authService.getToken()}`
+      }
+    })
+      .pipe(
+        tap(response => {
+          console.log('Respuesta del servidor:', response);
+        }),
+        catchError(error => {
+          console.error('Error al agregar favorito:', error);
+          // Optionally, you can return a fallback value or rethrow the error
+          return of({ error: true, message: 'Error al agregar favorito' });
+        })
+      );
+  }
 
 }

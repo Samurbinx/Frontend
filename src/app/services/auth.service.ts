@@ -68,6 +68,11 @@ export class AuthService {
     );
   }
 
+  getFavs(user_id: string): Observable<number[]> {
+    return this.http.get<number[]>(`${this.URL_API}/${user_id}/favs`);
+  }
+ 
+
   // Centralized error handling
   private handleError(error: HttpErrorResponse) {
     let errorMessage = 'Unknown error occurred!';

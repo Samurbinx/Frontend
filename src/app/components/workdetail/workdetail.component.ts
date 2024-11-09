@@ -18,7 +18,8 @@ import { subscribe } from 'diagnostics_channel';
 })
 export class WorkdetailComponent implements OnInit {
    work: WorkModel;
-
+   user_id: string = "";
+   favs: number[] = [];
 
 
    constructor(private router: Router, private route: ActivatedRoute, private workService: WorkService, private authService: AuthService) {
@@ -26,16 +27,19 @@ export class WorkdetailComponent implements OnInit {
    }
 
    ngOnInit() {
-      // Obtiene el id del trabajo de los parámetros de la ruta
+      this.setWork();
+      this.setUserData();
+   }
+
+
+   public setWork() {
       const workID = this.route.snapshot.queryParams["id"];
-   
-      // Verifica si `workID` existe antes de continuar
+
       if (!workID) {
          console.error('No work ID found in route.');
          return;
       }
-   
-      // Obtiene el proyecto usando el servicio
+
       this.workService.getWorkById(workID).subscribe(
          (response: any) => {
             if (response) {
@@ -48,44 +52,68 @@ export class WorkdetailComponent implements OnInit {
          }
       );
    }
-   
 
-   public favorite(artwork_id: number){
-      let favicon = document.getElementById("fav-icon");
-      favicon?.classList.toggle('favorited');
-
+   public setUserData(){
       let token = this.authService.getToken();
-      console.log(token);
 
-      let user_id = undefined;
       if (token) {
          this.authService.getIdByToken(token).subscribe(
-            (response: any) => {
-               if (response) {
-                  user_id = response['user_id']
-                  this.workService.addFavorite(user_id, artwork_id.toString()).subscribe(
-                     (response: any) => {
-                        if (response) {
-                           console.log(response);
-                        }
+             (response: any) => {
+                 if (response) {
+                     this.user_id = response['user_id'];
+                     if (this.user_id) {
+                         this.authService.getFavs(this.user_id).subscribe(
+                             (response: number[]) => {
+                                 if (response) {
+                                     this.favs = response;
+                                     if (this.favs && this.work) {
+                                          this.setFavs();
+                                     }
+                                 }
+                             },
+                             (error) => {
+                                 console.error('Error fetching favorites:', error);
+                             }
+                         );
                      }
-                  )
-               }
+                 }
+             },
+             (error) => {
+                 console.error('Error fetching user ID:', error);
+             }
+         );
+     }
+   }
+
+   public setFavs(){
+      this.work.artworks.forEach(artwork => {
+         this.favs.forEach(id => {
+            if (artwork.id == id) {
+               let favicon = document.getElementById("fav-icon"+id);
+               favicon?.classList.toggle('favorited');
             }
-         )
+         })
+      });
+   }
+
+   public favorite(artwork_id: number) {
+      let favicon = document.getElementById("fav-icon"+artwork_id);
+      favicon?.classList.toggle('favorited');
+
+      let shouldAdd;
+      if (favicon?.classList.contains('favorited')) {
+         shouldAdd = true;
+      } else {
+         shouldAdd = false;
       }
-      console.log(user_id);
 
-      
-      // this.workService.addFavorite().subscribe(
-      //    (response: any) => {
-      //       if (response) {
-      //          console.log(response);
-      //       }
-      //    }
-      // )      
-    }
-
-
-
+      this.workService.toggleFavorite(this.user_id, artwork_id.toString(), shouldAdd).subscribe(
+         (response: any) => {
+            if (response) {
+               console.log(response);
+            }
+         }
+      )
+   }
 }
+

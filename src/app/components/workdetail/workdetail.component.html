@@ -91,7 +91,7 @@
                                 
                             </p>
                             <div>
-                                <span id="fav-icon" class="material-symbols-outlined" (click)="favorite(artwork.id)">favorite</span>
+                                <span id="fav-icon{{artwork.id}}" class="material-symbols-outlined" (click)="favorite(artwork.id)">favorite</span>
                                 <span class="material-symbols-outlined" *ngIf="!artwork.sold;">add_shopping_cart</span>
                             </div>
                         </div>

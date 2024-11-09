@@ -24,7 +24,7 @@
 
         <div id="artworks">
             <ng-container *ngFor="let artwork of work.artworks">
-                <div id="artwork"
+                <div id="{{artwork.id}}" class="artwork"
                     *ngIf="artwork.display != 'covercarousel' && artwork.display != 'detail'">
                     <div id="pieces">
                         <div id="piece" *ngFor="let piece of artwork.pieces">
@@ -91,7 +91,7 @@
                                 
                             </p>
                             <div>
-                                <span class="material-symbols-outlined favorite">favorite</span>
+                                <span id="fav-icon" class="material-symbols-outlined" (click)="favorite(artwork.id)">favorite</span>
                                 <span class="material-symbols-outlined" *ngIf="!artwork.sold;">add_shopping_cart</span>
                             </div>
                         </div>

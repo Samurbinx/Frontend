@@ -30,7 +30,6 @@ export class NavbarComponent implements OnInit{
         (response) => {
           this.user = response.user;
           this.isLoggedIn = true;
-          this.router.navigate(['/home']); // Redirigimos a la página de inicio o dashboard
         },
         (error) => {
           console.error('Error during login', error);
@@ -44,4 +43,5 @@ export class NavbarComponent implements OnInit{
     this.authService.logout();
     this.router.navigate(['/login']);
   }
+
 }

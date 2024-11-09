@@ -59,7 +59,7 @@ pre {
     justify-content: space-around;
     margin: 0 auto;
 }
-#artwork {
+.artwork {
     scroll-snap-align: start;
     position: relative;
     margin-bottom: 30px;
@@ -181,7 +181,7 @@ pre {
     line-height: 1.5em;
 }
 .hidden {
-    opacity: 0;
+    opacity: 1;
     transition: opacity 0.3s;
 
     position: absolute;
@@ -300,3 +300,11 @@ video {
     max-width: 100%;
 }
 
+
+
+
+/* ---- FAV ---- */
+.favorited {
+    font-variation-settings:
+    'FILL' 1
+}

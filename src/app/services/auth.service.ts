@@ -49,7 +49,19 @@ export class AuthService {
       );
   }
   
+  getToken() {
+    let token = this.storageService.getCookie('token');
+    return token;
+  }
 
+  getIdByToken(token: string): Observable<any> {
+    return this.http.post<any>(`${this.URL_API}/getidbytoken`, { token })
+      .pipe(
+        tap(response => {
+          // console.log(response);
+        })
+      );
+  }
   addUser(user: UserModel): Observable<UserModel> {
     return this.http.post<UserModel>(`${this.URL_API}/new`, user).pipe(
       catchError(this.handleError)

@@ -3,6 +3,9 @@ import { Injectable } from '@angular/core';
 import { WorkModel } from '../models/work.model';
 import { Observable } from 'rxjs';
 import { PieceModel } from '../models/piece.model';
+import { catchError } from 'rxjs/operators';
+import { of, tap } from 'rxjs';
+import { AuthService } from './auth.service';
 
 @Injectable({
   providedIn: 'root'
@@ -10,7 +13,7 @@ import { PieceModel } from '../models/piece.model';
 export class WorkService {
   private URL_API = 'http://localhost:8080/work';
 
-  constructor(private _http: HttpClient) { }
+  constructor(private _http: HttpClient, private authService: AuthService) { }
 
   getAllWorks(): Observable<WorkModel[]> {
     return this._http.get<WorkModel[]>(`${this.URL_API}/`, { responseType: 'json' });
@@ -19,8 +22,26 @@ export class WorkService {
   getWorkById(id: string): Observable<WorkModel> {
     return this._http.get<WorkModel>(`${this.URL_API}/${id}`, { responseType: 'json' });
   }
-  
-  // getAllWorkPieces(id: string): Observable<PieceModel[]> {
-  //   return this._http.get<PieceModel[]>(`${this.URL_API}/${id}/pieces`, { responseType: 'json' });
-  // }
+
+  addFavorite(userId: string, artworkId: string) {
+    return this._http.post(`${this.URL_API}/fav`, {
+      user_id: userId,
+      artwork_id: artworkId
+    }, {
+      headers: {
+        'Authorization': `Bearer ${this.authService.getToken()}`
+      }
+    })
+      .pipe(
+        tap(response => {
+          console.log('Respuesta del servidor:', response);
+        }),
+        catchError(error => {
+          console.error('Error al agregar favorito:', error);
+          // Optionally, you can return a fallback value or rethrow the error
+          return of({ error: true, message: 'Error al agregar favorito' });
+        })
+      );
+  }
+
 }

@@ -5,6 +5,9 @@ import { CommonModule } from '@angular/common';
 import { WorkModel } from '../../models/work.model';
 import { PieceService } from '../../services/piece.service';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+import { AuthService } from '../../services/auth.service';
+import { response } from 'express';
+import { subscribe } from 'diagnostics_channel';
 
 @Component({
    selector: 'app-workdetail',
@@ -18,7 +21,7 @@ export class WorkdetailComponent implements OnInit {
 
 
 
-   constructor(private router: Router, private route: ActivatedRoute, private workService: WorkService, private pieceService: PieceService) {
+   constructor(private router: Router, private route: ActivatedRoute, private workService: WorkService, private authService: AuthService) {
       this.work = new WorkModel(0, "Sin título", "", "", "", []);
    }
 
@@ -47,6 +50,41 @@ export class WorkdetailComponent implements OnInit {
    }
    
 
+   public favorite(artwork_id: number){
+      let favicon = document.getElementById("fav-icon");
+      favicon?.classList.toggle('favorited');
+
+      let token = this.authService.getToken();
+      console.log(token);
+
+      let user_id = undefined;
+      if (token) {
+         this.authService.getIdByToken(token).subscribe(
+            (response: any) => {
+               if (response) {
+                  user_id = response['user_id']
+                  this.workService.addFavorite(user_id, artwork_id.toString()).subscribe(
+                     (response: any) => {
+                        if (response) {
+                           console.log(response);
+                        }
+                     }
+                  )
+               }
+            }
+         )
+      }
+      console.log(user_id);
+
+      
+      // this.workService.addFavorite().subscribe(
+      //    (response: any) => {
+      //       if (response) {
+      //          console.log(response);
+      //       }
+      //    }
+      // )      
+    }
 
 
 

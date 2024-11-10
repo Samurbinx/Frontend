@@ -54,10 +54,10 @@
 			</button>
 
 			<!-- If is logged -->
-			<div *ngIf="isLoggedIn; else notLogged" class="navbar-nav welcome userDrop">
+			<div *ngIf="logged; else notLogged" class="navbar-nav welcome userDrop">
 				<p>Hola! {{user?.name}}</p>
 				<div>
-					<a href="" class="shopping_bag"><span
+					<a href="/userdata/cart" class="shopping_bag"><span
 							class="material-symbols-outlined shopping_bag">local_mall</span></a>
 
 					<!-- User dropdown -->
@@ -70,10 +70,10 @@
 
 							<!-- Dropdown actions -->
 							<ul class="dropdown-menu dropdown-menu-end">
-								<li class="mine"><a class="dropdown-item" href="/perfil/misdatos">Mis datos</a></li>
-								<li class="mine"><a class="dropdown-item" href="/perfil/wishlist">Lista de deseos</a></li>
-								<li class="mine"><a class="dropdown-item" href="/perfil/pedidos">Pedidos</a></li>
-								<li class="mine"><a class="dropdown-item" href="/perfil/pago">Pago</a></li>
+								<li class="mine"><a class="dropdown-item" href="/userdata/">Mis datos</a></li>
+								<li class="mine"><a class="dropdown-item" href="/userdata/favorites">Favoritos</a></li>
+								<li class="mine"><a class="dropdown-item" href="/userdata/orders">Pedidos</a></li>
+								<li class="mine"><a class="dropdown-item" href="/userdata/">Pago</a></li>
 								<li class="mine logout" (click)="logout()"><a class="dropdown-item" href="/home">Cerrar
 										sesión</a><span class="material-symbols-outlined">logout</span></li>
 							</ul>
@@ -85,7 +85,7 @@
 			<!-- If is not logged -->
 			<ng-template #notLogged>
 				<div class="userDrop" id="notLogged">
-					<a href="" class="shopping_bag"><span class="material-symbols-outlined shopping_bag">local_mall</span></a>
+					<a href="/userdata/cart" class="shopping_bag"><span class="material-symbols-outlined shopping_bag">local_mall</span></a>
 
 					<ul class="navbar-nav">
 						<!-- User dropdown -->

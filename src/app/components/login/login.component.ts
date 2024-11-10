@@ -62,8 +62,7 @@ export class LoginComponent implements OnInit {
 
     this.authService.login(this.form.value.email, this.form.value.pwd).subscribe(
       (response) => {
-        // Navigate to home on successful login
-        this.router.navigate(['/home']);
+        this.router.navigate(['/userdata']);
         this.snackBar.open('Usted ha iniciado sesión con éxito', '', { duration: 3000 });
         this.loginError = null; // Clear any previous error
       },

@@ -15,6 +15,7 @@ import { MessageService } from './services/message.service';
 import { UserModel } from './models/user.model';
 import { Observable, share, Subscription } from 'rxjs';
 import { AuthService } from './services/auth.service';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 
 @Component({
@@ -37,22 +38,6 @@ import { AuthService } from './services/auth.service';
   styleUrl: './app.component.css'
 })
 
-export class AppComponent {
-  // user: UserModel | null = null;
-
-  // constructor(private authService: AuthService,
-  //             private router: Router,
-  //             private storageService: StorageService) {}
-
-  // ngOnInit(): void {
-  //   let token = this.storageService.getCookie('token');
-  //   if (token) {
-  //     this.authService.loginByToken(token);
-  //   }
-  // }
-
-  // logout(): void {
-  //   this.authService.logout();
-  //   this.router.navigate(['/login']);
-  // }
+export class AppComponent{
+  
 }

@@ -2,7 +2,6 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { WorkModel } from '../models/work.model';
 import { Observable } from 'rxjs';
-import { PieceModel } from '../models/piece.model';
 import { catchError } from 'rxjs/operators';
 import { of, tap } from 'rxjs';
 import { AuthService } from './auth.service';
@@ -64,5 +63,9 @@ export class WorkService {
         })
       );
   }
+
+ 
+
+  
 
 }

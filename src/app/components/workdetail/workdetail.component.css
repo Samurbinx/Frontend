@@ -308,3 +308,6 @@ video {
     font-variation-settings:
     'FILL' 1
 }
+.icontoggle {
+    display: none;
+}

@@ -71,6 +71,13 @@ export class AuthService {
   getFavs(user_id: string): Observable<number[]> {
     return this.http.get<number[]>(`${this.URL_API}/${user_id}/favs`);
   }
+  getCarted(user_id: string): Observable<number[]> {
+    return this.http.get<number[]>(`${this.URL_API}/${user_id}/carted`);
+  }
+  getCartId(user_id: string): Observable<number> {
+    return this.http.get<number>(`${this.URL_API}/${user_id}/cartId`);
+  }
+ 
  
 
   // Centralized error handling

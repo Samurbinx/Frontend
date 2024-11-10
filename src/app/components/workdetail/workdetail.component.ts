@@ -59,30 +59,18 @@ export class WorkdetailComponent implements OnInit {
    }
 
    public setUserData() {
-      let token = this.authService.getToken();
-
-      if (token) {
-         this.authService.getIdByToken(token).subscribe(
-            (response: any) => {
-               if (response) {
-                  this.user_id = response['user_id'];
-                  if (this.user_id) {
-                     this.logged = true;
-                     this.getFavs();
-                     this.getCarted();
-                     this.getCartId();
-                  }
-               }
-            },
-            (error) => {
-               console.error('Error fetching user ID:', error);
-            }
-         );
+      let user_id = this.authService.getUserId();
+      if (user_id) {
+         this.user_id = user_id;
+         this.logged = true;
+         this.getFavs();
+         this.getCarted();
+         this.getCartId();
       }
    }
 
    public getFavs() {
-      this.authService.getFavs(this.user_id).subscribe(
+      this.authService.getFavsId(this.user_id).subscribe(
          (response: number[]) => {
             if (response) {
                this.favs = response;
@@ -126,12 +114,11 @@ export class WorkdetailComponent implements OnInit {
       )
    }
 
-   public getCartId(){
+   public getCartId() {
       this.authService.getCartId(this.user_id).subscribe(
          (response: number) => {
             if (response) {
                this.cart_id = response.toString();
-               console.log(this.cart_id);
             }
          },
          (error) => {
@@ -173,7 +160,7 @@ export class WorkdetailComponent implements OnInit {
       });
       return isCarted;
    }
-   
+
    public addToCart(artwork_id: number) {
       if (!this.isCarted(artwork_id)) {
          this.cartService.addToCart(this.cart_id, artwork_id.toString()).subscribe(
@@ -187,17 +174,17 @@ export class WorkdetailComponent implements OnInit {
       }
    }
 
-   public toggleIcon(artwork_id: number){
+   public toggleIcon(artwork_id: number) {
       let isCarted = this.isCarted(artwork_id);
 
-         let checkicon = document.getElementById('check-icon'+artwork_id);
-         checkicon?.classList.toggle('icontoggle');
-         let carticon = document.getElementById('cart-icon'+artwork_id);
-         carticon?.classList.toggle('icontoggle');
+      let checkicon = document.getElementById('check-icon' + artwork_id);
+      checkicon?.classList.toggle('icontoggle');
+      let carticon = document.getElementById('cart-icon' + artwork_id);
+      carticon?.classList.toggle('icontoggle');
 
    }
 
-   public seeCart(){
+   public seeCart() {
       this.router.navigate(['/cart']);
 
    }

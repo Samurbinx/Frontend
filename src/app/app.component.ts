@@ -7,15 +7,10 @@ import { HttpClientModule } from '@angular/common/http';
 
 import { FormsModule } from '@angular/forms'
 
-// LOCAL
 import { FooterComponent } from './components/commons/footer/footer.component';
 import { HomeComponent } from './components/home/home.component';
 import { NavbarComponent } from './components/commons/navbar/navbar.component';
 import { MessageService } from './services/message.service';
-import { UserModel } from './models/user.model';
-import { Observable, share, Subscription } from 'rxjs';
-import { AuthService } from './services/auth.service';
-import { MatSnackBar } from '@angular/material/snack-bar';
 
 
 @Component({

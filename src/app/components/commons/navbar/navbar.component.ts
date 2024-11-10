@@ -7,6 +7,7 @@ import { Subscription } from 'rxjs';
 import { UserModel } from '../../../models/user.model';
 import { AuthService } from '../../../services/auth.service';
 import { StorageService } from '../../../services/storage.service';
+import { subscribe } from 'diagnostics_channel';
 
 @Component({
   selector: 'app-navbar',
@@ -26,18 +27,33 @@ export class NavbarComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    const token = this.storageService.getCookie('token');
-    if (token) {
-      this.authService.loginByToken(token).subscribe(
-        (response) => {
-          this.user = response.user;
-          this.logged = true;
-        },
-        (error) => {
-          console.error('Error during login', error);
+    this.authService.isLoggedSubject().subscribe(
+      (response) => {
+        this.logged = response;
+        if (this.logged) {
+          this.authService.getUserSubject().subscribe(
+            (response) => { 
+              this.user = response
+
+            }
+          )
         }
-      );
-    }
+        if (!this.logged) {
+          const token = this.storageService.getCookie('token');
+          if (token) {
+            this.authService.loginByToken(token).subscribe(
+              (response) => {
+                this.user = response.user;
+                this.logged = true;
+              },
+              (error) => {
+                console.error('Error during login', error);
+              }
+            );
+          }
+        }
+      }
+    )
   }
 
   logout(): void {

@@ -1,0 +1,21 @@
+* {
+   font-family: "Outfit", sans-serif !important;
+   font-optical-sizing: auto;
+   font-style: normal;
+   box-sizing: border-box;
+}
+
+#wrapper {
+   display: flex;
+   flex-direction: row;
+}
+.sidebar {
+   width: fit-content;
+   padding: 25px;
+   border-right: 1px solid var(--neutral-500);
+}
+.sidebar > a {
+   max-width: fit-content;
+   font-size: large;
+   margin: 20px;
+}

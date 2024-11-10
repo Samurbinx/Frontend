@@ -2,8 +2,10 @@
     display: flex;
     flex-wrap: nowrap;
     justify-content: center;
-    margin-top: 60px;
     padding: 0 50px;
+    margin: 60px auto;
+    
+
 }
 
 #contactImg {

@@ -1,5 +1,6 @@
+import { subscribe } from 'diagnostics_channel';
 import { Component, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
+import { Router, RouterOutlet } from '@angular/router';
 import { MatSnackBar } from '@angular/material/snack-bar';
 
 import { UserModel } from '../../models/user.model';
@@ -11,11 +12,22 @@ import { waitForAsync } from '@angular/core/testing';
   selector: 'app-user-data',
   standalone: true,
   imports: [
-    // Import required Angular modules here
+    RouterOutlet
   ],
   templateUrl: './user-data.component.html',
   styleUrls: ['./user-data.component.css']
 })
-export class UserDataComponent  {
+
+export class UserDataComponent  implements OnInit{
+  user: UserModel | null = null;
   
+  constructor(private authService: AuthService){}
+
+  ngOnInit(): void {
+    this.authService.getUserSubject().subscribe(
+      user => {
+        this.user = user;
+      }
+    );
+  }
 }

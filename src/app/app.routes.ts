@@ -21,11 +21,12 @@ export const routes: Routes = [
     { path: 'sobremi', component: AboutComponent },
     { path: 'registro', component: RegisterComponent },
     { path: 'login', component: LoginComponent },
-    { path: 'userdata', component: UserDataComponent, canActivate: [AuthGuard],
+    // canActivate: [AuthGuard],
+    { path: 'userdata', component: UserDataComponent, 
         children: [
-            { path: 'favorites', component: FavoritesComponent },
-            { path: 'orders', component: OrdersComponent },
-            { path: 'cart', component: CartComponent },
+            { path: 'favoritos', component: FavoritesComponent },
+            { path: 'pedidos', component: OrdersComponent },
+            { path: 'carrito', component: CartComponent },
         ]
     },
     { path: '', redirectTo:'home', pathMatch:'full'},

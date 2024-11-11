@@ -1,8 +1,11 @@
 #body {
+    width: 100vw !important;
+    margin: 50px 0;
+}
+#content {
     display: flex;
     flex-wrap: nowrap;
     justify-content: center;
-    margin-top: 60px;
     padding: 0 50px;
 }
 

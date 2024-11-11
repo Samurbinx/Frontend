@@ -7,6 +7,7 @@ export class PieceModel {
         public width: number,
         public height: number,
         public depth: number | null,
+        public dimensions: string | null,
         public images: string[]
     ) {}
 
@@ -20,6 +21,7 @@ export class PieceModel {
             Number(data.width),
             Number(data.height),
             data.depth ?? null,
+            data.dimensions ?? null,
             data.images ? data.images : []
         );
     }

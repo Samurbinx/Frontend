@@ -8,23 +8,25 @@ import { UserModel } from '../../../models/user.model';
 import { AuthService } from '../../../services/auth.service';
 import { StorageService } from '../../../services/storage.service';
 import { subscribe } from 'diagnostics_channel';
+import { MatBadgeModule } from '@angular/material/badge';
 
 @Component({
   selector: 'app-navbar',
   standalone: true,
-  imports: [MatIconModule, RouterModule, CommonModule],
+  imports: [MatIconModule, RouterModule, CommonModule, MatBadgeModule],
   templateUrl: './navbar.component.html',
   styleUrls: ['./navbar.component.css']
 })
 export class NavbarComponent implements OnInit {
   logged = false;
   user: UserModel | null = null;
-
+  cart_length: number | null = null;
+  user_id: string | null = null;
   constructor(
     private authService: AuthService,
     private router: Router,
     private storageService: StorageService
-  ) {}
+  ) { }
 
   ngOnInit(): void {
     this.authService.isLoggedSubject().subscribe(
@@ -32,9 +34,8 @@ export class NavbarComponent implements OnInit {
         this.logged = response;
         if (this.logged) {
           this.authService.getUserSubject().subscribe(
-            (response) => { 
+            (response) => {
               this.user = response
-
             }
           )
         }
@@ -54,8 +55,19 @@ export class NavbarComponent implements OnInit {
         }
       }
     )
+    this.getCartLength();
   }
 
+  getCartLength(){
+    this.user_id = this.storageService.getSessionItem('user_id');
+    if (this.user_id) {
+      this.authService.getCartLength(this.user_id).subscribe(
+        (response) => {
+          this.cart_length = response;
+        }
+      )
+    }
+  }
   logout(): void {
     this.authService.logout();
   }

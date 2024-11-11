@@ -23,7 +23,10 @@ html {
 }
 
 .content {
-    flex-grow: 1;
+    flex: 1;
+    display: flex;
+    min-width: 100vw !important;
+    height: 100%;
 }
 /* --- RESPONSIVE DESINGS BREAKPOINTS --- */
 @media screen and (max-width: 576px){}

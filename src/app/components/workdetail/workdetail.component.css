@@ -36,8 +36,6 @@ html {
     width: 90%;
     margin: 50px auto;
     text-align: justify;
-    height: 100%;
-
 }
 #inf {
     width: 85%;
@@ -65,6 +63,9 @@ pre {
     margin-bottom: 30px;
     width: fit-content;
 }
+.artwork:hover .hidden{
+    opacity: 1 !important;
+}
 #artwork_inf {
     text-align: center;
     padding: 0px;
@@ -85,117 +86,6 @@ pre {
     align-items: baseline;
 }
 
-#piece {
-    min-width: fit-content;
-    max-width: 100%;
-    display: flex;
-    flex-direction: column;
-    margin-top: 50px;
-    height: fit-content;
-    position: relative
-}
-
-#images {
-    display: flex;
-    flex-direction: row;
-    flex-wrap: wrap;
-    /* justify-content: space-between; */
-    justify-content: center;
-    flex-wrap: wrap;
-    width: fit-content;
-
-} 
-img {
-    margin: 20px 50px 20px;
-    max-height: 85vh;
-    max-width: 100%;
-}
-
-
-
-.picsum-img-wrapper {
-    height: 90vh; 
-    background-size: cover; 
-    background-position: center; 
-}
-#carousel {
-    margin-top: 50px;
-}
-video {
-    margin-bottom: 20px;
-    margin: 20px;
-    max-height: 90vh;
-    max-width: 100%;
-}
-
-/* Configuración general */
-html {
-    scroll-behavior: smooth;
-}
-
-#content {
-    width: 100vw;
-    max-width: 2000px;
-    height: 100%;
-}
-
-#workImg {
-    min-width: 320px;
-    width: 100%;
-    max-width: 2000px;
-    height: 100vh;
-    max-height: 1100px;
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    margin: 0 auto;
-    background-repeat: no-repeat;
-    background-size: cover;
-    background-position: center;
-    z-index: 1;
-}
-
-.headerImg {
-    height: 95vh;
-    max-height: 1050px;
-}
-
-#body {
-    width: 90%;
-    margin: 50px auto;
-    text-align: justify;
-    height: 100%;
-}
-
-#inf {
-    width: 85%;
-    margin: 0 auto;
-}
-
-pre {
-    overflow: hidden;
-    max-width: 100%;
-    text-wrap: wrap;
-    font-size: large;
-    line-height: 1.5em;
-}
-.hidden {
-    opacity: 1;
-    transition: opacity 0.3s;
-
-    position: absolute;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    padding: 30px;
-    border: 1px solid rgb(216, 216, 216);
-    background-color: #ebebebef;
-
-}
-#artwork:hover .hidden{
-    opacity: 1 !important;
-}
 #artwork_shop {
     width: 300px;
     background-color: #fff;
@@ -234,6 +124,32 @@ pre {
     margin-left: 10px;
     cursor: pointer;
 }
+.mini_inf {
+    font-size: small;
+    margin-top: 5px !important;
+    text-align: end;
+    align-self: center;
+}
+
+#pieces {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: baseline;
+}
+#piece {
+    min-width: fit-content;
+    max-width: 100%;
+    display: flex;
+    flex-direction: column;
+    margin-top: 50px;
+    height: fit-content;
+    position: relative
+}
+
 #piece_inf {
     height: fit-content;
     min-width: fit-content;
@@ -250,57 +166,48 @@ pre {
     margin: 5px;
 }
 
-#pieces {
-    width: 100%;
-    height: 100%;
-    display: flex;
-    flex-direction: row;
-    flex-wrap: wrap;
-    justify-content: center;
-    align-items: baseline;
-}
-
-#piece {
-    min-width: fit-content;
-    max-width: 100%;
-    display: flex;
-    flex-direction: column;
-    margin-top: 50px;
-    height: fit-content;
-}
-
-/* Estilos de las imágenes */
 #images {
     display: flex;
     flex-direction: row;
     flex-wrap: wrap;
     justify-content: center;
     width: fit-content;
-}
-
+} 
 img {
     margin: 20px 50px;
     max-height: 85vh;
     max-width: 100%;
 }
 
-.picsum-img-wrapper {
-    height: 90vh;
-    background-size: cover;
-    background-position: center;
-}
 
+.picsum-img-wrapper {
+    height: 90vh; 
+    background-size: cover; 
+    background-position: center; 
+}
 #carousel {
     margin-top: 50px;
 }
-
 video {
+    margin-bottom: 20px;
     margin: 20px;
     max-height: 90vh;
     max-width: 100%;
 }
 
+.hidden {
+    opacity: 1;
+    transition: opacity 0.3s;
 
+    position: absolute;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding: 30px;
+    border: 1px solid rgb(216, 216, 216);
+    background-color: #ebebebef;
+
+}
 
 
 /* ---- FAV ---- */
@@ -311,3 +218,4 @@ video {
 .icontoggle {
     display: none;
 }
+

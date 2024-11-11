@@ -42,7 +42,7 @@
                                 <p>
                                     <b>Materiales: </b>
                                     <ng-container *ngIf="piece.materials.length > 0; else noMaterials">
-                                        {{ piece.materials.join(', ') }}
+                                        {{ piece.materials }}
                                     </ng-container>
                                     <ng-template #noMaterials>No especificado</ng-template>
                                 </p>
@@ -88,15 +88,19 @@
                             <p *ngIf="!artwork.sold;">
                                 <ng-container *ngIf="artwork.price else noPrice">{{ artwork.price }} €</ng-container>
                                 <ng-template #noPrice>No aplica</ng-template>
-                                
                             </p>
                             <div *ngIf="logged">
-                                <span id="fav-icon{{artwork.id}}" class="material-symbols-outlined" (click)="favoriteToggle(artwork.id)">favorite</span>
                                 <span *ngIf="!artwork.sold;">
-                                    <span id="cart-icon{{artwork.id}}"  class="material-symbols-outlined" (click)="addToCart(artwork.id)">add_shopping_cart</span>
-                                    <span id="check-icon{{artwork.id}}" class="material-symbols-outlined icontoggle" (click)="seeCart()" title="Ya tienes este producto en el carrito" >check_circle</span>
+                                    <span id="cart-icon{{artwork.id}}" *ngIf="!isCarted(artwork.id)" class="material-symbols-outlined" (click)="addToCart(artwork.id)">add_shopping_cart</span>
+                                    <span id="check-icon{{artwork.id}}" *ngIf="isCarted(artwork.id)" class="mini_inf" (click)="seeCart()"><a href="/carrito" target="_blank">Ya en la cesta</a></span>
+                                    <!-- <span id="check-icon{{artwork.id}}" *ngIf="isCarted(artwork.id)" class="material-symbols-outlined carted" (click)="seeCart()" title="Ya tienes este producto en el carrito">check_circle</span> -->
                                 </span>
+                                <span id="fav-icon{{artwork.id}}" class="material-symbols-outlined"
+                                    (click)="favoriteToggle(artwork.id)">favorite</span>
                             </div>
+                        </div>
+                        <div *ngIf="!logged">
+                            <p class="mini_inf"><a href="/login" target="_blank">Inicie sesión</a> para comprar</p>
                         </div>
                     </div>
                 </div>

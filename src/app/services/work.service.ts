@@ -21,7 +21,9 @@ export class WorkService {
   getWorkById(id: string): Observable<WorkModel> {
     return this._http.get<WorkModel>(`${this.URL_API}/${id}`, { responseType: 'json' });
   }
-
+  // getWorkTitle(id:string): Observable<WorkModel> {
+  //   return this._http.get<WorkModel>(`${this.URL_API}/title/${id}`, { responseType: 'json' });
+  // }
   addFavorite(userId: string, artworkId: string) {
     return this._http.post(`${this.URL_API}/fav`, {
       user_id: userId,

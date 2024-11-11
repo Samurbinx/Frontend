@@ -1,15 +1,14 @@
 import { CartService } from './../../services/cart.service';
-import { Component, OnInit } from '@angular/core';
+import { AfterViewInit, Component, Inject, OnInit, PLATFORM_ID } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { WorkService } from '../../services/work.service';
-import { CommonModule } from '@angular/common';
+import { CommonModule, ViewportScroller } from '@angular/common';
 import { WorkModel } from '../../models/work.model';
-import { PieceService } from '../../services/piece.service';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { AuthService } from '../../services/auth.service';
-import { response } from 'express';
-import { subscribe } from 'diagnostics_channel';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { isPlatformBrowser } from '@angular/common';
+import { ArtworkModel } from '../../models/artwork.model';
 
 @Component({
    selector: 'app-workdetail',
@@ -18,25 +17,49 @@ import { MatSnackBar } from '@angular/material/snack-bar';
    templateUrl: './workdetail.component.html',
    styleUrl: './workdetail.component.css'
 })
-export class WorkdetailComponent implements OnInit {
+
+export class WorkdetailComponent implements OnInit, AfterViewInit {
    work: WorkModel;
    user_id: string = "";
    cart_id: string = "";
    favs: number[] = [];
-   carted: number[] = [];
+   carted: ArtworkModel[] = [];
 
    logged: boolean = false;
 
+   private fragment: string | null = null;
 
-   constructor(private router: Router, private route: ActivatedRoute, private workService: WorkService, private authService: AuthService, private cartService: CartService, private snackBar: MatSnackBar) {
+   constructor(
+      private router: Router,
+      private route: ActivatedRoute,
+      private workService: WorkService,
+      private authService: AuthService,
+      private cartService: CartService,
+      private snackBar: MatSnackBar,
+      private viewportScroller: ViewportScroller,
+      @Inject(PLATFORM_ID) private platformId: object
+   ) {
       this.work = new WorkModel(0, "Sin título", "", "", "", []);
    }
+
 
    ngOnInit() {
       this.setWork();
       this.setUserData();
+      this.route.fragment.subscribe(fragment => {
+         this.fragment = fragment;
+      });
    }
-
+   ngAfterViewInit(): void {
+      if (isPlatformBrowser(this.platformId)) {
+         // Usamos un setTimeout para asegurarnos de que el contenido esté cargado
+         setTimeout(() => {
+            if (this.fragment) {
+               this.viewportScroller.scrollToAnchor(this.fragment);
+            }
+         }, 3000);
+      }
+   }
 
    public setWork() {
       const workID = this.route.snapshot.queryParams["id"];
@@ -50,6 +73,7 @@ export class WorkdetailComponent implements OnInit {
             if (response) {
                // Convierte el JSON recibido a una instancia de WorkModel
                this.work = WorkModel.fromJson(response);
+
             }
          },
          (error) => {
@@ -128,12 +152,12 @@ export class WorkdetailComponent implements OnInit {
    }
    public getCarted() {
       this.authService.getCarted(this.user_id).subscribe(
-         (response: number[]) => {
+         (response: ArtworkModel[]) => {
             if (response) {
-               this.carted = response;
-               if (this.carted && this.work) {
-                  this.setCarted();
-               }
+               response.forEach(artwork => {
+                  this.carted.push(ArtworkModel.fromJson(artwork));
+               });
+               console.log(this.carted);
             }
          },
          (error) => {
@@ -141,23 +165,16 @@ export class WorkdetailComponent implements OnInit {
          }
       )
    }
-   public setCarted() {
-      this.work.artworks.forEach(artwork => {
-         this.carted.forEach(id => {
-            if (artwork.id == id) {
-               this.toggleIcon(artwork.id);
-            }
-         })
-      });
-   }
 
    public isCarted(artwork_id: number): boolean {
       let isCarted = false;
-      this.carted.forEach(id => {
-         if (id == artwork_id) {
+      if (this.carted) {
+      this.carted.forEach(artwork => {
+         if (artwork.id == artwork_id) {
             isCarted = true
          }
       });
+   }
       return isCarted;
    }
 
@@ -166,7 +183,9 @@ export class WorkdetailComponent implements OnInit {
          this.cartService.addToCart(this.cart_id, artwork_id.toString()).subscribe(
             (response: any) => {
                if (response) {
-                  console.log(response);
+                  let icon = document.getElementById(`cart-icon${artwork_id}`) ;
+                  if (icon) {
+                  }
                   this.snackBar.open('Producto añadido al carrito', '', { duration: 3000 });
                }
             }
@@ -174,19 +193,8 @@ export class WorkdetailComponent implements OnInit {
       }
    }
 
-   public toggleIcon(artwork_id: number) {
-      let isCarted = this.isCarted(artwork_id);
-
-      let checkicon = document.getElementById('check-icon' + artwork_id);
-      checkicon?.classList.toggle('icontoggle');
-      let carticon = document.getElementById('cart-icon' + artwork_id);
-      carticon?.classList.toggle('icontoggle');
-
-   }
-
    public seeCart() {
-      this.router.navigate(['/cart']);
-
+      window.open('/carrito', '_blank');
    }
 }
 

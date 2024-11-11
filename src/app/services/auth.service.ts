@@ -58,6 +58,7 @@ export class AuthService {
   logout() {
     this.storageService.removeCookie('token');
     this.storageService.removeSessionItem('logged');
+    this.storageService.removeSessionItem('user_id');
     this.user = null;
     this.userSubject.next(null);
     this.logged.next(false);
@@ -101,11 +102,14 @@ export class AuthService {
   getFavsArt(user_id: string): Observable<ArtworkModel[]> {
     return this.http.get<ArtworkModel[]>(`${this.URL_API}/${user_id}/favsart`);
   }
-  getCarted(user_id: string): Observable<number[]> {
-    return this.http.get<number[]>(`${this.URL_API}/${user_id}/carted`);
+  getCarted(user_id: string): Observable<ArtworkModel[]> {
+    return this.http.get<ArtworkModel[]>(`${this.URL_API}/${user_id}/carted`);
   }
   getCartId(user_id: string): Observable<number> {
     return this.http.get<number>(`${this.URL_API}/${user_id}/cartId`);
+  }
+  getCartLength(user_id: string):Observable<number> {
+    return this.http.get<number>(`${this.URL_API}/${user_id}/cartlength`);
   }
   getUser(){
     return this.user;

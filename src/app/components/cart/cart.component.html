@@ -1,0 +1,70 @@
+<div id="body">
+   <div id="content">
+      <div id="cart">
+         <div *ngIf="carted.length == 0; else hascart">
+            <h1>Tu cesta está vacía</h1>
+            <a href="">Ver obras</a>
+         </div>
+         <ng-template #hascart>
+            <h1>Cesta</h1>
+         </ng-template>
+
+         <div class="product" *ngFor="let artwork of carted">
+            <a *ngFor="let piece of artwork.pieces" class="piece" [routerLink]="['/proyecto']"
+               [queryParams]="{ id: artwork.work_id }" [fragment]="artwork.id.toString()">
+               <div class="images" *ngFor="let image of piece.images">
+                  <div class="img" [ngStyle]="{'background-image': getBackgroundImageUrl(image, piece)}"></div>
+               </div>
+            </a>
+            <div class="cover"></div>
+
+            <div class="inf">
+               <div class="inf_top">
+                  <div class="a">
+                     <a class="h2" [routerLink]="['/proyecto']" [queryParams]="{ id: artwork.work_id }"
+                        [fragment]="artwork.id.toString()">{{artwork.title}}</a>
+                     <span class="h4"><a [routerLink]="['/proyecto']"
+                           [queryParams]="{ id: artwork.work_id }">{{artwork.work_title}}</a> -
+                        {{artwork.creation_date}}</span>
+                  </div>
+                  <div class="pieces">
+                     <p><b>Contiene:</b></p>
+                     <ul>
+                        <li *ngFor="let piece of artwork.pieces">
+                           <ng-container *ngIf="piece.title; else noTitle">{{ piece.title }} - </ng-container>
+                           <ng-template #noTitle>Sin título - </ng-template>
+                           <ng-container *ngIf="piece.materials; else noMat">{{ piece.materials}} - </ng-container>
+                           <ng-template #noMat>Materiales no registrados - </ng-template>
+                           <ng-container *ngIf="piece.dimensions; else noDim">{{ piece.dimensions }} cm</ng-container>
+                           <ng-template #noDim>Dimensiones no especificadas</ng-template>
+
+                        </li>
+                     </ul>
+                  </div>
+               </div>
+               <div class="inf_bottom">
+                  <span>
+                     <input type="checkbox" name="" id="">
+                     <p class="l">|</p>
+                     <p>Eliminar</p>
+                  </span>
+                  <p>0.00€</p>
+               </div>
+            </div>
+         </div>
+      </div>
+
+      <div id="payment">
+         <div class="payment_inf">
+            <span>
+               <h1>Total</h1>
+               <h1>0.00€</h1>
+            </span>
+            <h3>0 productos</h3>
+         </div>
+         <div class="payment_button">
+            <button class="btn">Tramitar pedido</button>
+         </div>
+      </div>
+   </div>
+</div>

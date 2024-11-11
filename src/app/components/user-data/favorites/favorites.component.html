@@ -11,7 +11,8 @@
          </div>
          <div class="card_body">
             <h5>{{artwork.creation_date}}</h5>
-            <h4>{{artwork.title}}</h4>
+            <h4><a [routerLink]="['/proyecto']" [queryParams]="{id: artwork.work_id}" fragment="{{artwork.id}}" id="work">{{artwork.title}}</a></h4>
+
          </div>
          <div class="card_bottom">
             <div class="sold_inf">

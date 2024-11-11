@@ -3,11 +3,12 @@ import { ArtworkModel } from '../../../models/artwork.model';
 import { UserModel } from '../../../models/user.model';
 import { AuthService } from '../../../services/auth.service';
 import { Component, Input, OnInit } from '@angular/core';
+import { RouterLink } from '@angular/router';
 
 @Component({
   selector: 'app-favorites',
   standalone: true,
-  imports: [CommonModule],
+  imports: [CommonModule, RouterLink],
   templateUrl: './favorites.component.html',
   styleUrls: ['./favorites.component.css'] // Corrección en el nombre 'styleUrl' -> 'styleUrls'
 })

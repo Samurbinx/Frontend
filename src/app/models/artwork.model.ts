@@ -4,6 +4,7 @@ export class ArtworkModel {
     constructor(
         public id: number,
         public work_id: number,
+        public work_title: string,
         public title: string,
         public creation_date: number, 
         public dimensions: string, 
@@ -18,6 +19,7 @@ export class ArtworkModel {
         return new ArtworkModel(
             data.id,
             data.workID,
+            data.work_title,
             data.title,
             new Date(data.creation_date).getFullYear(), 
             data.dimensions,

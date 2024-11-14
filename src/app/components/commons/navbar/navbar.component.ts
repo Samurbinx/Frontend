@@ -20,7 +20,7 @@ import { MatBadgeModule } from '@angular/material/badge';
 export class NavbarComponent implements OnInit {
   logged = false;
   user: UserModel | null = null;
-  cart_length: number | null = null;
+  cart_length: number | null = 0;
   user_id: string | null = null;
   constructor(
     private authService: AuthService,
@@ -36,6 +36,7 @@ export class NavbarComponent implements OnInit {
           this.authService.getUserSubject().subscribe(
             (response) => {
               this.user = response
+              this.getCartLength();
             }
           )
         }
@@ -55,7 +56,6 @@ export class NavbarComponent implements OnInit {
         }
       }
     )
-    this.getCartLength();
   }
 
   getCartLength(){

@@ -11,7 +11,8 @@
          </div>
          <div class="card_body">
             <h5>{{artwork.creation_date}}</h5>
-            <h4><a [routerLink]="['/proyecto']" [queryParams]="{id: artwork.work_id}" fragment="{{artwork.id}}" id="work">{{artwork.title}}</a></h4>
+            <h4><a [routerLink]="['/proyecto']" [queryParams]="{id: artwork.work_id}" fragment="{{artwork.id}}"
+                  id="work">{{artwork.title}}</a></h4>
 
          </div>
          <div class="card_bottom">
@@ -25,12 +26,8 @@
                </p>
             </div>
             <div class="icons_div">
-               <span id="fav-icon{{artwork.id}}" class="material-symbols-outlined">favorite</span>
-               <span *ngIf="!artwork.sold;">
-                  <!-- <span id="cart-icon{{artwork.id}}" class="material-symbols-outlined">add_shopping_cart</span> -->
-                  <!-- <span id="check-icon{{artwork.id}}" class="material-symbols-outlined icontoggle"
-                     title="Ya tienes este producto en el carrito">check_circle</span> -->
-               </span>
+               <span *ngIf="!artwork.sold;"><span id="cart-icon{{artwork.id}}" class="material-symbols-outlined">add_shopping_cart</span></span>
+               <span id="fav-icon{{artwork.id}}" class="material-symbols-outlined fav-icon favorited" (click)="favoriteToggle(artwork.id)">favorite</span>
             </div>
          </div>
       </div>

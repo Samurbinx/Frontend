@@ -3,6 +3,7 @@ import { HttpClient } from '@angular/common/http';
 import { AuthService } from './auth.service';
 import { of, tap } from 'rxjs';
 import { catchError } from 'rxjs/operators';
+import { error } from 'console';
 
 @Injectable({
   providedIn: 'root'
@@ -31,5 +32,21 @@ export class CartService {
           return of({ error: true, message: 'Error al agregar al carrito' });
         })
       );
+  }
+
+  delFromCart(cartId: string, artworkId: number){
+    return this._http.post(`${this.URL_API}/delArtwork`, {
+      cart_id: cartId,
+      artwork_id: artworkId
+    }).pipe(
+      tap(response => {
+        console.log('Respuesta del servidor:', response);
+      }),
+      catchError(error => {
+        console.error('Error al elimnar del carrito:', error);
+        // Optionally, you can return a fallback value or rethrow the error
+        return of({ error: true, message: 'Error al eliminar del carrito' });
+      })
+    );
   }
 }

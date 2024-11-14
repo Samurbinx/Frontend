@@ -26,7 +26,7 @@ import { MessageService } from './services/message.service';
     HomeComponent, 
     FooterComponent, 
     MatIconModule,
-    FormsModule
+    FormsModule,
   ],
   providers: [MessageService],
   templateUrl: './app.component.html',

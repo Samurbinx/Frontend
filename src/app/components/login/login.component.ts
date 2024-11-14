@@ -62,9 +62,8 @@ export class LoginComponent implements OnInit {
 
     this.authService.login(this.form.value.email, this.form.value.pwd).subscribe(
       (response) => {
-        this.router.navigate(['/userdata']);
-        this.snackBar.open('Usted ha iniciado sesión con éxito', '', { duration: 3000 });
-        this.loginError = null; // Clear any previous error
+        this.router.navigate(['/carrito']);
+        this.loginError = null;
       },
       (error) => {
         this.loginError = 'Error al iniciar sesión. Por favor, verifica tus credenciales.';

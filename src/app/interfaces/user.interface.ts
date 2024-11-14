@@ -5,4 +5,4 @@ export interface User {
    surname: string;
    nick: string;
    phone: string;
- }
+}

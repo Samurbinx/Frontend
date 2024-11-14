@@ -9,11 +9,12 @@ import { AuthService } from '../../services/auth.service';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { isPlatformBrowser } from '@angular/common';
 import { ArtworkModel } from '../../models/artwork.model';
+import { MatIcon } from '@angular/material/icon';
 
 @Component({
    selector: 'app-workdetail',
    standalone: true,
-   imports: [CommonModule, NgbModule],
+   imports: [CommonModule, NgbModule, MatIcon],
    templateUrl: './workdetail.component.html',
    styleUrl: './workdetail.component.css'
 })
@@ -193,8 +194,8 @@ export class WorkdetailComponent implements OnInit, AfterViewInit {
       }
    }
 
-   public seeCart() {
-      window.open('/carrito', '_blank');
+   public seeLogin() {
+      window.open('/login', '_blank');
    }
 }
 

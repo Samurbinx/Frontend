@@ -37,34 +37,56 @@
                            <ng-template #noMat>Materiales no registrados - </ng-template>
                            <ng-container *ngIf="piece.dimensions; else noDim">{{ piece.dimensions }} cm</ng-container>
                            <ng-template #noDim>Dimensiones no especificadas</ng-template>
-
                         </li>
                      </ul>
                   </div>
                </div>
                <div class="inf_bottom">
                   <span>
-                     <input type="checkbox" name="" id="">
+                     <input type="checkbox" name="" class="artwork_checkbox" id="checkbox_{{artwork.id}}" [(ngModel)]="checkedArtworks[artwork.id]" (change)="getTotalAmount()">
                      <p class="l">|</p>
-                     <p>Eliminar</p>
+                     <p type="button" class="del" data-bs-toggle="modal" [attr.data-bs-target]="'#modal' + artwork.id">Eliminar</p>
                   </span>
-                  <p>0.00€</p>
+                  <p id="price_{{artwork.id}}">{{artwork.price}}€</p>
                </div>
             </div>
+            <!-- MODAL -->
+            <div class="modal fade" id="modal{{artwork.id}}" tabindex="-1" aria-labelledby="exampleModalLabel"
+               aria-hidden="true">
+               <div class="modal-dialog">
+                  <div class="modal-content">
+                     <div class="modal-header">
+                        <h2 class="modal-title">¿Eliminar artículo? ({{artwork.work_title}} - {{artwork.title}})</h2>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                     </div>
+                     <div class="modal-footer">
+                        <p>¿Deseas continuar?</p>
+                        <div class="modal-buttons">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                        <button type="button" class="btn btn-primary" data-bs-dismiss="modal" (click)="delArtwork(artwork.id)">Sí, eliminar</button>
+                     </div>
+                     </div>
+                  </div>
+               </div>
+            </div>
+            <!-- endmodal -->
          </div>
       </div>
+
 
       <div id="payment">
          <div class="payment_inf">
             <span>
                <h1>Total</h1>
-               <h1>0.00€</h1>
+               <h1>{{ getTotalAmount()}}€</h1>
             </span>
-            <h3>0 productos</h3>
+            <h3>{{selectedProducts}}</h3>
          </div>
          <div class="payment_button">
             <button class="btn">Tramitar pedido</button>
          </div>
+         
+
       </div>
    </div>
 </div>

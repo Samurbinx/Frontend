@@ -9,6 +9,7 @@ import { CommonModule } from '@angular/common';
 import { PieceModel } from '../../models/piece.model';
 import { Router, RouterLink } from '@angular/router';
 import { FormsModule } from '@angular/forms';
+import { loadStripe } from '@stripe/stripe-js';
 
 
 @Component({
@@ -23,7 +24,7 @@ export class CartComponent {
   userId: string | null = null;
   carted: ArtworkModel[] = [];
   cartId: string | null = null;
-  checkedArtworks: {[id: number]: boolean} = {};
+  checkedArtworks: { [id: number]: boolean } = {};
 
   constructor(private authService: AuthService, private workService: WorkService, private cartService: CartService, private router: Router) { }
 
@@ -59,8 +60,9 @@ export class CartComponent {
           this.carted.forEach(artwork => {
             this.checkedArtworks[artwork.id] = true; // Set default checked state to true
           });
-        }
-      )
+          const totalAmount = this.getTotalAmount();
+          this.cartService.updateTotalAmount(totalAmount);
+        })
     }
   }
 
@@ -86,19 +88,22 @@ export class CartComponent {
         totalAmount += artwork.price;
       }
     });
+    this.cartService.updateTotalAmount(totalAmount);
 
     return totalAmount;
   }
 
- get selectedProducts(): string {
-  const count = Object.values(this.checkedArtworks).filter(isChecked => isChecked).length;
-  return `${count} ${count === 1 ? 'producto seleccionado' : 'productos seleccionados'}`;
-}
+  get selectedProducts(): string {
+    const count = Object.values(this.checkedArtworks).filter(isChecked => isChecked).length;
+    return `${count} ${count === 1 ? 'producto seleccionado' : 'productos seleccionados'}`;
+  }
 
 
-goToCheckout(){
-  this.router.navigate(['/checkout']);
-}
+  checkout() {
+    this.router.navigate(["/checkout"]);
+  }
+
+
 
 }
 

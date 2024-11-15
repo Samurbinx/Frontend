@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { AuthService } from './auth.service';
-import { Observable, of, tap } from 'rxjs';
+import { BehaviorSubject, Observable, of, tap } from 'rxjs';
 import { catchError } from 'rxjs/operators';
 import { error } from 'console';
 
@@ -12,7 +12,15 @@ export class CartService {
   private URL_API = 'http://localhost:8080/cart';
   public StripePublicKey = 'pk_test_51QL60A01qslkTUypDH7HjcBn7G0E22306bHTsSjDqsGNsK3LT04ipA6PeGp4IajYdwNcIqce2Fi8hgHf4oFCtfMA006sUUYNnq'; 
 
+  private totalAmountSubject = new BehaviorSubject<number>(0); // Almacena el total
+  totalAmount$ = this.totalAmountSubject.asObservable();
+  
+
   constructor(private _http: HttpClient, private authService: AuthService) { }
+
+  updateTotalAmount(total: number): void {
+    this.totalAmountSubject.next(total * 100); // Actualiza el total
+  }
 
   addToCart(cartId: string, artworkId: string) {
     return this._http.post(`${this.URL_API}/addArtwork`, {

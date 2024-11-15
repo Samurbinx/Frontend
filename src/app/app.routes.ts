@@ -1,3 +1,4 @@
+import { CheckoutComponent } from './components/checkout/checkout.component';
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { HomeComponent } from './components/home/home.component';
@@ -22,6 +23,7 @@ export const routes: Routes = [
     { path: 'registro', component: RegisterComponent },
     { path: 'login', component: LoginComponent },
     { path: 'carrito', component: CartComponent },
+    { path: 'checkout', component: CheckoutComponent },
     {
         path: 'userdata', component: UserDataComponent, 
         children: [

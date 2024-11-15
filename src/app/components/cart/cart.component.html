@@ -43,9 +43,11 @@
                </div>
                <div class="inf_bottom">
                   <span>
-                     <input type="checkbox" name="" class="artwork_checkbox" id="checkbox_{{artwork.id}}" [(ngModel)]="checkedArtworks[artwork.id]" (change)="getTotalAmount()">
+                     <input type="checkbox" name="" class="artwork_checkbox" id="checkbox_{{artwork.id}}"
+                        [(ngModel)]="checkedArtworks[artwork.id]" (change)="getTotalAmount()">
                      <p class="l">|</p>
-                     <p type="button" class="del" data-bs-toggle="modal" [attr.data-bs-target]="'#modal' + artwork.id">Eliminar</p>
+                     <p type="button" class="del" data-bs-toggle="modal" [attr.data-bs-target]="'#modal' + artwork.id">
+                        Eliminar</p>
                   </span>
                   <p id="price_{{artwork.id}}">{{artwork.price}}€</p>
                </div>
@@ -62,9 +64,10 @@
                      <div class="modal-footer">
                         <p>¿Deseas continuar?</p>
                         <div class="modal-buttons">
-                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
-                        <button type="button" class="btn btn-primary" data-bs-dismiss="modal" (click)="delArtwork(artwork.id)">Sí, eliminar</button>
-                     </div>
+                           <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                           <button type="button" class="btn btn-primary" data-bs-dismiss="modal"
+                              (click)="delArtwork(artwork.id)">Sí, eliminar</button>
+                        </div>
                      </div>
                   </div>
                </div>
@@ -82,10 +85,12 @@
             </span>
             <h3>{{selectedProducts}}</h3>
          </div>
-         <div class="payment_button">
-            <button class="btn">Tramitar pedido</button>
+         <div>
          </div>
-         
+         <div class="payment_button">
+            <button class="btn" (click)="checkout()">Tramitar pedido</button>
+         </div>
+
 
       </div>
    </div>

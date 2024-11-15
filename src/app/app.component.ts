@@ -3,7 +3,7 @@ import { CommonModule, DOCUMENT } from '@angular/common';
 import { Component, OnInit, Inject, OnDestroy } from '@angular/core';
 import { Router, RouterLink, RouterLinkActive, RouterOutlet } from '@angular/router';
 import { MatIconModule } from '@angular/material/icon';
-import { HttpClientModule } from '@angular/common/http';
+import {} from '@angular/common/http';
 
 import { FormsModule } from '@angular/forms'
 
@@ -18,7 +18,11 @@ import { MessageService } from './services/message.service';
   standalone: true,
   imports: [
     CommonModule, 
-    HttpClientModule, 
+    
+// TODO: `HttpClientModule` should not be imported into a component directly.
+// Please refactor the code to add `provideHttpClient()` call to the provider list in the
+// application bootstrap logic and remove the `HttpClientModule` import from this component.
+HttpClientModule, 
     RouterOutlet, 
     RouterLink, 
     RouterLinkActive, 

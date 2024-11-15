@@ -7,9 +7,9 @@ import { ArtworkModel } from '../../models/artwork.model';
 import { AuthService } from '../../services/auth.service';
 import { CommonModule } from '@angular/common';
 import { PieceModel } from '../../models/piece.model';
-import { RouterLink } from '@angular/router';
-import { toASCII } from 'punycode';
+import { Router, RouterLink } from '@angular/router';
 import { FormsModule } from '@angular/forms';
+
 
 @Component({
   selector: 'app-cart',
@@ -25,7 +25,7 @@ export class CartComponent {
   cartId: string | null = null;
   checkedArtworks: {[id: number]: boolean} = {};
 
-  constructor(private authService: AuthService, private workService: WorkService, private cartService: CartService) { }
+  constructor(private authService: AuthService, private workService: WorkService, private cartService: CartService, private router: Router) { }
 
   ngOnInit(): void {
     this.loadData();
@@ -96,6 +96,9 @@ export class CartComponent {
 }
 
 
+goToCheckout(){
+  this.router.navigate(['/checkout']);
+}
 
 }
 

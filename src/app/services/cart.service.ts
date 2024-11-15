@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { AuthService } from './auth.service';
-import { of, tap } from 'rxjs';
+import { Observable, of, tap } from 'rxjs';
 import { catchError } from 'rxjs/operators';
 import { error } from 'console';
 
@@ -10,6 +10,7 @@ import { error } from 'console';
 })
 export class CartService {
   private URL_API = 'http://localhost:8080/cart';
+  public StripePublicKey = 'pk_test_51QL60A01qslkTUypDH7HjcBn7G0E22306bHTsSjDqsGNsK3LT04ipA6PeGp4IajYdwNcIqce2Fi8hgHf4oFCtfMA006sUUYNnq'; 
 
   constructor(private _http: HttpClient, private authService: AuthService) { }
 
@@ -49,4 +50,10 @@ export class CartService {
       })
     );
   }
+
+  createPaymentIntent(paymentData: { amount: number, currency: string }): Observable<{ client_secret: string }> {
+    return this._http.post<{ client_secret: string }>(`${this.URL_API}/create-payment-intent`, paymentData);
+  }
+
+  
 }

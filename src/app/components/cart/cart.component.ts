@@ -10,6 +10,7 @@ import { PieceModel } from '../../models/piece.model';
 import { Router, RouterLink } from '@angular/router';
 import { FormsModule } from '@angular/forms';
 import { loadStripe } from '@stripe/stripe-js';
+import { UserService } from '../../services/user.service';
 
 
 @Component({
@@ -26,42 +27,42 @@ export class CartComponent {
   cartId: string | null = null;
   checkedArtworks: { [id: number]: boolean } = {};
 
-  constructor(private authService: AuthService, private workService: WorkService, private cartService: CartService, private router: Router) { }
+  constructor(private authService: AuthService, private workService: WorkService, private cartService: CartService, private router: Router, private userService: UserService) { }
 
   ngOnInit(): void {
     this.loadData();
   }
 
   private loadData(): void {
-    this.authService.getUserSubject().subscribe((user) => {
-      this.user = user;
-      const token = this.authService.getToken();
+    this.userId = this.authService.getUserId()
+    if (this.userId) {
 
-      if (this.userId) {
-        this.authService.getCartId(this.userId).subscribe(
-          (response) => {
-            this.cartId = response.toString();
-          }
-        )
-      }
+      this.authService.getUserById(this.userId).subscribe(
+        (response) => {
+          this.user = response;
 
-      if (token) {
-        this.userId = this.authService.getUserId();
-        this.loadArtworks();
-      }
-    });
+        }
+      )
+      this.userService.getCartId(this.userId).subscribe(
+        (response) => {
+          this.cartId = response.toString();
+          this.loadArtworks();
+
+        }
+      )
+    }
   }
 
   loadArtworks(): void {
     if (this.userId) {
-      this.authService.getCarted(this.userId).subscribe(
+      this.userService.getCarted(this.userId).subscribe(
         (response) => {
           this.carted = response.map(artwork => ArtworkModel.fromJson(artwork));
           this.carted.forEach(artwork => {
             this.checkedArtworks[artwork.id] = true; // Set default checked state to true
           });
-          const totalAmount = this.getTotalAmount();
-          this.cartService.updateTotalAmount(totalAmount);
+          if (this.cartId) {
+          }
         })
     }
   }
@@ -88,8 +89,6 @@ export class CartComponent {
         totalAmount += artwork.price;
       }
     });
-    this.cartService.updateTotalAmount(totalAmount);
-
     return totalAmount;
   }
 
@@ -100,7 +99,10 @@ export class CartComponent {
 
 
   checkout() {
-    this.router.navigate(["/checkout"]);
+    if (this.cartId) {
+      this.cartService.updateTotalAmount(this.cartId, this.getTotalAmount()).subscribe()
+          this.router.navigate(["/checkout"]);
+    }
   }
 
 

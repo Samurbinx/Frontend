@@ -5,6 +5,7 @@ import { AuthService } from '../../../services/auth.service';
 import { Component, Input, OnInit } from '@angular/core';
 import { RouterLink } from '@angular/router';
 import { WorkService } from '../../../services/work.service';
+import { UserService } from '../../../services/user.service';
 
 @Component({
   selector: 'app-favorites',
@@ -18,7 +19,7 @@ export class FavoritesComponent implements OnInit {
   userId: string | null = null;
   favorites: ArtworkModel[] = [];
 
-  constructor(private authService: AuthService, private workService: WorkService) { }
+  constructor(private authService: AuthService, private workService: WorkService,private userService: UserService) { }
 
   ngOnInit(): void {
     this.loadData();
@@ -38,7 +39,7 @@ export class FavoritesComponent implements OnInit {
 
   private loadArtworks(): void {
     if (this.userId) {
-      this.authService.getFavsArt(this.userId).subscribe((response) => {
+      this.userService.getFavsArt(this.userId).subscribe((response) => {
         this.favorites = response.map(artwork => ArtworkModel.fromJson(artwork));
       });
     }

@@ -11,6 +11,7 @@ import { FooterComponent } from './components/commons/footer/footer.component';
 import { HomeComponent } from './components/home/home.component';
 import { NavbarComponent } from './components/commons/navbar/navbar.component';
 import { MessageService } from './services/message.service';
+import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 
 
 @Component({
@@ -20,6 +21,7 @@ import { MessageService } from './services/message.service';
     RouterOutlet, 
     NavbarComponent, 
     FooterComponent, 
+    NgbModule
   ],
   providers: [MessageService],
   templateUrl: './app.component.html',

@@ -23,20 +23,51 @@
 }
 
 #userdata{
-   border: 1px solid var(--neutral-500);
    padding: 20px;
    min-width: fit-content;
    width: 700px;
+   margin-bottom: 30px;
+}
+#userdata > h2 {
+   margin: 0px;
 }
 #userdataForm {
    display: flex;
    flex-direction: column;
 }
-
+#paymentForm{
+   margin-bottom: 20px;
+}
 .btn-primary {
    background-color: var(--primary-400);
    border-color: var(--primary-700);
 }
 .btn-primary:hover {
    background-color: var(--primary-700);
+}
+
+.modal-title {
+   margin: 0px;
+}
+
+/* Pago */
+#right {
+   margin-left: 60px;
+   height: fit-content;
+   width: 400px;
+   background-color: white;
+   padding: 30px;
+}
+
+.payment_inf>span {
+   display: flex;
+   flex-direction: row;
+   justify-content: space-between;
+}
+
+.payment_button {
+   width: 100%;
+   display: flex;
+   flex-direction: row;
+   justify-content: end;
 }

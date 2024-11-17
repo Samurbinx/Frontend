@@ -55,7 +55,7 @@
 
 			<!-- If is logged -->
 			<div *ngIf="logged; else notLogged" class="navbar-nav welcome userDrop">
-				<!-- <p>Hola! {{user?.name}}</p> -->
+				<p>Hola! {{user?.name}}</p>
 				<div>
 					<a href="/carrito" class="shopping_bag"><span class="material-symbols-outlined shopping_bag" matBadge="{{this.cart_length}}">local_mall</span></a>
 
@@ -69,7 +69,7 @@
 
 							<!-- Dropdown actions -->
 							<ul class="dropdown-menu dropdown-menu-end">
-								<li class="mine"><a class="dropdown-item" href="/userdata/">Mis datos</a></li>
+								<li class="mine"><a class="dropdown-item" href="/userdata/mydata">Mis datos</a></li>
 								<li class="mine"><a class="dropdown-item" href="/userdata/favoritos">Favoritos</a></li>
 								<li class="mine"><a class="dropdown-item" href="/userdata/pedidos">Pedidos</a></li>
 								<li class="mine"><a class="dropdown-item" href="/userdata/">Pago</a></li>

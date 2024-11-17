@@ -21,8 +21,7 @@ import { AuthService } from '../../services/auth.service';
 
 export class RegisterComponent implements OnInit {
 
-	successMessage = "";
-	errorMessage = "";
+	
 	constructor(private formBuilder: FormBuilder, private _authService: AuthService, private route: ActivatedRoute, private router: Router, private snackBar: MatSnackBar) { }
 
 	form: FormGroup = new FormGroup({
@@ -34,7 +33,10 @@ export class RegisterComponent implements OnInit {
 		nickname: new FormControl(''),
 		phone: new FormControl(''),
 	});
+	
 	submitted = false
+	successMessage = "";
+	errorMessage = "";
 
 	ngOnInit(): void {
 		this.form = this.formBuilder.group(
@@ -85,7 +87,8 @@ export class RegisterComponent implements OnInit {
 				this.form.value.name,
 				this.form.value.surname,
 				this.form.value.nickname,
-				this.form.value.phone
+				this.form.value.phone,
+				null
 			)
 
 

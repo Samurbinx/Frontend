@@ -12,6 +12,7 @@ import { UserDataComponent } from './components/user-data/user-data.component';
 import { FavoritesComponent } from './components/user-data/favorites/favorites.component';
 import { OrdersComponent } from './components/user-data/orders/orders.component';
 import { CartComponent } from './components/cart/cart.component';
+import { MydataComponent } from './components/user-data/mydata/mydata.component';
 
 // Configuración de rutas
 export const routes: Routes = [
@@ -27,6 +28,7 @@ export const routes: Routes = [
     {
         path: 'userdata', component: UserDataComponent, 
         children: [
+            { path: 'mydata', component: MydataComponent },
             { path: 'favoritos', component: FavoritesComponent },
             { path: 'pedidos', component: OrdersComponent },
         ]

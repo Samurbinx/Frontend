@@ -1,3 +1,4 @@
+import { UserService } from './../../../services/user.service';
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { MatIconModule } from '@angular/material/icon';
 import { CommonModule } from '@angular/common';
@@ -25,7 +26,8 @@ export class NavbarComponent implements OnInit {
   constructor(
     private authService: AuthService,
     private router: Router,
-    private storageService: StorageService
+    private storageService: StorageService,
+    private userService: UserService,
   ) { }
 
   ngOnInit(): void {
@@ -61,7 +63,7 @@ export class NavbarComponent implements OnInit {
   getCartLength(){
     this.user_id = this.storageService.getSessionItem('user_id');
     if (this.user_id) {
-      this.authService.getCartLength(this.user_id).subscribe(
+      this.userService.getCartLength(this.user_id).subscribe(
         (response) => {
           this.cart_length = response;
         }

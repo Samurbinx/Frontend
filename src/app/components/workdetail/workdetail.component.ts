@@ -10,11 +10,12 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 import { isPlatformBrowser } from '@angular/common';
 import { ArtworkModel } from '../../models/artwork.model';
 import { MatIcon } from '@angular/material/icon';
+import { UserService } from '../../services/user.service';
 
 @Component({
    selector: 'app-workdetail',
    standalone: true,
-   imports: [CommonModule, NgbModule, MatIcon],
+   imports: [CommonModule, NgbModule],
    templateUrl: './workdetail.component.html',
    styleUrl: './workdetail.component.css'
 })
@@ -36,6 +37,7 @@ export class WorkdetailComponent implements OnInit, AfterViewInit {
       private workService: WorkService,
       private authService: AuthService,
       private cartService: CartService,
+      private userService: UserService,
       private snackBar: MatSnackBar,
       private viewportScroller: ViewportScroller,
       @Inject(PLATFORM_ID) private platformId: object
@@ -95,7 +97,7 @@ export class WorkdetailComponent implements OnInit, AfterViewInit {
    }
 
    public getFavs() {
-      this.authService.getFavsId(this.user_id).subscribe(
+      this.userService.getFavsId(this.user_id).subscribe(
          (response: number[]) => {
             if (response) {
                this.favs = response;
@@ -140,7 +142,7 @@ export class WorkdetailComponent implements OnInit, AfterViewInit {
    }
 
    public getCartId() {
-      this.authService.getCartId(this.user_id).subscribe(
+      this.userService.getCartId(this.user_id).subscribe(
          (response: number) => {
             if (response) {
                this.cart_id = response.toString();
@@ -152,7 +154,7 @@ export class WorkdetailComponent implements OnInit, AfterViewInit {
       )
    }
    public getCarted() {
-      this.authService.getCarted(this.user_id).subscribe(
+      this.userService.getCarted(this.user_id).subscribe(
          (response: ArtworkModel[]) => {
             if (response) {
                response.forEach(artwork => {

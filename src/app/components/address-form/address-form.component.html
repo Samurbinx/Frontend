@@ -1,0 +1,38 @@
+<form [formGroup]="form" id="addressForm" (ngSubmit)="onSubmit()">
+
+  <div class="form-group">
+    <p>Dirección:</p>
+    <input matInput placeholder="Nombre y número de calle" formControlName="street"  class="form-control" [ngClass]="{ 'is-invalid': submitted && f['street'].errors }"/>
+    @if (submitted && f['street'].errors) { <div class="invalid-feedback">
+    @if (f['street'].errors['required']) { <div>Campo obligatorio</div> } </div>}
+  </div>
+
+  <div class="form-group">
+    <p>Detalles de dirección:</p>
+    <input matInput placeholder="Edificio, piso o apartamento" formControlName="details" class="form-control" [ngClass]="{ 'is-invalid': submitted && f['details'].errors }"/>
+    @if (submitted && f['details'].errors) { <div class="invalid-feedback">
+    @if (f['details'].errors['required']) { <div>Campo obligatorio</div> } </div>}
+  </div>
+
+  <div class="doble">
+    <div class="form-group">
+      <p>Ciudad:</p>
+      <input matInput formControlName="city"   class="form-control" [ngClass]="{ 'is-invalid': submitted && f['city'].errors }"/>
+      @if (submitted && f['city'].errors) { <div class="invalid-feedback">
+      @if (f['city'].errors['required']) { <div>Campo obligatorio</div> } </div>}
+    </div>
+    <div class="form-group">
+      <p>Código postal:</p>
+      <input matInput formControlName="zipcode"   class="form-control" [ngClass]="{ 'is-invalid': submitted && f['zipcode'].errors }"/>
+      @if (submitted && f['zipcode'].errors) { <div class="invalid-feedback">
+      @if (f['zipcode'].errors['required']) { <div>Campo obligatorio</div> } </div>}
+    </div>
+  </div>
+  <div class="form-group">
+    <p>Provincia:</p>
+    <input matInput formControlName="province"  class="form-control"  [ngClass]="{ 'is-invalid': submitted && f['province'].errors }"/>
+    @if (submitted && f['province'].errors) { <div class="invalid-feedback">
+    @if (f['province'].errors['required']) { <div>Campo obligatorio</div> } </div>}
+  </div>
+  <button type="submit" class="btn btn-primary">Guardar Cambios</button>
+</form>

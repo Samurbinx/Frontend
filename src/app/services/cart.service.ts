@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { AuthService } from './auth.service';
-import { BehaviorSubject, Observable, of, tap } from 'rxjs';
+import { BehaviorSubject, Observable, of, tap, throwError } from 'rxjs';
 import { catchError } from 'rxjs/operators';
 import { error } from 'console';
 
@@ -12,15 +12,29 @@ export class CartService {
   private URL_API = 'http://localhost:8080/cart';
   public StripePublicKey = 'pk_test_51QL60A01qslkTUypDH7HjcBn7G0E22306bHTsSjDqsGNsK3LT04ipA6PeGp4IajYdwNcIqce2Fi8hgHf4oFCtfMA006sUUYNnq'; 
 
-  private totalAmountSubject = new BehaviorSubject<number>(0); // Almacena el total
-  totalAmount$ = this.totalAmountSubject.asObservable();
-  
-
   constructor(private _http: HttpClient, private authService: AuthService) { }
 
-  updateTotalAmount(total: number): void {
-    this.totalAmountSubject.next(total * 100); // Actualiza el total
+  getTotalAmount(cartId: string): Observable<number> {
+    return this._http.get<number>(`${this.URL_API}/${cartId}/total`);
   }
+  updateTotalAmount(cartId: string, total: number): Observable<any> {
+    // Validar parámetros antes de enviar la solicitud
+    if (!cartId || typeof total !== 'number' || total < 0) {
+      console.error('Datos inválidos antes de enviar la solicitud');
+      return throwError(() => new Error('Datos inválidos para actualizar el monto total.'));
+    }
+
+    return this._http.post(`${this.URL_API}/update-amount`, {
+      cart_id: cartId,
+      total_amount: total,
+    }).pipe(
+      catchError((error) => {
+        console.error('Error al actualizar el monto total:', error);
+        return throwError(error); // Mantener el flujo original del error
+      })
+    );
+  }
+  
 
   addToCart(cartId: string, artworkId: string) {
     return this._http.post(`${this.URL_API}/addArtwork`, {

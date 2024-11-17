@@ -46,7 +46,8 @@ export class AuthService {
             response.user.name,
             response.user.surname,
             response.user.nick,
-            response.user.phone
+            response.user.phone,
+            response.user.address
           )
           this.user = user;
           this.userSubject.next(user);
@@ -79,7 +80,8 @@ export class AuthService {
             response.user.name,
             response.user.surname,
             response.user.nick,
-            response.user.phone
+            response.user.phone,
+            response.user.address,
           )
           this.user = user;
           this.userSubject.next(user);
@@ -94,28 +96,14 @@ export class AuthService {
       catchError(this.handleError)
     );
   }
-  
-  // -- GETTERS -- //
-  getFavsId(user_id: string): Observable<number[]> {
-    return this.http.get<number[]>(`${this.URL_API}/${user_id}/favsid`);
-  }
-  getFavsArt(user_id: string): Observable<ArtworkModel[]> {
-    return this.http.get<ArtworkModel[]>(`${this.URL_API}/${user_id}/favsart`);
-  }
-  getCarted(user_id: string): Observable<ArtworkModel[]> {
-    return this.http.get<ArtworkModel[]>(`${this.URL_API}/${user_id}/carted`);
-  }
-  getCartId(user_id: string): Observable<number> {
-    return this.http.get<number>(`${this.URL_API}/${user_id}/cartId`);
-  }
-  getCartLength(user_id: string):Observable<number> {
-    return this.http.get<number>(`${this.URL_API}/${user_id}/cartlength`);
-  }
   getUser(){
     return this.user;
   }
-  getUserById(id: any){
+  getUserById(id: any): Observable<UserModel>{
     return this.http.get<UserModel>(`${this.URL_API}/${id}`);
+  }
+  getUserSafeById(id: any): Observable<UserModel>{
+    return this.http.get<UserModel>(`${this.URL_API}/${id}`, { responseType: 'json' });
   }
   getUserId(){
     return this.storageService.getSessionItem('user_id');

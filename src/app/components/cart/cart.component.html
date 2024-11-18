@@ -9,7 +9,7 @@
             <h1>Cesta</h1>
          </ng-template>
 
-         <div class="product" *ngFor="let artwork of carted">
+         <div class="product" *ngFor="let artwork of carted" [ngClass]="{'sold': artwork.sold}">
             <a *ngFor="let piece of artwork.pieces" class="piece" [routerLink]="['/proyecto']"
                [queryParams]="{ id: artwork.work_id }" [fragment]="artwork.id.toString()">
                <div class="images" *ngFor="let image of piece.images">
@@ -44,9 +44,9 @@
                <div class="inf_bottom">
                   <span>
                      <input type="checkbox" name="" class="artwork_checkbox" id="checkbox_{{artwork.id}}"
-                        [(ngModel)]="checkedArtworks[artwork.id]" (change)="toggleSelected(artwork.id)">
+                        [(ngModel)]="checkedArtworks[artwork.id]" (change)="toggleSelected(artwork.id)" [disabled]="artwork.sold">
                      <p class="l">|</p>
-                     <p type="button" class="del" data-bs-toggle="modal" [attr.data-bs-target]="'#modal' + artwork.id">
+                     <p type="button" class="del" data-bs-toggle="modal" [attr.data-bs-target]="'#modal' + artwork.id"  >
                         Eliminar</p>
                   </span>
                   <p id="price_{{artwork.id}}">{{artwork.price}}€</p>

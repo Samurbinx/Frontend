@@ -33,7 +33,9 @@
    display: flex;
    flex-direction: row;
 }
-
+.sold {
+   opacity: 0.5;
+}
 .inf {
    display: flex;
    flex-direction: column;
@@ -177,3 +179,4 @@ h2.modal-title {
 .btn-secondary:hover {
    background-color: var(--error-500);
 }
+

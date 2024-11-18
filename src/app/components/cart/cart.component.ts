@@ -29,7 +29,7 @@ export class CartComponent {
   cartId: string | null = null;
   checkedArtworks: { [id: number]: boolean } = {};
 
-  constructor(private authService: AuthService, private workService: WorkService, private snackBar: MatSnackBar, private cartService: CartService, private router: Router, private userService: UserService) { }
+  constructor(private authService: AuthService,  private snackBar: MatSnackBar, private cartService: CartService, private router: Router, private userService: UserService) { }
 
   ngOnInit(): void {
     this.loadData();
@@ -65,8 +65,6 @@ export class CartComponent {
               this.checkedArtworks[artwork.id] = isSelected; // Set default checked state to true
             });
           });
-          if (this.cartId) {
-          }
         })
     }
   }
@@ -82,7 +80,6 @@ export class CartComponent {
 
   getBackgroundImageUrl(image: string, piece: PieceModel): string {
     return `url('http://127.0.0.1:8080/piece/${piece.id}/${image}')`;
-
   }
 
   toggleSelected(artworkId: number) {
@@ -134,15 +131,25 @@ export class CartComponent {
 
   checkout() {
     const count = Object.values(this.checkedArtworks).filter(isChecked => isChecked).length;
+    let proceed = true;
     if (count <= 0) {
       this.snackBar.open("Por favor, seleccione un producto para continuar", "", { duration: 3000 });
-    } else {
-      if (this.cartId) {
-        this.cartService.updateTotalAmount(this.cartId, this.getTotalAmount()).subscribe()
-        this.router.navigate(["/checkout"]);
-      }
+      proceed = false
+    }
+    else {
+      this.carted.forEach(artwork => {
+        if (artwork.sold) {
+          console.log(artwork.sold );
+          this.snackBar.open(`Lo sentimos, la obra ${artwork.title} ha sido vendida`, "", { duration: 3000 });
+          proceed = false
+        }
+      });
     }
 
+    if (this.cartId && proceed) {
+      this.cartService.updateTotalAmount(this.cartId, this.getTotalAmount()).subscribe()
+      this.router.navigate(["/checkout"]);
+    }
   }
 
 

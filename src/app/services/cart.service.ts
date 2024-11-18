@@ -98,9 +98,9 @@ export class CartService {
   createPaymentIntent(paymentData: { amount: number, currency: string }): Observable<{ client_secret: string }> {
     return this._http.post<{ client_secret: string }>(`${this.URL_API}/create-payment-intent`, paymentData);
   }
-//   cancelPaymentIntent(paymentData: { client_secret: string }): Observable<{ client_secret: string }> {
-//     return this._http.post<{ client_secret: string }>(`${this.URL_API}/cancel-payment-intent`, paymentData);
-// }
+  cancelPaymentIntent(paymentData: { client_secret: string }): Observable<{ client_secret: string }> {
+    return this._http.post<{ client_secret: string }>(`${this.URL_API}/cancel-payment-intent`, paymentData);
+}
 
 
   

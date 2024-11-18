@@ -11,22 +11,55 @@
 			</div>
 			<div class="order_inf">
 				<h2>Obras</h2>
-   <div *ngFor="let artwork of artworks">
-		<h1>{{artwork.title}} </h1>
-	</div>
+				<div *ngFor="let artwork of artworks" class="product">
+					<a *ngFor="let piece of artwork.pieces" class="piece">
+						<div class="images" *ngFor="let image of piece.images">
+							<div class="img" [ngStyle]="{'background-image': getBackgroundImageUrl(image, piece)}"></div>
+						</div>
+					</a>
+					<div class="cover"></div>
+
+					<div class="inf">
+						<div class="inf_top">
+							<div class="a">
+							<span>
+							<h2>{{artwork.title}} </h2>
+							<h2 id="price_{{artwork.id}}">{{artwork.price}}€</h2>
+						</span>
+								<h4>{{artwork.work_title}} - {{artwork.creation_date}}</h4>
+							</div>
+							<div class="pieces">
+								<p><b>Contiene:</b></p>
+								<ul>
+									<li *ngFor="let piece of artwork.pieces">
+										<ng-container *ngIf="piece.title; else noTitle">{{ piece.title }} - </ng-container>
+										<ng-template #noTitle>Sin título - </ng-template>
+										<ng-container *ngIf="piece.materials; else noMat">{{ piece.materials}} - </ng-container>
+										<ng-template #noMat>Materiales no registrados - </ng-template>
+										<ng-container *ngIf="piece.dimensions; else noDim">{{ piece.dimensions }}
+											cm</ng-container>
+										<ng-template #noDim>Dimensiones no especificadas</ng-template>
+									</li>
+								</ul>
+							</div>
+						</div>
+
+					</div>
+				</div>
 			</div>
-			
 		</div>
 
 		<div id="right">
-			<div class="payment_inf">
-				<span>
+			<div id="payment_inf">
+				<div>
 					<h2>Total</h2>
 					<h2>{{ total_amount }} €</h2>
-				</span>
+				</div>
+				<h4>{{artworks.length}} productos seleccionados</h4>
+				<h4>Envío gratuito</h4>
 			</div>
 
-			
+
 			<div id="paymentForm">
 				<h2>Método de pago</h2>
 				@if (elementsOptions.clientSecret) {

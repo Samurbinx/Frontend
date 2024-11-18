@@ -18,17 +18,33 @@
 }
 #left {
    margin-right: 70px;
+   min-width: fit-content;
+   width: 700px;
+   max-width: none;
 }
-#left > div, #right > div {
+#left > div{
    background-color: white;
    padding: 35px;
    margin-bottom: 30px ;
+}
+.product .inf{
+   width: 100%;
+   flex: 1;
+}
+.a > span {
+   display: flex;
+   flex-direction: row;
+justify-content: space-between;
+   width: 100%
+}
+.a > span > h2 {
+   margin: 0px;
 }
 
 #userdata{
    padding: 20px;
    min-width: fit-content;
-   width: 700px;
+   height: 165px;
 }
 #userdata > h2 {
    margin: 0px;
@@ -53,14 +69,22 @@
 }
 
 /* Pago */
+#right > div{
+   background-color: white;
+   padding: 35px;
+   margin-bottom: 30px ;
+   min-height: 165px;
+}
+
 #right {
    width: 500px;
+   display: flex;
+   flex-direction: column;
 }
-.payment_inf > {
-   margin-bottom: 30px ;
-
+#right h4 {
+   margin: 0px;
 }
-.payment_inf>span {
+#payment_inf>div {
    display: flex;
    flex-direction: row;
    justify-content: space-between;
@@ -71,4 +95,39 @@
    display: flex;
    flex-direction: row;
    justify-content: end;
+   margin-top: 20px;
+}
+
+/* PRODUCTS VIEW */
+.product {
+   padding-bottom: 20px;
+   margin-bottom: 20px;
+   border-bottom: 1px solid var(--neutral-400);
+   display: flex;
+   flex-direction: row;
+}
+.a > h2, .pieces > p {
+   margin: 0px;
+}
+.piece {
+   position: absolute;
+}
+
+.pieces>ul {
+   list-style: none;
+   padding-left: 10px;
+}
+
+.cover {
+   height: 150px;
+   width: 150px;
+   margin-right: 30px;
+}
+
+.img {
+   height: 150px;
+   width: 150px;
+   background-position: center;
+   background-size: cover;
+   position: relative;
 }

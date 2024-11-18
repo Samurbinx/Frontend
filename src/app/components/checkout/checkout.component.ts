@@ -16,7 +16,15 @@ import {
   StripeElementsOptions, StripePaymentElementOptions
 } from '@stripe/stripe-js';
 import { ArtworkModel } from '../../models/artwork.model';
+import { PieceModel } from '../../models/piece.model';
+import { OrderService } from '../../services/order.service';
 
+interface OrderResponse {
+  success: boolean;  // Indica si la creación de la orden fue exitosa
+  error: boolean;    // Indica si hubo un error en la creación de la orden
+  message: string;   // Mensaje de éxito o error
+  details?: any;     // Detalles adicionales del error (opcional)
+}
 
 @Component({
   selector: 'ngstr-checkout-form',
@@ -35,7 +43,7 @@ import { ArtworkModel } from '../../models/artwork.model';
 })
 
 export class CheckoutComponent implements OnInit {
-  constructor(private fb: UntypedFormBuilder, private router: Router, private cartService: CartService, private authService: AuthService, private userService: UserService) { }
+  constructor(private fb: UntypedFormBuilder, private router: Router, private orderService: OrderService, private cartService: CartService, private authService: AuthService, private userService: UserService) { }
 
   // VARIABLES DE USO COMÚN DE USUARIO
   user: UserModel | null = null;
@@ -90,7 +98,7 @@ export class CheckoutComponent implements OnInit {
   }
   loadCartData() {
     if (this.user_id) {
-      
+
       this.userService.getCartId(this.user_id).subscribe(
         (response) => {
           this.cart_id = response;
@@ -111,6 +119,11 @@ export class CheckoutComponent implements OnInit {
         }
       )
     }
+  }
+
+  getBackgroundImageUrl(image: string, piece: PieceModel): string {
+    return `url('http://127.0.0.1:8080/piece/${piece.id}/${image}')`;
+
   }
 
   createPaymentIntent(amount: number) {
@@ -151,8 +164,33 @@ export class CheckoutComponent implements OnInit {
         if (result.error) {
           alert({ success: false, error: result.error.message });
         } else if (result.paymentIntent.status === 'succeeded') {
-          this.router.navigate(['/login']);
+          this.createOrder();
+          this.router.navigate(['/userdata/pedidos']);
         }
       });
+  }
+
+  createOrder(): boolean {
+    if (this.user_id && this.cart_id && this.artworks && this.total_amount) {
+      let artworks_id = this.artworks.map(artwork => artwork.id);
+      this.orderService.newOrder(this.user_id, artworks_id, this.total_amount, this.cart_id).subscribe(
+        (response: OrderResponse) => {
+          if (response.success) {
+            console.log("todo ok");
+            return true;
+          } else if (response.error) {
+            console.log("no sa creao el order a ver k carajo acemo");
+            return false;
+          }
+          return false;
+
+        }, (error) => {
+          console.log("nosa creao el order a ver k carajo acemo");
+          return false;
+
+        }
+      )
+    }
+    return false;
   }
 }

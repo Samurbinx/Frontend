@@ -12,6 +12,7 @@ import { FormsModule } from '@angular/forms';
 import { loadStripe } from '@stripe/stripe-js';
 import { UserService } from '../../services/user.service';
 import { map, Observable, of } from 'rxjs';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 
 @Component({
@@ -28,7 +29,7 @@ export class CartComponent {
   cartId: string | null = null;
   checkedArtworks: { [id: number]: boolean } = {};
 
-  constructor(private authService: AuthService, private workService: WorkService, private cartService: CartService, private router: Router, private userService: UserService) { }
+  constructor(private authService: AuthService, private workService: WorkService, private snackBar: MatSnackBar, private cartService: CartService, private router: Router, private userService: UserService) { }
 
   ngOnInit(): void {
     this.loadData();
@@ -132,10 +133,16 @@ export class CartComponent {
 
 
   checkout() {
-    if (this.cartId) {
-      this.cartService.updateTotalAmount(this.cartId, this.getTotalAmount()).subscribe()
-      this.router.navigate(["/checkout"]);
+    const count = Object.values(this.checkedArtworks).filter(isChecked => isChecked).length;
+    if (count <= 0) {
+      this.snackBar.open("Por favor, seleccione un producto para continuar", "", { duration: 3000 });
+    } else {
+      if (this.cartId) {
+        this.cartService.updateTotalAmount(this.cartId, this.getTotalAmount()).subscribe()
+        this.router.navigate(["/checkout"]);
+      }
     }
+
   }
 
 

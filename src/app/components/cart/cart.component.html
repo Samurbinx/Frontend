@@ -44,7 +44,7 @@
                <div class="inf_bottom">
                   <span>
                      <input type="checkbox" name="" class="artwork_checkbox" id="checkbox_{{artwork.id}}"
-                        [(ngModel)]="checkedArtworks[artwork.id]" (change)="getTotalAmount()">
+                        [(ngModel)]="checkedArtworks[artwork.id]" (change)="toggleSelected(artwork.id)">
                      <p class="l">|</p>
                      <p type="button" class="del" data-bs-toggle="modal" [attr.data-bs-target]="'#modal' + artwork.id">
                         Eliminar</p>

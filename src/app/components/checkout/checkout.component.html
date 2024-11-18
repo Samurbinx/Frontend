@@ -9,7 +9,24 @@
 				<a href="" data-bs-toggle="modal" data-bs-target="#exampleModal">{{ user?.address ? 'Editar dirección' :
 					'Añadir dirección' }}</a>
 			</div>
+			<div class="order_inf">
+				<h2>Obras</h2>
+   <div *ngFor="let artwork of artworks">
+		<h1>{{artwork.title}} </h1>
+	</div>
+			</div>
+			
+		</div>
 
+		<div id="right">
+			<div class="payment_inf">
+				<span>
+					<h2>Total</h2>
+					<h2>{{ total_amount }} €</h2>
+				</span>
+			</div>
+
+			
 			<div id="paymentForm">
 				<h2>Método de pago</h2>
 				@if (elementsOptions.clientSecret) {
@@ -17,21 +34,9 @@
 					<ngx-stripe-payment [options]="paymentElementOptions" />
 				</ngx-stripe-elements>
 				}
-			</div>
-		</div>
-
-		<div id="right">
-			<div class="payment_inf">
-				<span>
-					<h1>Total</h1>
-					<h1>{{ total_amount }}€</h1>
-				</span>
-				<!-- <h3>{{selectedProducts}}</h3> -->
-			</div>
-			<div>
-			</div>
-			<div class="payment_button">
-				<button class="btn" (click)="pay()">PAY</button>
+				<div class="payment_button">
+					<button class="btn-primary btn" (click)="pay()">Pagar</button>
+				</div>
 			</div>
 		</div>
 

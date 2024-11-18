@@ -19,12 +19,13 @@ export class UserService {
   getFavsArt(user_id: string): Observable<ArtworkModel[]> {
     return this.http.get<ArtworkModel[]>(`${this.URL_API}/user/${user_id}/favsart`);
   }
-  getCarted(user_id: string): Observable<ArtworkModel[]> {
-    return this.http.get<ArtworkModel[]>(`${this.URL_API}/user/${user_id}/carted`);
-  }
   getCartId(user_id: string): Observable<number> {
     return this.http.get<number>(`${this.URL_API}/user/${user_id}/cartId`);
   }
+  getCarted(user_id: string): Observable<ArtworkModel[]> {
+    return this.http.get<ArtworkModel[]>(`${this.URL_API}/user/${user_id}/carted`);
+  }
+
   getCartLength(user_id: string):Observable<number> {
     return this.http.get<number>(`${this.URL_API}/user/${user_id}/cartlength`);
   }

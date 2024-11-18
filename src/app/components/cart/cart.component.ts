@@ -11,6 +11,7 @@ import { Router, RouterLink } from '@angular/router';
 import { FormsModule } from '@angular/forms';
 import { loadStripe } from '@stripe/stripe-js';
 import { UserService } from '../../services/user.service';
+import { map, Observable, of } from 'rxjs';
 
 
 @Component({
@@ -59,7 +60,9 @@ export class CartComponent {
         (response) => {
           this.carted = response.map(artwork => ArtworkModel.fromJson(artwork));
           this.carted.forEach(artwork => {
-            this.checkedArtworks[artwork.id] = true; // Set default checked state to true
+            this.isSelected(artwork.id, (isSelected: boolean) => {
+              this.checkedArtworks[artwork.id] = isSelected; // Set default checked state to true
+            });
           });
           if (this.cartId) {
           }
@@ -81,6 +84,36 @@ export class CartComponent {
 
   }
 
+  toggleSelected(artworkId: number) {
+    if (this.cartId) {
+      this.cartService.toggleSelected(this.cartId, artworkId).subscribe(
+        (response) => {
+          this.loadArtworks();
+        })
+    }
+  }
+
+
+  isSelected(artworkId: number, callback: (isSelected: boolean) => void): void {
+    if (this.cartId) {
+      this.cartService.isSelected(this.cartId, artworkId).subscribe(
+        (response: any) => {
+          if (response.isSelected !== undefined) {
+            callback(response.isSelected);  // Call the callback with the result
+          } else if (response.error) {
+            console.log('Error:', response.error);
+          }
+        },
+        (error) => {
+          console.error('Request failed', error);
+        }
+      );
+    }
+  }
+
+
+
+
   getTotalAmount() {
     let totalAmount = 0;
 
@@ -101,7 +134,7 @@ export class CartComponent {
   checkout() {
     if (this.cartId) {
       this.cartService.updateTotalAmount(this.cartId, this.getTotalAmount()).subscribe()
-          this.router.navigate(["/checkout"]);
+      this.router.navigate(["/checkout"]);
     }
   }
 

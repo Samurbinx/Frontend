@@ -4,6 +4,7 @@ import { AuthService } from './auth.service';
 import { BehaviorSubject, Observable, of, tap, throwError } from 'rxjs';
 import { catchError } from 'rxjs/operators';
 import { error } from 'console';
+import { ArtworkModel } from '../models/artwork.model';
 
 @Injectable({
   providedIn: 'root'
@@ -73,6 +74,27 @@ export class CartService {
     );
   }
 
+  toggleSelected(cartId: string, artworkId: number){
+    return this._http.post(`${this.URL_API}/toggleSelected`, {
+      cart_id: cartId,
+      artwork_id: artworkId
+    }).pipe(
+      tap(response => {
+        console.log('Respuesta del servidor:', response);
+      }),
+      catchError(error => {
+        console.error('Error al cambiar el select del carrito:', error);
+        // Optionally, you can return a fallback value or rethrow the error
+        return of({ error: true, message: 'Error al cambiar el select del carrito' });
+      })
+    );
+  }
+  isSelected(cartId: string, artworkId: number){
+    return this._http.get(`${this.URL_API}/isSelected/${cartId}/${artworkId}`);
+  }
+  getCartedSelected(cart_id: number): Observable<ArtworkModel[]> {
+    return this._http.get<ArtworkModel[]>(`${this.URL_API}/${cart_id}/cartedselected`);
+  }
   createPaymentIntent(paymentData: { amount: number, currency: string }): Observable<{ client_secret: string }> {
     return this._http.post<{ client_secret: string }>(`${this.URL_API}/create-payment-intent`, paymentData);
   }

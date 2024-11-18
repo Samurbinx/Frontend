@@ -15,6 +15,7 @@ import {
 import {
   StripeElementsOptions, StripePaymentElementOptions
 } from '@stripe/stripe-js';
+import { ArtworkModel } from '../../models/artwork.model';
 
 
 @Component({
@@ -43,6 +44,7 @@ export class CheckoutComponent implements OnInit {
   logged = false;
   cart_id: number | null = null
   total_amount: number | null = null
+  artworks: ArtworkModel[] = [];
 
 
   //  STRIPE
@@ -88,10 +90,17 @@ export class CheckoutComponent implements OnInit {
   }
   loadCartData() {
     if (this.user_id) {
+      
       this.userService.getCartId(this.user_id).subscribe(
         (response) => {
           this.cart_id = response;
           if (this.cart_id) {
+            this.cartService.getCartedSelected(this.cart_id).subscribe(
+              (response) => {
+                this.artworks = response.map(artwork => ArtworkModel.fromJson(artwork));
+                console.log(this.artworks);
+              }
+            )
             this.cartService.getTotalAmount(this.cart_id.toString()).subscribe(
               (response) => {
                 this.total_amount = response;

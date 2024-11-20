@@ -3,7 +3,7 @@
    flex: 1;
    min-width: 100vw !important;
 
-   background-color: var(--neutral-300);
+   background-color: var(--neutral-100);
    height: 100% !important;
 }
 
@@ -27,15 +27,66 @@
 }
 
 .product {
-   padding-bottom: 20px;
+   padding: 20px;
    margin-bottom: 20px;
    border-bottom: 1px solid var(--neutral-400);
    display: flex;
    flex-direction: row;
+   position: relative;
 }
-.sold {
-   opacity: 0.5;
+
+.product_cover {
+   position: absolute;
+   top: 0;
+   left: 0;
+   width: 100%;
+   height: 100%;
+   z-index: 10;
+   background-color: rgba(51, 51, 51, 0.6);
+   display: flex;
+   align-items: center;
+   justify-content: center;
+   color: white;
+   font-size: 1.5rem;
+   cursor: pointer;
 }
+
+.product_cover:hover p.sold {
+   opacity: 1;
+   transition: opacity 0.5s ease;
+}
+
+h1.sold {
+   background-color: var(--error-400);
+   border: 2px solid white;
+   color: white;
+   font-size: 30px;
+   font-weight: 500;
+
+   padding: 10px 20px;
+   border-radius: 10px;
+
+   transform: rotate(10deg);
+   /* Aplica la rotación */
+   box-shadow: 5px 5px 15px rgba(0, 0, 0, 0.5);
+   position: absolute;
+   /* Para posicionarlo en una esquina */
+   top: 50px;
+   right: 40px;
+   z-index: 20;
+   text-align: center;
+}
+
+p.sold {
+   color: white;
+   margin: 0px;
+   border-radius: 10px;
+   text-align: center;
+   font-size: 100px;
+   opacity: 0;
+   transition: opacity 0.5s ease;
+}
+
 .inf {
    display: flex;
    flex-direction: column;
@@ -57,21 +108,26 @@ h5,
 p {
    margin: 0px !important;
 }
+
 div.a {
    display: flex;
    flex-direction: column;
 }
-div.a a{
+
+div.a a {
    color: black;
    text-decoration: none;
 }
-div.a > .h2 {
+
+div.a>.h2 {
    font-size: 20px;
 }
-div.a > .h4 {
+
+div.a>.h4 {
    font-size: 15px;
    font-weight: 300;
 }
+
 .inf_bottom {
    display: flex;
    flex-direction: row;
@@ -132,9 +188,11 @@ button {
    margin-top: 10px;
    background-color: var(--primary-200);
 }
+
 button:hover {
    background-color: var(--primary-500);
 }
+
 .del {
    cursor: pointer;
 }
@@ -151,9 +209,11 @@ h2.modal-title {
    align-items: center;
    padding: 25px;
 }
-.modal-footer > p {
+
+.modal-footer>p {
    font-size: 20px;
 }
+
 .modal-buttons {
    display: flex;
    flex-direction: row;
@@ -161,22 +221,26 @@ h2.modal-title {
    margin: 10px 0 0;
    width: 60%;
 }
-.modal-buttons > .btn {
+
+.modal-buttons>.btn {
    font-size: 15px;
    padding: 5px 10px;
 }
+
 .btn-primary {
    background-color: var(--primary-400);
    border-color: var(--primary-700);
 }
+
 .btn-primary:hover {
    background-color: var(--primary-700);
 }
+
 .btn-secondary {
    background-color: var(--error-300);
    border-color: var(--error-900);
 }
+
 .btn-secondary:hover {
    background-color: var(--error-500);
 }
-

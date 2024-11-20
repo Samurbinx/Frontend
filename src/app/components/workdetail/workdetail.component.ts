@@ -23,7 +23,7 @@ import { UserService } from '../../services/user.service';
 export class WorkdetailComponent implements OnInit, AfterViewInit {
    work: WorkModel;
    user_id: string = "";
-   cart_id: string = "";
+  cart_id: number | null = null;
    favs: number[] = [];
    carted: ArtworkModel[] = [];
 
@@ -145,7 +145,7 @@ export class WorkdetailComponent implements OnInit, AfterViewInit {
       this.userService.getCartId(this.user_id).subscribe(
          (response: number) => {
             if (response) {
-               this.cart_id = response.toString();
+               this.cart_id = response;
             }
          },
          (error) => {
@@ -182,8 +182,8 @@ export class WorkdetailComponent implements OnInit, AfterViewInit {
    }
 
    public addToCart(artwork_id: number) {
-      if (!this.isCarted(artwork_id)) {
-         this.cartService.addToCart(this.cart_id, artwork_id.toString()).subscribe(
+      if (!this.isCarted(artwork_id) && this.cart_id) {
+         this.cartService.addToCart(this.cart_id, artwork_id).subscribe(
             (response: any) => {
                if (response) {
                   let icon = document.getElementById(`cart-icon${artwork_id}`) ;

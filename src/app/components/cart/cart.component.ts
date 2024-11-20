@@ -8,10 +8,8 @@ import { AuthService } from '../../services/auth.service';
 import { CommonModule } from '@angular/common';
 import { PieceModel } from '../../models/piece.model';
 import { Router, RouterLink } from '@angular/router';
-import { FormsModule } from '@angular/forms';
-import { loadStripe } from '@stripe/stripe-js';
+import { FormsModule, ValueChangeEvent } from '@angular/forms';
 import { UserService } from '../../services/user.service';
-import { map, Observable, of } from 'rxjs';
 import { MatSnackBar } from '@angular/material/snack-bar';
 
 
@@ -26,13 +24,23 @@ export class CartComponent {
   user: UserModel | null = null;
   userId: string | null = null;
   carted: ArtworkModel[] = [];
-  cartId: string | null = null;
+  cartId: number | null = null;
   checkedArtworks: { [id: number]: boolean } = {};
+  selectedProduct = "";
+  modal: any;
 
-  constructor(private authService: AuthService,  private snackBar: MatSnackBar, private cartService: CartService, private router: Router, private userService: UserService) { }
+  constructor(private authService: AuthService, private snackBar: MatSnackBar, private cartService: CartService, private router: Router, private userService: UserService) { }
 
   ngOnInit(): void {
     this.loadData();
+    this.modal = document.getElementById('soldModal');
+
+    if (this.modal) {
+      // Escucha el evento 'hidden.bs.modal' cuando el modal se cierra
+      this.modal.addEventListener('hidden.bs.modal', () => {
+        this.reload(); // Recargar la página
+      });
+    }
   }
 
   private loadData(): void {
@@ -47,7 +55,7 @@ export class CartComponent {
       )
       this.userService.getCartId(this.userId).subscribe(
         (response) => {
-          this.cartId = response.toString();
+          this.cartId = response;
           this.loadArtworks();
 
         }
@@ -62,7 +70,9 @@ export class CartComponent {
           this.carted = response.map(artwork => ArtworkModel.fromJson(artwork));
           this.carted.forEach(artwork => {
             this.isSelected(artwork.id, (isSelected: boolean) => {
-              this.checkedArtworks[artwork.id] = isSelected; // Set default checked state to true
+              if (!artwork.sold) {
+                this.checkedArtworks[artwork.id] = isSelected; // Set default checked state to true                
+              }
             });
           });
         })
@@ -74,6 +84,7 @@ export class CartComponent {
       this.cartService.delFromCart(this.cartId, artworkId).subscribe(
         (response) => {
           this.loadArtworks();
+          this.snackBar.open(`Obra eliminada del carrito`,"", { duration: 3000 });
         })
     }
   }
@@ -116,43 +127,80 @@ export class CartComponent {
     let totalAmount = 0;
 
     this.carted.forEach(artwork => {
-      if (this.checkedArtworks[artwork.id] && artwork.price) { // Check if this artwork is selected
+      if (this.checkedArtworks[artwork.id] && artwork.price && !artwork.sold) { // Check if this artwork is selected
         totalAmount += artwork.price;
       }
     });
     return totalAmount;
   }
 
-  get selectedProducts(): string {
-    const count = Object.values(this.checkedArtworks).filter(isChecked => isChecked).length;
+  getselectedProductsString(): string {
+    let count = this.count()
     return `${count} ${count === 1 ? 'producto seleccionado' : 'productos seleccionados'}`;
   }
 
+  count(): number {
+    let count = 0;
 
-  checkout() {
-    const count = Object.values(this.checkedArtworks).filter(isChecked => isChecked).length;
-    let proceed = true;
-    if (count <= 0) {
-      this.snackBar.open("Por favor, seleccione un producto para continuar", "", { duration: 3000 });
-      proceed = false
-    }
-    else {
-      this.carted.forEach(artwork => {
-        if (artwork.sold) {
-          console.log(artwork.sold );
-          this.snackBar.open(`Lo sentimos, la obra ${artwork.title} ha sido vendida`, "", { duration: 3000 });
-          proceed = false
-        }
-      });
-    }
-
-    if (this.cartId && proceed) {
-      this.cartService.updateTotalAmount(this.cartId, this.getTotalAmount()).subscribe()
-      this.router.navigate(["/checkout"]);
-    }
+    this.carted.forEach(artwork => {
+      if (!artwork.sold && this.checkedArtworks[artwork.id]) {
+        count += 1;
+      }
+    });
+    return count;
   }
 
 
+
+
+  checkout() {
+    let proceed = true;
+    // 1. Comprobar que ninguna de las obras se haya vendido
+    if (this.cartId) {
+
+      this.cartService.getCartArtworks(this.cartId).subscribe(
+        (response) => {
+          let artworks = response.map(artwork => ArtworkModel.fromJson(artwork));
+          console.log(artworks);
+          artworks.forEach(artwork => {
+            // Si alguna obra del carrito ha sido vendida pero el checkbox del html está seleccionado, avisar y recargar la página
+            if (artwork.sold && this.checkedArtworks[artwork.id]) {
+              proceed = false;
+              this.openSoldModal();
+            }
+          });
+          if (proceed && this.cartId) {
+            // 2. Comprobar que haya alguna obra seleccionada
+            this.cartService.getCartedSelected(this.cartId).subscribe(
+              (response) => {
+                let artworks = response.map(artwork => ArtworkModel.fromJson(artwork));
+                // si no hay ninugna obra seleccionada, no procede
+                if (artworks.length <= 0) {
+                  proceed = false;
+                  this.snackBar.open(`Por favor, seleccione una obra para continuar`,"", { duration: 3000 });
+                } else {
+                  if (proceed && this.cartId) {
+                    console.log("object");
+                    this.cartService.updateTotalAmount(this.cartId, this.getTotalAmount()).subscribe()
+                    this.router.navigate(["/checkout"]);
+                  }
+                }
+              }
+            )
+          }
+        }
+      )
+    }
+  }
+
+  // Acciones del soldModal
+  openSoldModal() {
+    const button = document.getElementById('soldModalBtn');
+    button?.click();
+  }
+  reload() {
+    window.location.reload();
+  }
 
 }
 

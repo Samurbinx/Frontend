@@ -9,7 +9,11 @@
             <h1>Cesta</h1>
          </ng-template>
 
-         <div class="product" *ngFor="let artwork of carted" [ngClass]="{'sold': artwork.sold}">
+         <div class="product" *ngFor="let artwork of carted">
+            <div class="product_cover" *ngIf="artwork.sold" (click)="delArtwork(artwork.id)">
+               <h1 class="sold">VENDIDO</h1>
+               <p class="sold material-symbols-outlined">delete</p>
+            </div>
             <a *ngFor="let piece of artwork.pieces" class="piece" [routerLink]="['/proyecto']"
                [queryParams]="{ id: artwork.work_id }" [fragment]="artwork.id.toString()">
                <div class="images" *ngFor="let image of piece.images">
@@ -44,9 +48,10 @@
                <div class="inf_bottom">
                   <span>
                      <input type="checkbox" name="" class="artwork_checkbox" id="checkbox_{{artwork.id}}"
-                        [(ngModel)]="checkedArtworks[artwork.id]" (change)="toggleSelected(artwork.id)" [disabled]="artwork.sold">
+                        [(ngModel)]="checkedArtworks[artwork.id]" (change)="toggleSelected(artwork.id)"
+                        [disabled]="artwork.sold">
                      <p class="l">|</p>
-                     <p type="button" class="del" data-bs-toggle="modal" [attr.data-bs-target]="'#modal' + artwork.id"  >
+                     <p type="button" class="del" data-bs-toggle="modal" [attr.data-bs-target]="'#modal' + artwork.id">
                         Eliminar</p>
                   </span>
                   <p id="price_{{artwork.id}}">{{artwork.price}}€</p>
@@ -58,7 +63,8 @@
                <div class="modal-dialog">
                   <div class="modal-content">
                      <div class="modal-header">
-                        <h2 class="modal-title">¿Eliminar artículo? ({{artwork.work_title}} - {{artwork.title}})</h2>
+                        <h2 class="modal-title">¿Eliminar artículo de la cesta? <br>({{artwork.work_title}} -
+                           {{artwork.title}})</h2>
                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                      </div>
                      <div class="modal-footer">
@@ -83,15 +89,31 @@
                <h1>Total</h1>
                <h1>{{ getTotalAmount()}}€</h1>
             </span>
-            <h3>{{selectedProducts}}</h3>
+            <h3>{{ getselectedProductsString() }}</h3>
          </div>
          <div>
          </div>
          <div class="payment_button">
             <button class="btn" (click)="checkout()">Tramitar pedido</button>
          </div>
+      </div>
 
+      <!-- <div class="sold_products">
 
+      </div> -->
+
+   </div>
+
+   <!-- Este modal aparece cuando tienes en el carrito alguna obra vendida pero aún no has recargado la página -->
+   <button type="button" data-bs-toggle="modal" data-bs-target="#soldModal" id="soldModalBtn" hidden></button>
+   <div class="modal" tabindex="-1" id="soldModal">
+      <div class="modal-dialog">
+         <div class="modal-content">
+            <div class="modal-body">
+               <h2>Lo sentimos, una de las obras que tenías en el carrito ha sido vendida</h2>
+               <button type="button" class="btn btn-primary" data-bs-dismiss="modal">Aceptar</button>
+            </div>
+         </div>
       </div>
    </div>
 </div>

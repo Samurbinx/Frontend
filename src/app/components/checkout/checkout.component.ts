@@ -118,7 +118,7 @@ export class CheckoutComponent implements OnInit {
               error: () => this.handleError('Error al cargar los artworks del carrito'),
             });
 
-            this.cartService.getTotalAmount(this.cart_id.toString()).subscribe({
+            this.cartService.getTotalAmount(this.cart_id).subscribe({
               next: (total) => {
                 this.total_amount = total;
                 if (this.total_amount) this.createPaymentIntent(this.total_amount);

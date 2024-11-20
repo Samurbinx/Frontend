@@ -23,6 +23,7 @@ export class NavbarComponent implements OnInit {
   user: UserModel | null = null;
   cart_length: number | null = 0;
   user_id: string | null = null;
+
   constructor(
     private authService: AuthService,
     private router: Router,
@@ -60,16 +61,19 @@ export class NavbarComponent implements OnInit {
     )
   }
 
-  getCartLength(){
+  getCartLength() {
     this.user_id = this.storageService.getSessionItem('user_id');
     if (this.user_id) {
-      this.userService.getCartLength(this.user_id).subscribe(
-        (response) => {
-          this.cart_length = response;
-        }
-      )
+      this.userService.getCartLength(this.user_id).subscribe({
+        next: (length: number) => this.userService.updateCartLength(length), // Actualizar el observable con el valor inicial
+        error: (err) => console.error('Error al cargar el tamaño del carrito:', err),
+      });
     }
+    this.userService.cartLength$.subscribe(length => {
+      this.cart_length = length;
+    });
   }
+  
   logout(): void {
     this.authService.logout();
   }

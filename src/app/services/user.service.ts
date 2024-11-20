@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Observable } from 'rxjs';
+import { BehaviorSubject, Observable } from 'rxjs';
 import { ArtworkModel } from '../models/artwork.model';
 import { AddressModel } from '../models/address.model';
 
@@ -9,9 +9,15 @@ import { AddressModel } from '../models/address.model';
 })
 export class UserService {
   private URL_API = 'http://localhost:8080';
+  
+  private cartLengthSource = new BehaviorSubject<number>(0);
+  cartLength$ = this.cartLengthSource.asObservable();
 
   constructor(private http: HttpClient) { }
 
+  updateCartLength(newLength: number) {
+    this.cartLengthSource.next(newLength);
+  }
    // -- GETTERS -- //
   getFavsId(user_id: string): Observable<number[]> {
     return this.http.get<number[]>(`${this.URL_API}/user/${user_id}/favsid`);

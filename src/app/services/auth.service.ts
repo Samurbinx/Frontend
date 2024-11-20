@@ -1,3 +1,4 @@
+import { UserService } from './user.service';
 import { UserModel } from './../models/user.model';
 import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { Injectable } from '@angular/core';
@@ -24,7 +25,7 @@ export class AuthService {
   private userSubject = new BehaviorSubject<UserModel | null>(null);
   private logged = new BehaviorSubject<boolean>(false);
 
-  constructor(private http: HttpClient, private storageService: StorageService) { }
+  constructor(private http: HttpClient, private storageService: StorageService, private userService: UserService) { }
 
   getUserSubject() {
     return this.userSubject.asObservable();
@@ -63,7 +64,7 @@ export class AuthService {
     this.user = null;
     this.userSubject.next(null);
     this.logged.next(false);
-
+    window.location.reload();
   }
 
   loginByToken(token: string): Observable<LoginResponse> {

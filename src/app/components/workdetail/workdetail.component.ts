@@ -186,9 +186,8 @@ export class WorkdetailComponent implements OnInit, AfterViewInit {
          this.cartService.addToCart(this.cart_id, artwork_id).subscribe(
             (response: any) => {
                if (response) {
-                  let icon = document.getElementById(`cart-icon${artwork_id}`) ;
-                  if (icon) {
-                  }
+                  console.log();
+                  this.userService.updateCartLength(response['cart_length']);
                   this.snackBar.open('Producto añadido al carrito', '', { duration: 3000 });
                }
             }

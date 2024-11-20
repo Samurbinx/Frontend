@@ -13,8 +13,11 @@ export class CartService {
   private URL_API = 'http://localhost:8080/cart';
   public StripePublicKey = 'pk_test_51QL60A01qslkTUypDH7HjcBn7G0E22306bHTsSjDqsGNsK3LT04ipA6PeGp4IajYdwNcIqce2Fi8hgHf4oFCtfMA006sUUYNnq';
 
+ 
   
   constructor(private _http: HttpClient, private authService: AuthService) { }
+
+
 
   getTotalAmount(cartId: number): Observable<number> {
     return this._http.get<number>(`${this.URL_API}/${cartId}/total`);

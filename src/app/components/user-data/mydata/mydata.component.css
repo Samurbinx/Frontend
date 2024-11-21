@@ -1,0 +1,37 @@
+
+.pageinf {
+   height: 50px;
+   margin: 20px 30px 30px;
+}
+h1 {
+   font-weight: 500;
+   margin: 0px;
+}
+
+.divopt {
+   display: flex;
+   align-items: center;
+   padding: 15px;
+   cursor: pointer;
+}
+.divopt:hover{
+   background-color: var(--neutral-400);
+   transition: 0.3s ease;
+}
+.icon {
+   height: 48px;
+   width: 48px;
+   display: flex;
+   justify-content: center;
+   align-items: center;
+   margin-right: 15px;
+}
+.inf {
+   padding-right: 20px;
+}
+.inf > h3, p{
+margin: 0px;
+}
+.inf > h3 {
+   font-weight: 500;
+}

@@ -6,7 +6,7 @@ import { FormGroup, ReactiveFormsModule, UntypedFormBuilder, Validators } from '
 import { MatInputModule } from '@angular/material/input';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { UserModel } from '../../models/user.model';
-import { AddressFormComponent } from "../address-form/address-form.component";
+import { AddressFormComponent } from "../user-data/mydata/address-form/address-form.component";
 import { AddressModel } from '../../models/address.model';
 import { CommonModule } from '@angular/common';
 import { Router } from '@angular/router';
@@ -77,23 +77,25 @@ export class CheckoutComponent implements OnInit {
 
   elementsOptions: StripeElementsOptions = {
     locale: 'es',
-    appearance: { theme: 'flat' },
   };
 
-  // cardOptions: StripeCardElementOptions = {
-  //   style: {
-  //     base: {
-  //       iconColor: '#666EE8',
-  //       color: '#31325F',
-  //       fontWeight: '300',
-  //       fontFamily: '"Helvetica Neue", Helvetica, sans-serif',
-  //       fontSize: '18px',
-  //       '::placeholder': {
-  //         color: '#CFD7E0'
-  //       }
-  //     }
-  //   }
-  // };
+  cardOptions: StripeCardElementOptions = {
+    hidePostalCode: true,
+    style: {
+      base: {
+        backgroundColor: 'white',
+        iconColor: 'black',
+        color: 'black',
+        fontWeight: '300',
+        fontFamily: 'inherit',
+        fontSize: '18px',
+        '::placeholder': {
+          color: 'gray'
+        }
+
+      }
+    }
+  };
 
   ngOnInit() {
     this.loadUserData();

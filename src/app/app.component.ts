@@ -21,7 +21,8 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
     RouterOutlet, 
     NavbarComponent, 
     FooterComponent, 
-    NgbModule
+    NgbModule,
+    CommonModule
   ],
   providers: [MessageService],
   templateUrl: './app.component.html',

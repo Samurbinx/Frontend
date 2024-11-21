@@ -1,9 +1,17 @@
 <div id="wrapper">
    <div class="sidebar">
-      <a class="nav-link" href="/userdata/mydata" routerLink="/userdata/mydata" routerLinkActive="active">Mis datos</a>
-      <a class="nav-link" href="/userdata/favoritos" routerLink="/userdata/favoritos" routerLinkActive="active">Favoritos</a>
-      <a class="nav-link" href="/userdata/pedidos" routerLink="/userdata/pedidos" routerLinkActive="active">Pedidos</a>
-      <a class="nav-link" href="/userdata/" routerLink="/userdata/" routerLinkActive="active">Pago</a>
+      <a class="options nav-link" href="/userdata/mydata" routerLink="/userdata/mydata" routerLinkActive="active">
+         <h2>Mis datos</h2>
+         <i class="bi bi-chevron-right"></i>
+      </a>
+      <a class="options nav-link" href="/userdata/favoritos" routerLink="/userdata/favoritos" routerLinkActive="active">
+         <h2>Favoritos</h2>
+         <i class="bi bi-chevron-right"></i>
+      </a>
+      <a class="options nav-link" href="/userdata/pedidos" routerLink="/userdata/pedidos" routerLinkActive="active">
+         <h2>Pedidos</h2>
+         <i class="bi bi-chevron-right"></i>
+      </a>
    </div>
    <router-outlet></router-outlet>
 </div>

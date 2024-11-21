@@ -1,7 +1,13 @@
-h1 {
-   margin: 20px;
-   font-weight: 500;
+
+.pageinf {
+   height: 50px;
+   margin: 20px 30px 30px;
 }
+h1 {
+   font-weight: 500;
+   margin: 0px;
+}
+
 #favorites {
    display: flex;
    flex-direction: row;
@@ -14,7 +20,7 @@ h1 {
    'FILL' 1
 }
 .artwork_card {
-   background-color: rgb(238, 238, 238);
+   background-color: var(--neutral-100);
    width: 200px;
    max-width: 200px;
    height: 350px;
@@ -32,6 +38,7 @@ h1 {
    overflow-x: auto;
    scroll-snap-type: x mandatory;
    display: flex;
+   cursor: pointer;
 }
 .images {
    width: 100%;
@@ -53,6 +60,9 @@ img {
    padding: 15px;
    margin-top: 15px;
 }
+.card_body > h4 {
+   cursor: pointer;
+}
 h5, p, h4 {
    margin: 0px;
    font-family: "Outfit", sans-serif;
@@ -68,7 +78,9 @@ h5, p, h4 {
    
    font-size: 20px;
 }
-
+.fav-icon {
+   margin-left: 5px;
+}
 .material-symbols-outlined {
    font-size: 22px;
 }

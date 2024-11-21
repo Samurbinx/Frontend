@@ -64,7 +64,11 @@
 				<h2>Método de pago</h2>
 				@if (elementsOptions.clientSecret) {
 				<ngx-stripe-elements [stripe]="stripe" [elementsOptions]="elementsOptions">
-					<ngx-stripe-card />
+					<div id="blackborder">
+						<div id="padding">
+							<ngx-stripe-card [options]="cardOptions" />
+						</div>
+					</div>
 				</ngx-stripe-elements>
 				}
 				<div class="payment_button">

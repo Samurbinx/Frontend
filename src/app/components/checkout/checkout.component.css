@@ -74,12 +74,15 @@ justify-content: space-between;
    padding: 35px;
    margin-bottom: 30px ;
    min-height: 165px;
+   min-width: fit-content;
 }
 
 #right {
-   width: 500px;
+   width: 700px;
    display: flex;
    flex-direction: column;
+   min-width: fit-content;
+
 }
 #right h4 {
    margin: 0px;
@@ -130,4 +133,15 @@ justify-content: space-between;
    background-position: center;
    background-size: cover;
    position: relative;
+}
+#blackborder {
+   background-color: var(--neutral-700);
+   padding: 1px;
+   border-radius: 5px;
+}
+#padding {
+   background-color: white;
+   padding: 10px;
+   border-radius: 5px;
+
 }

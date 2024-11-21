@@ -1,11 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 import { AbstractControl, FormBuilder, FormControl, FormGroup, ReactiveFormsModule, UntypedFormBuilder, Validators } from '@angular/forms';
 import { MatInputModule } from '@angular/material/input';
-import { AddressModel } from '../../models/address.model';
-import { AddressService } from '../../services/address.service';
-import { AuthService } from '../../services/auth.service';
+import { AddressModel } from '../../../../models/address.model';
+import { AddressService } from '../../../../services/address.service';
+import { AuthService } from '../../../../services/auth.service';
 import { CommonModule } from '@angular/common';
-import { UserModel } from '../../models/user.model';
+import { UserModel } from '../../../../models/user.model';
 
 
 

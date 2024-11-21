@@ -8,14 +8,42 @@
 #wrapper {
    display: flex;
    flex-direction: row;
+   margin-top: 30px;
 }
+
 .sidebar {
-   width: fit-content;
-   padding: 25px;
-   border-right: 1px solid var(--neutral-500);
+   min-width: fit-content;
+   width: 230px;
+   border-right: 1px solid var(--neutral-700);
 }
-.sidebar > a {
-   max-width: fit-content;
-   font-size: large;
-   margin: 20px;
+
+
+
+.options {
+   display: flex;
+   flex-direction: row;
+   align-items: center;
+   padding: 15px 25px;
+   cursor: pointer;
+   justify-content: space-between;
+
+}
+
+.options:hover {
+   background-color: var(--neutral-400);
+   transition: 0.3s ease;
+}
+
+.options>h2 {
+   margin: 0px;
+   font-weight: 400;
+   font-size: 18px;
+}
+
+a.active {
+   background-color: var(--neutral-200);
+   border-right: 1px solid var(--primary-500);
+}
+a.active > h2 {
+   font-weight: 500;
 }

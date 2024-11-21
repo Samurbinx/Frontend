@@ -3,13 +3,14 @@ import { UserModel } from '../../../models/user.model';
 import { WorkService } from '../../../services/work.service';
 import { AuthService } from '../../../services/auth.service';
 import { UserService } from '../../../services/user.service';
-import { AddressFormComponent } from '../../address-form/address-form.component';
+import { AddressFormComponent } from './address-form/address-form.component';
 import { CommonModule } from '@angular/common';
+import { DataFormComponent } from './data-form/data-form.component';
 
 @Component({
   selector: 'app-mydata',
   standalone: true,
-  imports: [AddressFormComponent, CommonModule],
+  imports: [AddressFormComponent, CommonModule, DataFormComponent],
   templateUrl: './mydata.component.html',
   styleUrl: './mydata.component.css'
 })

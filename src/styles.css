@@ -1,8 +1,18 @@
 /* You can add global styles to this file, and also import other style files */
 * {
-    font-family: "Outfit", sans-serif;
+    font-family: "Outfit", sans-serif !important;
     font-optical-sizing: auto;
     font-style: normal;
+    box-sizing: border-box;
+}
+
+.material-symbols-outlined {
+    font-family: 'Material Symbols Outlined', sans-serif !important;
+}
+
+.material-symbols-outlined.fill {
+    font-variation-settings:
+        'FILL' 1 !important
 }
 
 pre {
@@ -49,7 +59,7 @@ body {
     --succes-700: #4F715D;
     --succes-800: #354B3E;
     --succes-900: #1A261F;
-    
+
     --warning-50: #FBEED4;
     --warning-100: #F6DCAA;
     --warning-200: #F4D495;
@@ -60,7 +70,7 @@ body {
     --warning-700: #DC9916;
     --warning-800: #B87F12;
     --warning-900: #93660F;
-    
+
     --error-50: #F7E5E1;
     --error-100: #E8B0A6;
     --error-200: #D97B6A;
@@ -82,4 +92,4 @@ body {
     --neutral-700: #AEBBBB;
     --neutral-800: #7D9191;
     --neutral-900: #3E4949;
-  }
+}

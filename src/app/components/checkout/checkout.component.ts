@@ -2,7 +2,7 @@ import { UserService } from './../../services/user.service';
 import { AuthService } from './../../services/auth.service';
 import { CartService } from '../../services/cart.service';
 import { Component, inject, OnInit, signal, ViewChild } from '@angular/core';
-import { ReactiveFormsModule, UntypedFormBuilder, Validators } from '@angular/forms';
+import { FormGroup, ReactiveFormsModule, UntypedFormBuilder, Validators } from '@angular/forms';
 import { MatInputModule } from '@angular/material/input';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { UserModel } from '../../models/user.model';
@@ -11,16 +11,18 @@ import { AddressModel } from '../../models/address.model';
 import { CommonModule } from '@angular/common';
 import { Router } from '@angular/router';
 import {
-  injectStripe, NGX_STRIPE_VERSION, STRIPE_PUBLISHABLE_KEY, STRIPE_OPTIONS, NgxStripeModule, StripeElementsDirective, StripePaymentElementComponent, StripeFactoryService
+  injectStripe, NGX_STRIPE_VERSION, STRIPE_PUBLISHABLE_KEY, STRIPE_OPTIONS, NgxStripeModule, StripeElementsDirective, StripePaymentElementComponent, StripeFactoryService,
+  StripeCardNumberComponent,
+  StripeCardComponent
 } from 'ngx-stripe';
-import { StripeElementsOptions, StripePaymentElementOptions } from '@stripe/stripe-js';
+import { StripeCardElementOptions, StripeElementsOptions, StripePaymentElementOptions } from '@stripe/stripe-js';
 import { ArtworkModel } from '../../models/artwork.model';
 import { PieceModel } from '../../models/piece.model';
 import { OrderService } from '../../services/order.service';
+import { response } from 'express';
 
 interface OrderResponse {
   success: boolean;
-  error: boolean;
   message: string;
   details?: any;
 }
@@ -55,7 +57,7 @@ export class CheckoutComponent implements OnInit {
     private authService: AuthService,
     private userService: UserService,
     private snackBar: MatSnackBar
-  ) {}
+  ) { }
 
   // VARIABLES
   user: UserModel | null = null;
@@ -72,25 +74,36 @@ export class CheckoutComponent implements OnInit {
   stripe = injectStripe(this.cartService.StripePublicKey);
   paying = signal(false);
   client_secret = '';
+  paymentIntentId = '';
 
   elementsOptions: StripeElementsOptions = {
     locale: 'es',
     appearance: { theme: 'flat' },
   };
-  paymentElementOptions: StripePaymentElementOptions = {
-    layout: {
-      type: 'tabs',
-      defaultCollapsed: false,
-      radios: false,
-      spacedAccordionItems: false,
-    },
-  };
+
+  @ViewChild(StripeCardComponent) cardElement!: StripeCardComponent;
+  // cardOptions: StripeCardElementOptions = {
+  //   style: {
+  //     base: {
+  //       iconColor: '#666EE8',
+  //       color: '#31325F',
+  //       fontWeight: '300',
+  //       fontFamily: '"Helvetica Neue", Helvetica, sans-serif',
+  //       fontSize: '18px',
+  //       '::placeholder': {
+  //         color: '#CFD7E0'
+  //       }
+  //     }
+  //   }
+  // };
 
   ngOnInit() {
     this.loadUserData();
   }
 
   // MÉTODOS
+
+  // Carga los datos del usuario, cuando termina, llama a cargar los datos del carrito
   loadUserData() {
     this.user_id = this.authService.getUserId();
     if (this.user_id) {
@@ -105,6 +118,7 @@ export class CheckoutComponent implements OnInit {
     }
   }
 
+  // Carga los datos del carrito: cart_id, artworks y total_amount con el que crea un intento de pago con stripe
   loadCartData() {
     if (this.user_id) {
       this.userService.getCartId(this.user_id).subscribe({
@@ -132,60 +146,80 @@ export class CheckoutComponent implements OnInit {
     }
   }
 
+  // Crea un intento de pago y devuelve la clave secreta del usuario
   createPaymentIntent(amount: number) {
     this.cartService.createPaymentIntent({ amount: amount * 100, currency: 'eur' }).subscribe({
       next: (pi) => {
-        this.elementsOptions.clientSecret = pi.client_secret as string;
-        this.client_secret = pi.client_secret as string;
+        // Asignar tanto el client_secret como el payment_intent_id
+        this.elementsOptions.clientSecret = pi.client_secret;
+        this.client_secret = pi.client_secret;
+        this.paymentIntentId = pi.payment_intent_id; // Ahora tienes el payment_intent_id también
       },
       error: () => this.handleError('Error al crear la intención de pago'),
     });
   }
 
+  // Confirma el pago, pasando los detalles del mismo y crea un pedido en la base de datos
   pay() {
-    if (!this.user || !this.paymentElement?.elements) {
+    if (this.user_id && this.cart_id && this.artworks && this.total_amount) {
+
+      const cardElement = this.cardElement;
+      if (!cardElement) {
+        throw new Error('Card element is not available.');
+      }
+
+      // Se crea un token con los datos de la tarjeta para mandarlos al backend
+      this.stripe
+        .createToken(cardElement.element)
+        .subscribe((result) => {
+          if (result.token) {
+            console.log(result.token.id);
+            this.createOrder(result.token.id);
+          } else if (result.error) {
+            console.log(result.error.message);
+          }
+        });
+    } else {
       this.handleError('Datos de usuario o pago incompletos');
       return;
     }
-    if (this.paying()) return;
-    this.paying.set(true);
 
-    this.stripe.confirmPayment({
-      elements: this.paymentElement.elements,
-      confirmParams: { payment_method_data: { billing_details: this.getBillingDetails() } },
-      redirect: 'if_required',
-    }).subscribe({
-      next: (result) => {
-        if (result.error) {
-          this.cancel();
-          this.handleError(result.error.message || 'Error durante el pago');
-        } else if (result.paymentIntent.status === 'succeeded') {
-          this.createOrder();
+  }
+
+  // Recopila todos los datos necesarios y hace la petición al backend donde se termina de confirmar el pago
+  createOrder(token: string) {
+    const artworks_id = this.artworks.map(artwork => artwork.id);
+
+    const paymentData = {
+      token: token,
+      payment_intent_id: this.paymentIntentId,
+      billing_details: this.getBillingDetails(),
+    };
+    const orderData = {
+      user_id: this.user_id,
+      artworks: artworks_id, // Lista de IDs de obras seleccionadas
+      total_amount: this.total_amount,
+      cart_id: this.cart_id
+    };
+
+    this.orderService.newOrder(orderData, paymentData).subscribe({
+      next: (response) => {
+        console.log('Pedido completado:', response);
+        if (response.message) {
           this.router.navigate(['/userdata/pedidos']);
+          this.snackBar.open('Pedido realizado correctamente', '', { duration: 3000 });
         }
       },
-      error: () => this.handleError('Error durante la confirmación del pago'),
-      complete: () => this.paying.set(false),
+      error: (error) => {
+        console.error('Error al crear el pedido:', error);
+        alert('Hubo un error al crear el pedido. Inténtalo de nuevo.');
+        this.router.navigate(['/carrito']);
+
+      }
     });
   }
 
-  createOrder() {
-    if (this.user_id && this.cart_id && this.artworks && this.total_amount) {
-      const artworks_id = this.artworks.map(artwork => artwork.id);
-      this.orderService.newOrder(this.user_id, artworks_id, this.total_amount, this.cart_id).subscribe({
-        next: (response: OrderResponse) => {
-          if (!response.success) this.cancel();
-        },
-        error: () => this.cancel(),
-      });
-    }
-  }
-
-  cancel() {
-    this.cartService.cancelPaymentIntent({ client_secret: this.client_secret });
-    this.paying.set(false);
-  }
-
+  // Recoge los detalles del usuario
   getBillingDetails() {
     return {
       name: this.user?.name,
@@ -203,6 +237,8 @@ export class CheckoutComponent implements OnInit {
     console.error(message);
     this.snackBar.open(message, 'Cerrar', { duration: 3000 });
   }
+
+  // Recoge la imagen de las obras
   getBackgroundImageUrl(image: string, piece: PieceModel): string {
     return `url('http://127.0.0.1:8080/piece/${piece.id}/${image}')`;
   }

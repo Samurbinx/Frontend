@@ -22,10 +22,10 @@
 					<div class="inf">
 						<div class="inf_top">
 							<div class="a">
-							<span>
-							<h2>{{artwork.title}} </h2>
-							<h2 id="price_{{artwork.id}}">{{artwork.price}}€</h2>
-						</span>
+								<span>
+									<h2>{{artwork.title}} </h2>
+									<h2 id="price_{{artwork.id}}">{{artwork.price}}€</h2>
+								</span>
 								<h4>{{artwork.work_title}} - {{artwork.creation_date}}</h4>
 							</div>
 							<div class="pieces">
@@ -62,10 +62,17 @@
 
 			<div id="paymentForm">
 				<h2>Método de pago</h2>
+
+
 				@if (elementsOptions.clientSecret) {
-				<ngx-stripe-elements id="cardForm" [stripe]="stripe" [elementsOptions]="elementsOptions">
+				<!-- <ngx-stripe-elements id="cardForm" [stripe]="stripe" [elementsOptions]="elementsOptions">
 					<ngx-stripe-payment [options]="paymentElementOptions" />
+
+				</ngx-stripe-elements> -->
+				<ngx-stripe-elements [stripe]="stripe" [elementsOptions]="elementsOptions">
+					<ngx-stripe-card />
 				</ngx-stripe-elements>
+
 				}
 				<div class="payment_button">
 					<button class="btn-primary btn" (click)="pay()">Pagar</button>
@@ -83,7 +90,8 @@
 	<div class="modal-dialog">
 		<div class="modal-content">
 			<div class="modal-header">
-				<h1 class="modal-title fs-5" id="exampleModalLabel">{{ user?.address ? 'Editar dirección' : 'Añadir dirección'}}</h1>
+				<h1 class="modal-title fs-5" id="exampleModalLabel">{{ user?.address ? 'Editar dirección' : 'Añadir
+					dirección'}}</h1>
 				<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
 			</div>
 			<div class="modal-body">

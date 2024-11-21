@@ -11,6 +11,7 @@ import { Router, RouterLink } from '@angular/router';
 import { FormsModule, ValueChangeEvent } from '@angular/forms';
 import { UserService } from '../../services/user.service';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { response } from 'express';
 
 
 @Component({
@@ -71,11 +72,17 @@ export class CartComponent {
           this.carted.forEach(artwork => {
             this.isSelected(artwork.id, (isSelected: boolean) => {
               if (!artwork.sold) {
-                this.checkedArtworks[artwork.id] = isSelected; // Set default checked state to true                
+                this.checkedArtworks[artwork.id] = isSelected; // Set default checked state to true     
+                   
               }
             });
           });
         })
+        this.userService.getCartLength(this.userId).subscribe(
+          (response) => {
+            this.userService.updateCartLength(response);        
+          }
+        )
     }
   }
 
@@ -84,6 +91,9 @@ export class CartComponent {
       this.cartService.delFromCart(this.cartId, artworkId).subscribe(
         (response) => {
           this.loadArtworks();
+
+ 
+
           this.snackBar.open(`Obra eliminada del carrito`,"", { duration: 3000 });
         })
     }
@@ -180,7 +190,6 @@ export class CartComponent {
                   this.snackBar.open(`Por favor, seleccione una obra para continuar`,"", { duration: 3000 });
                 } else {
                   if (proceed && this.cartId) {
-                    console.log("object");
                     this.cartService.updateTotalAmount(this.cartId, this.getTotalAmount()).subscribe()
                     this.router.navigate(["/checkout"]);
                   }

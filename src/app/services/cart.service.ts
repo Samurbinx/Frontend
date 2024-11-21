@@ -102,11 +102,13 @@ export class CartService {
   getCartArtworks(cart_id: number): Observable<ArtworkModel[]> {
     return this._http.get<ArtworkModel[]>(`${this.URL_API}/${cart_id}/getCartArtworks`).pipe(catchError(this.handleError));
   }
-  createPaymentIntent(paymentData: { amount: number, currency: string }): Observable<{ client_secret: string }> {
-    return this._http.post<{ client_secret: string }>(`${this.URL_API}/create-payment-intent`, paymentData);
+  createPaymentIntent(paymentData: { amount: number, currency: string }): Observable<{ client_secret: string, payment_intent_id: string }> {
+    return this._http.post<{ client_secret: string, payment_intent_id: string }>(
+      `${this.URL_API}/create-payment-intent`, paymentData);
   }
-  cancelPaymentIntent(paymentData: { client_secret: string }): Observable<{ client_secret: string }> {
-    return this._http.post<{ client_secret: string }>(`${this.URL_API}/cancel-payment-intent`, paymentData);
+  
+  cancelPaymentIntent(paymentData: { payment_intent_id: string }): Observable<{ payment_intent: string }> {
+    return this._http.post<{ payment_intent: string }>(`${this.URL_API}/cancel-payment-intent`, paymentData);
   }
 
 

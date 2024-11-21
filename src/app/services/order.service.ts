@@ -24,9 +24,4 @@ export class OrderService {
       paymentData
     });
   }
-  // newOrder(orderData: any): Observable<any> {
-  //   return this._http.post<any>(`${this.URL_API}/new`, {
-  //     orderData,
-  //   });
-  // }
 }

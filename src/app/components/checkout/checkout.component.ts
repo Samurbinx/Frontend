@@ -36,7 +36,6 @@ interface OrderResponse {
     ReactiveFormsModule,
     MatInputModule,
     StripeElementsDirective,
-    StripePaymentElementComponent,
     NgxStripeModule,
     AddressFormComponent,
     CommonModule
@@ -69,8 +68,8 @@ export class CheckoutComponent implements OnInit {
   artworks: ArtworkModel[] = [];
 
   // STRIPE
-  @ViewChild(StripePaymentElementComponent)
-  paymentElement!: StripePaymentElementComponent;
+  @ViewChild(StripeCardComponent) cardElement!: StripeCardComponent;
+
   stripe = injectStripe(this.cartService.StripePublicKey);
   paying = signal(false);
   client_secret = '';
@@ -81,7 +80,6 @@ export class CheckoutComponent implements OnInit {
     appearance: { theme: 'flat' },
   };
 
-  @ViewChild(StripeCardComponent) cardElement!: StripeCardComponent;
   // cardOptions: StripeCardElementOptions = {
   //   style: {
   //     base: {
@@ -100,8 +98,6 @@ export class CheckoutComponent implements OnInit {
   ngOnInit() {
     this.loadUserData();
   }
-
-  // MÉTODOS
 
   // Carga los datos del usuario, cuando termina, llama a cargar los datos del carrito
   loadUserData() {
@@ -214,7 +210,6 @@ export class CheckoutComponent implements OnInit {
         console.error('Error al crear el pedido:', error);
         alert('Hubo un error al crear el pedido. Inténtalo de nuevo.');
         this.router.navigate(['/carrito']);
-
       }
     });
   }

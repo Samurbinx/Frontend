@@ -6,11 +6,18 @@
 }
 
 #wrapper {
+   width: 100vw !important;
+   height: 100%;
+}
+#content {
+   margin-top: 30px;
+
    display: flex;
    flex-direction: row;
-   margin-top: 30px;
+   width: 100%;
+   margin: 0 auto;
+   height: 100%;
 }
-
 .sidebar {
    min-width: fit-content;
    width: 230px;

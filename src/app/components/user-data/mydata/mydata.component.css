@@ -35,3 +35,16 @@ margin: 0px;
 .inf > h3 {
    font-weight: 500;
 }
+
+/* MODAL */
+.modal-content{
+   border-radius: 0px;
+   border: 1px solid var(--neutral-500);
+}
+.modal-header {
+   padding: 20px 30px;
+}
+.modal-body {
+   background-color: var(--neutral-300);
+   padding: 30px;
+}

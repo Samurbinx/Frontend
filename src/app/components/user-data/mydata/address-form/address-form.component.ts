@@ -37,16 +37,13 @@ export class AddressFormComponent implements OnInit {
 
   ngOnInit(): void {
     this.loadData();
-   
-
-
   }
 
   private loadData(): void {
     this.authService.getUserSubject().subscribe((user) => {
       this.user = user;
       const token = this.authService.getToken();
-     
+
       if (token) {
         this.userId = this.authService.getUserId();
         this.loadForm();
@@ -54,14 +51,14 @@ export class AddressFormComponent implements OnInit {
     });
   }
 
-  private loadForm(){
-      this.form = this.fb.group({
-        street: [this.user?.address?.street ?? '', [Validators.required]],
-        details: [this.user?.address?.details ?? '', [Validators.required]],
-        zipcode: [this.user?.address?.zipcode ?? '', [Validators.required]],
-        city: [this.user?.address?.city ?? '', [Validators.required]],
-        province: [this.user?.address?.province ?? '', [Validators.required]],
-      });
+  private loadForm() {
+    this.form = this.fb.group({
+      street: [this.user?.address?.street ?? '', [Validators.required]],
+      details: [this.user?.address?.details ?? '', [Validators.required]],
+      zipcode: [this.user?.address?.zipcode ?? '', [Validators.required]],
+      city: [this.user?.address?.city ?? '', [Validators.required]],
+      province: [this.user?.address?.province ?? '', [Validators.required]],
+    });
   }
 
   //To access form controls using -> (ex: f.username)
@@ -75,7 +72,6 @@ export class AddressFormComponent implements OnInit {
       return;
     }
     if (this.form.valid && this.userId) {
-
       let address = new AddressModel(
         this.form.value.street,
         this.form.value.details,

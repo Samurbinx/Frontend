@@ -6,11 +6,12 @@ import { UserService } from '../../../services/user.service';
 import { AddressFormComponent } from './address-form/address-form.component';
 import { CommonModule } from '@angular/common';
 import { DataFormComponent } from './data-form/data-form.component';
+import { PwdFormComponent } from './pwd-form/pwd-form.component';
 
 @Component({
   selector: 'app-mydata',
   standalone: true,
-  imports: [AddressFormComponent, CommonModule, DataFormComponent],
+  imports: [CommonModule, AddressFormComponent, DataFormComponent, PwdFormComponent],
   templateUrl: './mydata.component.html',
   styleUrl: './mydata.component.css'
 })
@@ -19,7 +20,7 @@ export class MydataComponent implements OnInit{
   user: UserModel | null = null;
   userId: string | null = null;
 
-  constructor(private authService: AuthService, private workService: WorkService,private userService: UserService) { }
+  constructor(private authService: AuthService) { }
 
   ngOnInit(): void {
     this.loadData();

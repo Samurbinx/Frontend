@@ -1,4 +1,50 @@
 <div class="pageinf">
-	<h1>Tus pedidos</h1>
-	<p>Comprueba el estado de tus pedidos, cancela pedidos a tiempo o consulta pedidos antiguos.</p>
+   <h1>Tus pedidos</h1>
+   <p>Comprueba el estado de tus pedidos, cancela pedidos a tiempo o consulta pedidos antiguos.</p>
+</div>
+
+<div id="orders">
+   <div *ngFor="let order of orders" class="order">
+      <div class="thead">
+         <div>
+            <h3>PEDIDO REALIZADO</h3>
+            <p>{{order.created_at}}</p>
+         </div>
+         <div>
+            <h3>TOTAL</h3>
+            <p>{{order.total_amount}} €</p>
+         </div>
+         <div>
+            <h3>Nº PEDIDO</h3>
+            <p>{{order.id}}</p>
+         </div>
+         <div>
+            <h3>ESTADO</h3>
+            <p>{{order.status}}</p>
+         </div>
+      </div>
+         
+
+      <div id="artworks">
+         <div *ngFor="let artwork of order.artworks" class="artwork">
+            <div class="artwork_card">
+               <div class="piece_images" [routerLink]="['/proyecto']" [queryParams]="{id: artwork.work_id}"
+                  fragment="{{artwork.id}}">
+                  <div *ngFor="let piece of artwork.pieces" class="images">
+                     <img *ngFor="let image of piece.images"
+                        [src]="'http://127.0.0.1:8080/piece/' + piece.id + '/' + image" alt="">
+                  </div>
+               </div>
+               <div class="card_body">
+                  <h5>{{artwork.creation_date}}</h5>
+                  <h4 [routerLink]="['/proyecto']" [queryParams]="{id: artwork.work_id}" fragment="{{artwork.id}}">
+                     {{artwork.title}}</h4>
+                  <p>{{ artwork.price }} €</p>
+               </div>
+            </div>
+         </div>
+      </div>
+
+
+   </div>
 </div>

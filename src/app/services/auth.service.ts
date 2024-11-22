@@ -100,6 +100,12 @@ export class AuthService {
   getUser(){
     return this.user;
   }
+  updateUser(user: any, user_id: string): any {
+    return this.http.post<any>(`${this.URL_API}/update/${user_id}`, user);
+  }
+  updatePwd(data: any, user_id: string): any {
+    return this.http.post<any>(`${this.URL_API}/updatepwd/${user_id}`, data);
+  }
   getUserById(id: any): Observable<UserModel>{
     return this.http.get<UserModel>(`${this.URL_API}/${id}`);
   }

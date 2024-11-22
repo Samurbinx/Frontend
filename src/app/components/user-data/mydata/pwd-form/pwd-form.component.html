@@ -1,0 +1,42 @@
+<form [formGroup]="form" id="dataForm" (ngSubmit)="onSubmit()">
+
+   <!-- CURRENT PASSWORD -->
+   <div class="form-group">
+      <p>Contraseña actual:</p>
+      <input type="password" formControlName="pwd" class="form-control"
+         [ngClass]="{ 'is-invalid': submitted && f['pwd'].errors }" />
+      @if (submitted && f['pwd'].errors) { <div class="invalid-feedback">
+         @if (f['pwd'].errors['required']) { <div>Campo obligatorio</div> }
+         @if (f['pwd'].errors['minlength']) { <div>Mínimo 6 caracteres</div> }
+         @if (f['pwd'].errors['maxlength']) { <div>Máximo 40 caracteres</div> }
+         @if (f['pwd'].errors['incorrectPassword']) { <div>La contraseña no es correcta</div> }
+      </div> }
+   </div>
+
+   <!-- NEW PASSWORD -->
+   <div class="form-group">
+      <p>Nueva contraseña:</p>
+      <input type="password" formControlName="npwd" class="form-control"
+         [ngClass]="{ 'is-invalid': submitted && f['npwd'].errors }" />
+      @if (submitted && f['npwd'].errors) { <div class="invalid-feedback">
+         @if (f['npwd'].errors['required']) { <div>Campo obligatorio</div> }
+         @if (f['npwd'].errors['minlength']) { <div>Mínimo 6 caracteres</div> }
+         @if (f['npwd'].errors['maxlength']) { <div>Máximo 40 caracteres</div> }
+         @if (f['npwd'].errors['matching']) { <div>La nueva contraseña no puede ser igual a la actual</div> }
+      </div> }
+   </div>
+
+   <!-- CONFIRM PASSWORD -->
+   <div class="form-group">
+      <p>Confirma la nueva contraseña:</p>
+      <input type="password" formControlName="cpwd" class="form-control"
+         [ngClass]="{ 'is-invalid': submitted && f['cpwd'].errors }" />
+      @if (submitted && f['cpwd'].errors) { <div class="invalid-feedback">
+         @if (f['cpwd'].errors['required']) { <div>Campo obligatorio</div> }
+         @if (f['cpwd'].errors['matching']) { <div>Las contraseñas no coinciden</div> }
+      </div>
+      }
+   </div>
+
+   <button type="submit" class="btn btn-primary">Guardar Cambios</button>
+</form>

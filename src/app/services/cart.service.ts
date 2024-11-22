@@ -53,11 +53,6 @@ export class CartService {
       .pipe(
         tap(response => {
           console.log('Respuesta del servidor:', response);
-        }),
-        catchError(error => {
-          console.error('Error al agregar al carrito:', error);
-          // Optionally, you can return a fallback value or rethrow the error
-          return of({ error: true, message: 'Error al agregar al carrito' });
         })
       );
   }

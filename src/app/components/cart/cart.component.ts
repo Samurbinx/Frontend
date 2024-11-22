@@ -1,3 +1,5 @@
+import { ArtworkService } from './../../services/artwork.service';
+import { StorageService } from './../../services/storage.service';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { CartService } from './../../services/cart.service';
 import { WorkService } from './../../services/work.service';
@@ -11,6 +13,8 @@ import { Router, RouterLink } from '@angular/router';
 import { FormsModule, ValueChangeEvent } from '@angular/forms';
 import { UserService } from '../../services/user.service';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { response } from 'express';
+import { error } from 'console';
 
 
 @Component({
@@ -29,7 +33,7 @@ export class CartComponent {
   selectedProduct = "";
   modal: any;
 
-  constructor(private authService: AuthService, private snackBar: MatSnackBar, private cartService: CartService, private router: Router, private userService: UserService) { }
+  constructor(private authService: AuthService, private artworkService: ArtworkService, private storageService: StorageService, private snackBar: MatSnackBar, private cartService: CartService, private router: Router, private userService: UserService) { }
 
   ngOnInit(): void {
     this.loadData();
@@ -38,32 +42,33 @@ export class CartComponent {
     if (this.modal) {
       // Escucha el evento 'hidden.bs.modal' cuando el modal se cierra
       this.modal.addEventListener('hidden.bs.modal', () => {
-        this.reload(); // Recargar la página
+        this.reload(); 
       });
     }
   }
 
-  private loadData(): void {
+  loadData() {
     this.userId = this.authService.getUserId()
     if (this.userId) {
-
       this.authService.getUserById(this.userId).subscribe(
         (response) => {
           this.user = response;
-
         }
       )
       this.userService.getCartId(this.userId).subscribe(
         (response) => {
           this.cartId = response;
           this.loadArtworks();
-
         }
       )
+    } else {
+      // OFFLINE CART
+      this.loadOfflineArtworks();
     }
   }
 
-  loadArtworks(): void {
+
+  loadArtworks() {
     if (this.userId) {
       this.userService.getCarted(this.userId).subscribe(
         (response) => {
@@ -72,16 +77,15 @@ export class CartComponent {
             this.isSelected(artwork.id, (isSelected: boolean) => {
               if (!artwork.sold) {
                 this.checkedArtworks[artwork.id] = isSelected; // Set default checked state to true     
-                   
               }
             });
           });
         })
-        this.userService.getCartLength(this.userId).subscribe(
-          (response) => {
-            this.userService.updateCartLength(response);        
-          }
-        )
+      this.userService.getCartLength(this.userId).subscribe(
+        (response) => {
+          this.userService.updateCartLength(response);
+        }
+      )
     }
   }
 
@@ -90,11 +94,17 @@ export class CartComponent {
       this.cartService.delFromCart(this.cartId, artworkId).subscribe(
         (response) => {
           this.loadArtworks();
-
- 
-
-          this.snackBar.open(`Obra eliminada del carrito`,"", { duration: 3000 });
+          this.snackBar.open(`Obra eliminada del carrito`, "", { duration: 3000 });
         })
+    } else {
+      let cart = this.storageService.getOfflineCart();
+      let i = cart.indexOf(artworkId)
+      if (i > -1) {
+        cart.splice(i,1);
+        this.storageService.setOfflineCart(cart);
+        this.loadOfflineArtworks();
+        this.snackBar.open(`Obra eliminada del carrito`, "", { duration: 3000 });
+      }
     }
   }
 
@@ -110,7 +120,6 @@ export class CartComponent {
         })
     }
   }
-
 
   isSelected(artworkId: number, callback: (isSelected: boolean) => void): void {
     if (this.cartId) {
@@ -128,9 +137,6 @@ export class CartComponent {
       );
     }
   }
-
-
-
 
   getTotalAmount() {
     let totalAmount = 0;
@@ -166,7 +172,6 @@ export class CartComponent {
     let proceed = true;
     // 1. Comprobar que ninguna de las obras se haya vendido
     if (this.cartId) {
-
       this.cartService.getCartArtworks(this.cartId).subscribe(
         (response) => {
           let artworks = response.map(artwork => ArtworkModel.fromJson(artwork));
@@ -186,7 +191,7 @@ export class CartComponent {
                 // si no hay ninugna obra seleccionada, no procede
                 if (artworks.length <= 0) {
                   proceed = false;
-                  this.snackBar.open(`Por favor, seleccione una obra para continuar`,"", { duration: 3000 });
+                  this.snackBar.open(`Por favor, seleccione una obra para continuar`, "", { duration: 3000 });
                 } else {
                   if (proceed && this.cartId) {
                     this.cartService.updateTotalAmount(this.cartId, this.getTotalAmount()).subscribe()
@@ -198,6 +203,10 @@ export class CartComponent {
           }
         }
       )
+    } else {
+      // OFFLINECART
+      const button = document.getElementById('offLineModalBtn');
+      button?.click();
     }
   }
 
@@ -209,6 +218,24 @@ export class CartComponent {
   reload() {
     window.location.reload();
   }
+
+  
+  // OFFLINE CART
+  loadOfflineArtworks() {
+    let cart = this.storageService.getOfflineCart();
+    this.carted = [];
+    cart.forEach(artwork_id => {
+      let art = this.artworkService.getArtwork(artwork_id).subscribe(
+        (response) => {
+          let artwork = ArtworkModel.fromJson(response);
+          this.checkedArtworks[artwork.id] = true; // Set default checked state to true     
+          this.carted.push(artwork)
+          console.log(this.carted);
+        }
+      );
+    });
+  }
+
 
 }
 

@@ -1,3 +1,4 @@
+import { ArtworkService } from './artwork.service';
 import { Injectable, Inject, PLATFORM_ID } from '@angular/core';
 import { isPlatformBrowser } from '@angular/common';
 
@@ -6,8 +7,10 @@ import { isPlatformBrowser } from '@angular/common';
 })
 // Manejo del sessionStorage y las cookies
 export class StorageService {
-  constructor(@Inject(PLATFORM_ID) private platformId: any) {}
+  constructor(@Inject(PLATFORM_ID) private platformId: any, private artworkService: ArtworkService) { }
 
+
+  // --- COOKIES STORAGE --- //
   // Establecer un item en cookies
   setCookie(name: string, value: string, days: number): void {
     if (isPlatformBrowser(this.platformId)) {
@@ -39,6 +42,8 @@ export class StorageService {
     }
   }
 
+
+  // --- SESSION STORAGE --- //
   // Establecer un item en sessionStorage
   setSessionItem(key: string, value: string): void {
     if (isPlatformBrowser(this.platformId) && window.sessionStorage) {
@@ -65,6 +70,49 @@ export class StorageService {
   clearSession(): void {
     if (isPlatformBrowser(this.platformId) && window.sessionStorage) {
       window.sessionStorage.clear();
+    }
+  }
+
+
+  // --- LOCAL STORAGE --- //
+  // Manejo de localStorage
+  setLocalItem(key: string, value: string): void {
+    if (isPlatformBrowser(this.platformId) && window.localStorage) {
+      window.localStorage.setItem(key, value);
+    }
+  }
+
+  // Obtener un item de localStorage
+  getLocalItem(key: string): string | null {
+    if (isPlatformBrowser(this.platformId) && window.localStorage) {
+      return window.localStorage.getItem(key);
+    }
+    return null;
+  }
+
+  // Eliminar un item de localStorage
+  removeLocalItem(key: string): void {
+    if (isPlatformBrowser(this.platformId) && window.localStorage) {
+      window.localStorage.removeItem(key);
+    }
+  }
+
+  // Limpiar todo localStorage
+  clearLocal(): void {
+    if (isPlatformBrowser(this.platformId) && window.localStorage) {
+      window.localStorage.clear();
+    }
+  }
+
+
+  getOfflineCart(): number[] {
+    const cart = this.getLocalItem('offlineCart');
+    return cart ? JSON.parse(cart) : [];
+  }
+  setOfflineCart(cart: number[]): void {
+    if (isPlatformBrowser(this.platformId) && window.localStorage) {
+      // Convertir el carrito a JSON y guardarlo en el localStorage
+      this.setLocalItem('offlineCart', JSON.stringify(cart));
     }
   }
 }

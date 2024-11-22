@@ -78,7 +78,6 @@
                   </div>
                </div>
             </div>
-            <!-- endmodal -->
          </div>
       </div>
 
@@ -97,13 +96,9 @@
             <button class="btn" (click)="checkout()">Tramitar pedido</button>
          </div>
       </div>
-
-      <!-- <div class="sold_products">
-
-      </div> -->
-
    </div>
 
+   <!-- SOLD MODAL -->
    <!-- Este modal aparece cuando tienes en el carrito alguna obra vendida pero aún no has recargado la página -->
    <button type="button" data-bs-toggle="modal" data-bs-target="#soldModal" id="soldModalBtn" hidden></button>
    <div class="modal" tabindex="-1" id="soldModal">
@@ -112,6 +107,19 @@
             <div class="modal-body">
                <h2>Lo sentimos, una de las obras que tenías en el carrito ha sido vendida</h2>
                <button type="button" class="btn btn-primary" data-bs-dismiss="modal">Aceptar</button>
+            </div>
+         </div>
+      </div>
+   </div>
+
+   <!-- OFFLINE CART MODAL -->
+   <button type="button" data-bs-toggle="modal" data-bs-target="#offLineModal" id="offLineModalBtn" hidden></button>
+   <div class="modal" tabindex="-1" id="offLineModal">
+      <div class="modal-dialog">
+         <div class="modal-content">
+            <div class="modal-body">
+               <h2>Para tramitar un pedido, porfavor inicie sesión</h2>
+               <a class="btn btn-primary" data-bs-dismiss="modal" [routerLink]="['/login']" >Iniciar sesión</a>
             </div>
          </div>
       </div>

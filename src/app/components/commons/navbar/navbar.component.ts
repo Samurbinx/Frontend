@@ -55,8 +55,14 @@ export class NavbarComponent implements OnInit {
                 console.error('Error during login', error);
               }
             );
-          }
+          } 
+          let cart = this.storageService.getOfflineCart().length;
+          this.userService.updateCartLength(cart)
+          this.userService.cartLength$.subscribe(length => {
+            this.cart_length = length;
+          });
         }
+        
       }
     )
   }
@@ -68,10 +74,10 @@ export class NavbarComponent implements OnInit {
         next: (length: number) => this.userService.updateCartLength(length), // Actualizar el observable con el valor inicial
         error: (err) => console.error('Error al cargar el tamaño del carrito:', err),
       });
+      this.userService.cartLength$.subscribe(length => {
+        this.cart_length = length;
+      });
     }
-    this.userService.cartLength$.subscribe(length => {
-      this.cart_length = length;
-    });
   }
   
   logout(): void {

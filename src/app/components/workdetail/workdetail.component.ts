@@ -1,3 +1,4 @@
+import { StorageService } from './../../services/storage.service';
 import { CartService } from './../../services/cart.service';
 import { AfterViewInit, Component, Inject, OnInit, PLATFORM_ID } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
@@ -23,7 +24,7 @@ import { UserService } from '../../services/user.service';
 export class WorkdetailComponent implements OnInit, AfterViewInit {
    work: WorkModel;
    user_id: string = "";
-  cart_id: number | null = null;
+   cart_id: number | null = null;
    favs: number[] = [];
    carted: ArtworkModel[] = [];
 
@@ -39,6 +40,7 @@ export class WorkdetailComponent implements OnInit, AfterViewInit {
       private cartService: CartService,
       private userService: UserService,
       private snackBar: MatSnackBar,
+      private storageService: StorageService,
       private viewportScroller: ViewportScroller,
       @Inject(PLATFORM_ID) private platformId: object
    ) {
@@ -172,16 +174,20 @@ export class WorkdetailComponent implements OnInit, AfterViewInit {
    public isCarted(artwork_id: number): boolean {
       let isCarted = false;
       if (this.carted) {
-      this.carted.forEach(artwork => {
-         if (artwork.id == artwork_id) {
-            isCarted = true
-         }
-      });
-   }
+         this.carted.forEach(artwork => {
+            if (artwork.id == artwork_id) {
+               isCarted = true
+            }
+         });
+      }
       return isCarted;
    }
 
    public addToCart(artwork_id: number) {
+      if (!this.user_id) {
+         this.addToOfflineCart(artwork_id);
+
+      }
       if (!this.isCarted(artwork_id) && this.cart_id) {
          this.cartService.addToCart(this.cart_id, artwork_id).subscribe(
             (response: any) => {
@@ -195,8 +201,22 @@ export class WorkdetailComponent implements OnInit, AfterViewInit {
       }
    }
 
+   
+
    public seeLogin() {
       window.open('/login', '_blank');
    }
+
+// OFFLINE CART
+   addToOfflineCart(artwork_id: number){
+      let cart = this.storageService.getOfflineCart();
+      if (!cart.includes(artwork_id)) {
+         cart.push(artwork_id);
+         this.storageService.setLocalItem('offlineCart', JSON.stringify(cart));
+         this.userService.updateCartLength(cart.length);
+         this.snackBar.open('Producto añadido al carrito', '', { duration: 3000 });
+       }
+   }
+
 }
 

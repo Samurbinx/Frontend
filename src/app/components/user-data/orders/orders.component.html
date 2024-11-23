@@ -7,8 +7,12 @@
    <div *ngFor="let order of orders" class="order">
       <div class="thead">
          <div>
+            <h3>DIRECCIÓN DE ENVÍO</h3>
+            <p>{{order.address.street}} {{order.address.details}},  {{order.address.zipcode}} - {{order.address.city}}, {{order.address.province}}</p>
+         </div>
+         <div>
             <h3>PEDIDO REALIZADO</h3>
-            <p>{{order.created_at}}</p>
+            <p>{{this.getDate(order)[0]}} / {{this.getDate(order)[1]}}</p>
          </div>
          <div>
             <h3>TOTAL</h3>
@@ -23,8 +27,6 @@
             <p>{{order.status}}</p>
          </div>
       </div>
-         
-
       <div id="artworks">
          <div *ngFor="let artwork of order.artworks" class="artwork">
             <div class="artwork_card">

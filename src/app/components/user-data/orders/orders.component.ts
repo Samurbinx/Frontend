@@ -46,4 +46,8 @@ export class OrdersComponent {
       });
     }
   }
+
+  getDate(order: OrderModel){
+    return order.created_at.toString().split(" ");
+  }
 }

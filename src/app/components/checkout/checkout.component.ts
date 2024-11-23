@@ -187,12 +187,11 @@ export class CheckoutComponent implements OnInit {
             this.createOrder(result.token.id);
           } else if (result.error) {
             console.log(result.error.message);
-            this.handleError(`Stripe error: ${result.error.message}`);
+            this.handleError(`${result.error.message}`);
           }
         });
-
     } else {
-      this.handleError('Datos de usuario o pago incompletos');
+      if (!this.user?.address) this.snackBar.open('Por favor, añada una dirección de envío', 'Cerrar', { duration: 3000 });
       return;
     }
   }

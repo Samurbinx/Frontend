@@ -53,7 +53,22 @@ justify-content: space-between;
    display: flex;
    flex-direction: column;
 }
-
+#noAddress {
+   display: flex;
+   flex-direction: row;
+   align-items: center;
+}
+#noAddress > p {
+   margin: 0px;
+}
+.error {
+   color: var(--error-400);
+   font-variation-settings:
+   'FILL' 0,
+   'wght' 400,
+   'GRAD' 0,
+   'opsz' 12
+}
 
 
 .btn-primary {

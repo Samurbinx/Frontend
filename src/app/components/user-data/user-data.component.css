@@ -18,6 +18,9 @@
    margin: 0 auto;
    height: 100%;
 }
+.main-content {
+   flex: 1;
+}
 .sidebar {
    min-width: fit-content;
    width: 230px;

@@ -1,3 +1,4 @@
+import { AddressModel } from "./address.model";
 import { ArtworkModel } from "./artwork.model";
 
 export class OrderModel {
@@ -8,6 +9,7 @@ export class OrderModel {
        public created_at: Date,
        public status: string,
        public artworks: ArtworkModel[],
+       public address: AddressModel,
    ){  }
 
    static fromJson(data: any): OrderModel {
@@ -17,7 +19,8 @@ export class OrderModel {
         data.total_amount,
         data.created_at,
         data.status,
-        data.artworks ? data.artworks.map((p: any) => ArtworkModel.fromJson(p)) : []
+        data.artworks ? data.artworks.map((p: any) => ArtworkModel.fromJson(p)) : [],
+        AddressModel.fromJson(data.address),
     );
 }
 }

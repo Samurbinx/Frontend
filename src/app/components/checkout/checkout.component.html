@@ -4,7 +4,10 @@
 		<div id="left">
 			<div id="userdata">
 				<h2>Entregando a {{user?.name}} {{user?.surname}}</h2>
-				<p *ngIf="!user?.address">No se ha encontrado ninguna dirección</p>
+				<div *ngIf="!user?.address" id="noAddress">
+					<p>No se ha encontrado ninguna dirección</p>
+					<span aria-hidden="false" class="material-symbols-outlined error">error</span>
+				</div>
 				<h4 *ngIf="user?.address">{{addressString}}</h4>
 				<a href="" data-bs-toggle="modal" data-bs-target="#exampleModal">{{ user?.address ? 'Editar dirección' :
 					'Añadir dirección' }}</a>

@@ -1,8 +1,6 @@
 import { ArtworkService } from './../../services/artwork.service';
 import { StorageService } from './../../services/storage.service';
-import { MatFormFieldModule } from '@angular/material/form-field';
 import { CartService } from './../../services/cart.service';
-import { WorkService } from './../../services/work.service';
 import { Component } from '@angular/core';
 import { UserModel } from '../../models/user.model';
 import { ArtworkModel } from '../../models/artwork.model';
@@ -10,11 +8,11 @@ import { AuthService } from '../../services/auth.service';
 import { CommonModule } from '@angular/common';
 import { PieceModel } from '../../models/piece.model';
 import { Router, RouterLink } from '@angular/router';
-import { FormsModule, ValueChangeEvent } from '@angular/forms';
+import { FormsModule } from '@angular/forms';
 import { UserService } from '../../services/user.service';
 import { MatSnackBar } from '@angular/material/snack-bar';
-import { response } from 'express';
-import { error } from 'console';
+import { Inject, PLATFORM_ID } from '@angular/core';
+import { isPlatformBrowser } from '@angular/common';
 
 
 @Component({
@@ -33,16 +31,17 @@ export class CartComponent {
   selectedProduct = "";
   modal: any;
 
-  constructor(private authService: AuthService, private artworkService: ArtworkService, private storageService: StorageService, private snackBar: MatSnackBar, private cartService: CartService, private router: Router, private userService: UserService) { }
-
+  constructor(private authService: AuthService, @Inject(PLATFORM_ID) private platformId: Object, private artworkService: ArtworkService, private storageService: StorageService, private snackBar: MatSnackBar, private cartService: CartService, private router: Router, private userService: UserService) { }
   ngOnInit(): void {
-    this.loadData();
-    this.modal = document.getElementById('soldModal');
 
+    this.loadData();
+    if (isPlatformBrowser(this.platformId)) {
+      this.modal = document.getElementById('soldModal');
+    }
     if (this.modal) {
       // Escucha el evento 'hidden.bs.modal' cuando el modal se cierra
       this.modal.addEventListener('hidden.bs.modal', () => {
-        this.reload(); 
+        this.reload();
       });
     }
   }
@@ -100,7 +99,7 @@ export class CartComponent {
       let cart = this.storageService.getOfflineCart();
       let i = cart.indexOf(artworkId)
       if (i > -1) {
-        cart.splice(i,1);
+        cart.splice(i, 1);
         this.storageService.setOfflineCart(cart);
         this.loadOfflineArtworks();
         this.snackBar.open(`Obra eliminada del carrito`, "", { duration: 3000 });
@@ -205,8 +204,10 @@ export class CartComponent {
       )
     } else {
       // OFFLINECART
-      const button = document.getElementById('offLineModalBtn');
-      button?.click();
+      if (isPlatformBrowser(this.platformId)) {
+        const button = document.getElementById('offLineModalBtn');
+        button?.click();
+      }
     }
   }
 
@@ -219,7 +220,7 @@ export class CartComponent {
     window.location.reload();
   }
 
-  
+
   // OFFLINE CART
   loadOfflineArtworks() {
     let cart = this.storageService.getOfflineCart();

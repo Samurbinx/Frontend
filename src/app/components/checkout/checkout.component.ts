@@ -11,9 +11,9 @@ import { AddressModel } from '../../models/address.model';
 import { CommonModule } from '@angular/common';
 import { Router } from '@angular/router';
 import {
-  injectStripe, NGX_STRIPE_VERSION, STRIPE_PUBLISHABLE_KEY, STRIPE_OPTIONS, NgxStripeModule, StripeElementsDirective, StripePaymentElementComponent, StripeFactoryService,
+  injectStripe, NGX_STRIPE_VERSION, LazyStripeAPILoader, STRIPE_PUBLISHABLE_KEY, STRIPE_OPTIONS, NgxStripeModule, StripeElementsDirective, StripePaymentElementComponent, StripeFactoryService,
   StripeCardNumberComponent,
-  StripeCardComponent
+  StripeCardComponent, WindowRef, DocumentRef
 } from 'ngx-stripe';
 import { StripeCardElementOptions, StripeElementsOptions, StripePaymentElementOptions } from '@stripe/stripe-js';
 import { ArtworkModel } from '../../models/artwork.model';
@@ -41,10 +41,13 @@ interface OrderResponse {
     CommonModule
   ],
   providers: [
+    LazyStripeAPILoader,
     StripeFactoryService,
     { provide: NGX_STRIPE_VERSION, useValue: '14.1.1' },
     { provide: STRIPE_PUBLISHABLE_KEY, useValue: 'pk_test_51QL60A01qslkTUypDH7HjcBn7G0E22306bHTsSjDqsGNsK3LT04ipA6PeGp4IajYdwNcIqce2Fi8hgHf4oFCtfMA006sUUYNnq' },
-    { provide: STRIPE_OPTIONS, useValue: { apiVersion: '2020-08-27' } }
+    { provide: STRIPE_OPTIONS, useValue: { apiVersion: '2020-08-27' } },
+    { provide: WindowRef, useClass: WindowRef },
+    { provide: DocumentRef, useClass: DocumentRef },
   ],
 })
 export class CheckoutComponent implements OnInit {
@@ -69,8 +72,7 @@ export class CheckoutComponent implements OnInit {
 
   // STRIPE
   @ViewChild(StripeCardComponent) cardElement!: StripeCardComponent;
-
-  stripe = injectStripe(this.cartService.StripePublicKey);
+  stripe = injectStripe('pk_test_51QL60A01qslkTUypDH7HjcBn7G0E22306bHTsSjDqsGNsK3LT04ipA6PeGp4IajYdwNcIqce2Fi8hgHf4oFCtfMA006sUUYNnq');
   paying = signal(false);
   client_secret = '';
   paymentIntentId = '';
@@ -98,6 +100,10 @@ export class CheckoutComponent implements OnInit {
   };
 
   ngOnInit() {
+    if (!this.stripe) {
+      console.error('Stripe has not been initialized.');
+      return;
+    }
     this.loadUserData();
   }
 
@@ -152,6 +158,13 @@ export class CheckoutComponent implements OnInit {
         this.elementsOptions.clientSecret = pi.client_secret;
         this.client_secret = pi.client_secret;
         this.paymentIntentId = pi.payment_intent_id; // Ahora tienes el payment_intent_id también
+        if (!this.client_secret) {
+          this.handleError('Client secret is missing.');
+          return;
+        }
+
+        console.log(this.client_secret);
+        console.log(this.paymentIntentId);
       },
       error: () => this.handleError('Error al crear la intención de pago'),
     });
@@ -159,8 +172,7 @@ export class CheckoutComponent implements OnInit {
 
   // Confirma el pago, pasando los detalles del mismo y crea un pedido en la base de datos
   pay() {
-    if (this.user_id && this.cart_id && this.artworks && this.total_amount) {
-
+    if (this.user_id && this.cart_id && this.artworks && this.total_amount && this.user?.address) {
       const cardElement = this.cardElement;
       if (!cardElement) {
         throw new Error('Card element is not available.');
@@ -175,13 +187,14 @@ export class CheckoutComponent implements OnInit {
             this.createOrder(result.token.id);
           } else if (result.error) {
             console.log(result.error.message);
+            this.handleError(`Stripe error: ${result.error.message}`);
           }
         });
+
     } else {
       this.handleError('Datos de usuario o pago incompletos');
       return;
     }
-
   }
 
   // Recopila todos los datos necesarios y hace la petición al backend donde se termina de confirmar el pago

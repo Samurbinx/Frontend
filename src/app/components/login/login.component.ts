@@ -79,9 +79,9 @@ export class LoginComponent implements OnInit {
                     this.cartService.addToCart(cartId, artwork).subscribe();
                   }
                 });
-                this.router.navigate(['/carrito']);
-                this.loginError = null;
               }
+              this.router.navigate(['/carrito']);
+                this.loginError = null;
 
             }
           )

@@ -67,11 +67,11 @@ export class StorageService {
   }
 
   // Limpiar todo sessionStorage
-  clearSession(): void {
-    if (isPlatformBrowser(this.platformId) && window.sessionStorage) {
-      window.sessionStorage.clear();
-    }
-  }
+  // clearSession(): void {
+  //   if (isPlatformBrowser(this.platformId) && window.sessionStorage) {
+  //     window.sessionStorage.clear();
+  //   }
+  // }
 
 
   // --- LOCAL STORAGE --- //
@@ -98,11 +98,11 @@ export class StorageService {
   }
 
   // Limpiar todo localStorage
-  clearLocal(): void {
-    if (isPlatformBrowser(this.platformId) && window.localStorage) {
-      window.localStorage.clear();
-    }
-  }
+  // clearLocal(): void {
+  //   if (isPlatformBrowser(this.platformId) && window.localStorage) {
+  //     window.localStorage.clear();
+  //   }
+  // }
 
 
   getOfflineCart(): number[] {

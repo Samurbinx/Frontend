@@ -1,18 +1,10 @@
-import { StorageService } from './services/storage.service';
-import { CommonModule, DOCUMENT } from '@angular/common';
-import { Component, OnInit, Inject, OnDestroy } from '@angular/core';
-import { Router, RouterLink, RouterLinkActive, RouterOutlet } from '@angular/router';
-import { MatIconModule } from '@angular/material/icon';
-import { HttpClientModule } from '@angular/common/http';
-
-import { FormsModule } from '@angular/forms'
-
+import { CommonModule } from '@angular/common';
+import { Component } from '@angular/core';
+import { RouterOutlet } from '@angular/router';
 import { FooterComponent } from './components/commons/footer/footer.component';
-import { HomeComponent } from './components/home/home.component';
 import { NavbarComponent } from './components/commons/navbar/navbar.component';
 import { MessageService } from './services/message.service';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
-
 
 @Component({
   selector: 'app-root',
@@ -22,7 +14,7 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
     NavbarComponent, 
     FooterComponent, 
     NgbModule,
-    CommonModule
+    CommonModule,
   ],
   providers: [MessageService],
   templateUrl: './app.component.html',

@@ -1,21 +1,21 @@
 
 export class AddressModel {
     constructor(
-        public street: string,
-        public details: string,
-        public zipcode: string, 
-        public city: string, 
-        public province: string, 
+        public Street: string,
+        public Details: string,
+        public Zipcode: string, 
+        public City: string, 
+        public Province: string, 
     ) {}
 
     // Método para inicializar una instancia desde un objeto recibido
     static fromJson(data: any): AddressModel {
         return new AddressModel(
-            data.street,
-            data.details,
-            data.zipcode,
-            data.city,
-            data.province,
+            data.Street,
+            data.Details,
+            data.Zipcode,
+            data.City,
+            data.Province,
         );
     }
 
@@ -23,6 +23,6 @@ export class AddressModel {
         if (!data) {
             return "";
         }
-        return `${data.street}, ${data.details}, ${data.zipcode}, ${data.city}, ${data.province}`;
+        return `${data.Street}, ${data.Details}, ${data.Zipcode}, ${data.City}, ${data.Province}`;
     }
 }

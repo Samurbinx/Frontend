@@ -1,6 +1,9 @@
 #dataForm {
    display: flex;
    flex-direction: column;
+   width: 350px;
+   background: var(--neutral-300);
+   padding: 20px;
 }
 #dataForm > div {
    display: flex;

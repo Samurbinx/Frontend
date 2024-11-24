@@ -11,15 +11,15 @@ import { BrowserModule } from '@angular/platform-browser';
 import { CommonModule } from '@angular/common';
 
 @Component({
-  selector: 'app-user-data',
+  selector: 'app-userdata',
   standalone: true,
   imports: [
     RouterOutlet,
     RouterModule,
     CommonModule
   ],
-  templateUrl: './user-data.component.html',
-  styleUrls: ['./user-data.component.css']
+  templateUrl: './userdata.component.html',
+  styleUrls: ['./userdata.component.css']
 })
 
 export class UserDataComponent  implements OnInit{

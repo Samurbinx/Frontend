@@ -1,3 +1,4 @@
+import { subscribe } from 'diagnostics_channel';
 import { Component, OnInit } from '@angular/core';
 import { AbstractControl, FormBuilder, FormControl, FormGroup, ReactiveFormsModule, UntypedFormBuilder, Validators } from '@angular/forms';
 import { MatInputModule } from '@angular/material/input';
@@ -6,22 +7,26 @@ import { AddressService } from '../../../../services/address.service';
 import { AuthService } from '../../../../services/auth.service';
 import { CommonModule } from '@angular/common';
 import { UserModel } from '../../../../models/user.model';
+import { UserService } from '../../../../services/user.service';
 
 
 
 @Component({
-  selector: 'app-address-form',
+  selector: 'app-address',
   standalone: true,
   imports: [ReactiveFormsModule, MatInputModule, CommonModule],
-  templateUrl: './address-form.component.html',
-  styleUrl: './address-form.component.css'
+  templateUrl: './address.component.html',
+  styleUrl: './address.component.css'
 })
-export class AddressFormComponent implements OnInit {
+export class AddressComponent implements OnInit {
 
-  constructor(private fb: FormBuilder, private addressService: AddressService, private authService: AuthService) { }
+  constructor(private fb: FormBuilder, private addressService: AddressService, private authService: AuthService, private userService: UserService) { }
 
   user: UserModel | null = null;
   userId: string | null = null;
+
+  myaddress: AddressModel | null = null;
+  alladdress: AddressModel[] | null = null;
 
   form: FormGroup = new FormGroup({
     street: new FormControl(''),
@@ -39,6 +44,10 @@ export class AddressFormComponent implements OnInit {
     this.loadData();
   }
 
+  delAddress(address_id: string){
+    this.addressService.delAddress(address_id).subscribe();
+  }
+
   private loadData(): void {
     this.authService.getUserSubject().subscribe((user) => {
       this.user = user;
@@ -46,7 +55,31 @@ export class AddressFormComponent implements OnInit {
 
       if (token) {
         this.userId = this.authService.getUserId();
-        this.loadForm();
+        if (this.userId) {
+          this.userService.getAddress(this.userId).subscribe(
+            (response) => {
+              this.myaddress = AddressModel.fromJson(response);
+              if (this.userId) {
+                this.userService.getAllAddress(this.userId).subscribe(
+                  (addresses) => {
+                    this.alladdress = addresses
+                      .map((address) => AddressModel.fromJson(address))
+                      .filter((address) => address.id !== this.myaddress?.id); // Exclude the default address
+                  },
+                  (error) => {
+                    console.error('Error fetching all addresses:', error);
+                  }
+                );
+              }
+            },
+            (error) => {
+              console.error('Error fetching default address:', error);
+            }
+          );
+          this.loadForm()
+
+
+        }
       }
     });
   }
@@ -73,11 +106,13 @@ export class AddressFormComponent implements OnInit {
     }
     if (this.form.valid && this.userId) {
       let address = new AddressModel(
+        '',
         this.form.value.street,
         this.form.value.details,
         this.form.value.zipcode,
         this.form.value.city,
-        this.form.value.province
+        this.form.value.province,
+        '',''
       )
 
       this.addressService.addAddress(address, this.userId).subscribe({

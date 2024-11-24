@@ -16,4 +16,10 @@ export class AddressService {
     return this.http.post(`${this.URL_API}/${user_id}/new`, address);
   }
 
+  delAddress(address_id: string): any {
+    return this.http.post(`${this.URL_API}/${address_id}/del`, address_id);
+  }
+
+ 
+
 }

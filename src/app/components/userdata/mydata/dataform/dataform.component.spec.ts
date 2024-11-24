@@ -1,18 +1,18 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { PwdFormComponent } from './pwd-form.component';
+import { DataFormComponent } from './dataform.component';
 
-describe('PwdFormComponent', () => {
-  let component: PwdFormComponent;
-  let fixture: ComponentFixture<PwdFormComponent>;
+describe('DataFormComponent', () => {
+  let component: DataFormComponent;
+  let fixture: ComponentFixture<DataFormComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [PwdFormComponent]
+      imports: [DataFormComponent]
     })
     .compileComponents();
 
-    fixture = TestBed.createComponent(PwdFormComponent);
+    fixture = TestBed.createComponent(DataFormComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

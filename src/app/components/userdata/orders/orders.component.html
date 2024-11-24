@@ -4,6 +4,8 @@
 </div>
 
 <div id="orders">
+   <p *ngIf="orders.length == 0">PONER AQUI ALGO de que no hay pedidos</p>
+
    <div *ngFor="let order of orders" class="order">
       <div class="thead">
          <div>

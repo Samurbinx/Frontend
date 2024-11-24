@@ -1,21 +1,24 @@
-#addressForm {
+#dataForm {
    display: flex;
    flex-direction: column;
+   width: 350px;
+   background: var(--neutral-300);
+   padding: 20px;
 }
-#addressForm > div {
+#dataForm > div {
    display: flex;
    flex-direction: column;
    min-width: 100%;
    width: 100%;
 }
-#addressForm p {
+#dataForm p {
    font-size: 15px;
    font-weight: 500;
    margin: 0px;
    color: var(--neutral-900);
 }
 
-#addressForm input {
+#dataForm input {
    padding: 5px 10px;
    margin-top: 5px;
    border-radius: 5px;
@@ -24,17 +27,6 @@
 .form-group {
    margin-bottom: 25px;
    height: 75px;
-}
-
-.doble {
-   display: flex;
-   flex-direction: row !important;
-   justify-content: space-between;
-}
-.doble > div {
-   display: flex;
-   flex-direction: column;
-   width: 48% !important;
 }
 
 .btn-primary {

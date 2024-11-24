@@ -41,6 +41,7 @@ export class FavoritesComponent implements OnInit {
     if (this.userId) {
       this.userService.getFavsArt(this.userId).subscribe((response) => {
         this.favorites = response.map(artwork => ArtworkModel.fromJson(artwork));
+        console.log(this.favorites);
       });
     }
   }

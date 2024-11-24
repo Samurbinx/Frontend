@@ -8,11 +8,14 @@ import { AboutComponent } from './components/about/about.component';
 import { WorkdetailComponent } from './components/workdetail/workdetail.component';
 import { RegisterComponent } from './components/register/register.component';
 import { LoginComponent } from './components/login/login.component';
-import { UserDataComponent } from './components/user-data/user-data.component';
-import { FavoritesComponent } from './components/user-data/favorites/favorites.component';
-import { OrdersComponent } from './components/user-data/orders/orders.component';
+import { UserDataComponent } from './components/userdata/userdata.component';
+import { FavoritesComponent } from './components/userdata/favorites/favorites.component';
+import { OrdersComponent } from './components/userdata/orders/orders.component';
 import { CartComponent } from './components/cart/cart.component';
-import { MydataComponent } from './components/user-data/mydata/mydata.component';
+import { MydataComponent } from './components/userdata/mydata/mydata.component';
+import { DataFormComponent } from './components/userdata/mydata/dataform/dataform.component';
+import { PwdFormComponent } from './components/userdata/mydata/pwdform/pwdform.component';
+import { AddressComponent } from './components/userdata/mydata/address/address.component';
 
 // Configuración de rutas
 export const routes: Routes = [
@@ -26,9 +29,16 @@ export const routes: Routes = [
     { path: 'carrito', component: CartComponent },
     { path: 'checkout', component: CheckoutComponent },
     {
-        path: 'userdata', component: UserDataComponent, 
+        path: 'userdata', component: UserDataComponent,
         children: [
-            { path: 'mydata', component: MydataComponent },
+            {
+                path: 'mydata', component: MydataComponent,
+                children: [
+                    { path: 'address', component: AddressComponent },
+                    { path: 'data', component: DataFormComponent },
+                    { path: 'pwd', component: PwdFormComponent },
+                ]
+            },
             { path: 'favoritos', component: FavoritesComponent },
             { path: 'pedidos', component: OrdersComponent },
         ]

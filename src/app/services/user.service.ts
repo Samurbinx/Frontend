@@ -48,5 +48,8 @@ export class UserService {
   getAddress(user_id: string):Observable<AddressModel> {
     return this.http.get<AddressModel>(`${this.URL_API}/address/${user_id}`);
   }
+  getAllAddress(user_id: string):Observable<AddressModel[]> {
+    return this.http.get<AddressModel[]>(`${this.URL_API}/address/alladdress/${user_id}`);
+  }
 
 }

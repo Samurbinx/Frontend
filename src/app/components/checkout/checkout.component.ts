@@ -6,7 +6,7 @@ import { FormGroup, ReactiveFormsModule, UntypedFormBuilder, Validators } from '
 import { MatInputModule } from '@angular/material/input';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { UserModel } from '../../models/user.model';
-import { AddressFormComponent } from "../user-data/mydata/address-form/address-form.component";
+import { AddressComponent } from '../userdata/mydata/address/address.component';
 import { AddressModel } from '../../models/address.model';
 import { CommonModule } from '@angular/common';
 import { Router } from '@angular/router';
@@ -37,7 +37,7 @@ interface OrderResponse {
     MatInputModule,
     StripeElementsDirective,
     NgxStripeModule,
-    AddressFormComponent,
+    AddressComponent,
     CommonModule
   ],
   providers: [

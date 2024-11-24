@@ -1,0 +1,108 @@
+
+#header {
+   display: flex;
+   flex-direction: row;
+   justify-content: space-between;
+   margin-right: 45px;
+}
+p {
+   margin-bottom: 0px;
+}
+.btn {
+   display: flex;
+   flex-direction: row;
+   justify-content: center;
+   align-items: center;
+   font-size: 20px;
+   border: 1px solid var(--primary-500);
+   color: var(--primary-500);
+}
+.btn:hover {
+   background-color: var(--primary-300);
+   color: white;
+}
+#alladdress {
+   display: flex;
+   flex-direction: row;
+   flex-wrap: wrap;
+}
+
+.address {
+   border: 1px solid gainsboro;
+   margin-right: 30px;
+   margin-bottom: 30px;
+   padding: 20px;
+   min-width: fit-content;
+   width: 250px;
+}
+
+
+
+.card_header {
+   padding-bottom: 15px;
+}
+
+.card_body {
+   border-top: 1px solid gainsboro;
+   border-bottom: 1px solid gainsboro;
+   padding: 15px 0;
+}
+
+.card_body>p {
+   margin-bottom: 5px;
+}
+
+.card_footer {
+   display: flex;
+   flex-direction: row;
+   width: 100%;
+   justify-content: space-between;
+   padding-top: 15px;
+}
+
+#addressForm {
+   display: flex;
+   flex-direction: column;
+}
+#addressForm > div {
+   display: flex;
+   flex-direction: column;
+   min-width: 100%;
+   width: 100%;
+}
+#addressForm p {
+   font-size: 15px;
+   font-weight: 500;
+   margin: 0px;
+   color: var(--neutral-900);
+}
+
+#addressForm input {
+   padding: 5px 10px;
+   margin-top: 5px;
+   border-radius: 5px;
+   border: 1px solid var(--neutral-500);
+}
+.form-group {
+   margin-bottom: 25px;
+   height: 75px;
+}
+
+.doble {
+   display: flex;
+   flex-direction: row !important;
+   justify-content: space-between;
+}
+.doble > div {
+   display: flex;
+   flex-direction: column;
+   width: 48% !important;
+}
+
+.btn-primary {
+   background-color: var(--primary-400);
+   border-color: var(--primary-700);
+}
+.btn-primary:hover {
+   background-color: var(--primary-700);
+}

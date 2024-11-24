@@ -1,30 +1,33 @@
-import { UserService } from './../../../../services/user.service';
+import { UserService } from '../../../../services/user.service';
 import { Component } from '@angular/core';
 import { AbstractControl, FormBuilder, FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { AuthService } from '../../../../services/auth.service';
 import { UserModel } from '../../../../models/user.model';
 import { CommonModule } from '@angular/common';
 import { MatSnackBar } from '@angular/material/snack-bar';
-import Validation from '../../../../utils/validation';
 
 @Component({
-  selector: 'app-pwd-form',
+  selector: 'app-dataform',
   standalone: true,
   imports: [CommonModule, ReactiveFormsModule],
-  templateUrl: './pwd-form.component.html',
-  styleUrl: './pwd-form.component.css'
+  templateUrl: './dataform.component.html',
+  styleUrl: './dataform.component.css'
 })
-export class PwdFormComponent {
+export class DataFormComponent {
+
   constructor(private fb: FormBuilder, private authService: AuthService, private snackBar: MatSnackBar, private userService: UserService) { }
 
   user: UserModel | null = null;
   userId: string | null = null;
 
   form: FormGroup = new FormGroup({
-    pwd: new FormControl(''),
-    npwd: new FormControl(''),
-    cpwd: new FormControl(''),
+    name: new FormControl(''),
+    surname: new FormControl(''),
+    email: new FormControl(''),
+    nick: new FormControl(''),
+    phone: new FormControl(''),
   });
+
 
   submitted = false;
   successMessage = "";
@@ -48,14 +51,12 @@ export class PwdFormComponent {
 
   private loadForm() {
     this.form = this.fb.group({
-      pwd: ['', [Validators.required, Validators.minLength(6), Validators.maxLength(40)]],
-      npwd: ['', [Validators.required, Validators.minLength(6), Validators.maxLength(40)]],
-      cpwd: ['', [Validators.required]],
-    }, {
-      validators: [Validation.match('npwd', 'cpwd'), Validation.notMatch('pwd', 'npwd')],
-    }
-  
-  );
+      name: [this.user?.name ?? '', [Validators.required]],
+      surname: [this.user?.surname ?? '', [Validators.required]],
+      email: [this.user?.email ?? '', [Validators.required, Validators.email, Validators.nullValidator]],
+      nick: [this.user?.nick ?? '', [Validators.required, Validators.minLength(6), Validators.maxLength(20)]],
+      phone: [this.user?.phone ?? '', [Validators.required]],
+    });
   }
 
   //To access form controls using -> (ex: f.username)
@@ -70,21 +71,24 @@ export class PwdFormComponent {
       return;
     }
     if (this.form.valid && this.userId) {
-      let data = {
-        pwd: this.form.value.pwd,
-        npwd: this.form.value.npwd,
+      let user = {
+        name: this.form.value.name,
+        surname: this.form.value.surname,
+        email: this.form.value.email,
+        nick: this.form.value.nick,
+        phone: this.form.value.phone
       }
 
-      this.authService.updatePwd(data, this.userId).subscribe({
+      this.authService.updateUser(user, this.userId).subscribe({
         next: (response: any) => {
           this.onReset();
           this.snackBar.open('Datos de usuario actualizados correctamente.', '', { duration: 3000, });
           window.location.reload();
         },
         error: (error: any) => {
-          if (error.status === 401 && error.error.message === 'La contraseña actual no es correcta') {
-            this.form.get('pwd')?.setErrors({ incorrectPassword: true });
-          }
+          this.form.get('email')?.setErrors(Validators.nullValidator);
+          console.log(error);
+          this.snackBar.open('Ha ocurrido un error actualizando sus datos.', '', { duration: 3000, });
 
         }
       });
@@ -96,4 +100,5 @@ export class PwdFormComponent {
     this.form.reset();
     this.submitted = false
   }
+
 }

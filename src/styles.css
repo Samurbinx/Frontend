@@ -49,16 +49,16 @@ body {
     --primary-800: #264041;
     --primary-900: #192A2C;
 
-    --succes-50: #DAE5DE;
-    --succes-100: #C7D8CE;
-    --succes-200: #A2BDAD;
-    --succes-300: #8FB09D;
-    --succes-400: #7DA38C;
-    --succes-500: #6A967C;
-    --succes-600: #5D836C;
-    --succes-700: #4F715D;
-    --succes-800: #354B3E;
-    --succes-900: #1A261F;
+    --success-50: #DAE5DE;
+    --success-100: #C7D8CE;
+    --success-200: #A2BDAD;
+    --success-300: #8FB09D;
+    --success-400: #7DA38C;
+    --success-500: #6A967C;
+    --success-600: #5D836C;
+    --success-700: #4F715D;
+    --success-800: #354B3E;
+    --success-900: #1A261F;
 
     --warning-50: #FBEED4;
     --warning-100: #F6DCAA;

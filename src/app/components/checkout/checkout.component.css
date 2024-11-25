@@ -19,8 +19,8 @@
 #left {
    margin-right: 70px;
    min-width: fit-content;
-   width: 700px;
-   max-width: none;
+   width: 910px;
+   max-width: 910px;
 }
 #left > div{
    background-color: white;
@@ -52,6 +52,9 @@ justify-content: space-between;
 #userdataForm {
    display: flex;
    flex-direction: column;
+}
+#addressCollapse {
+max-width: 910px;   
 }
 #noAddress {
    display: flex;

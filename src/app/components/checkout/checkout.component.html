@@ -2,16 +2,20 @@
 	<div id="content">
 
 		<div id="left">
+
 			<div id="userdata">
-				<h2>Entregando a {{user?.name}} {{user?.surname}}</h2>
+				<h2>Entregando a {{ user?.address?.recipient }}</h2>
 				<div *ngIf="!user?.address" id="noAddress">
 					<p>No se ha encontrado ninguna dirección</p>
 					<span aria-hidden="false" class="material-symbols-outlined error">error</span>
 				</div>
 				<h4 *ngIf="user?.address">{{addressString}}</h4>
-				<a href="" data-bs-toggle="modal" data-bs-target="#exampleModal">{{ user?.address ? 'Editar dirección' :
-					'Añadir dirección' }}</a>
+				<a href="" data-bs-toggle="collapse" data-bs-target="#addressCollapse">{{ user?.address ? 'Cambiar dirección' : 'Añadir dirección' }}</a>
 			</div>
+			<div class="collapse multi-collapse" id="addressCollapse">
+				<app-address (reload)="loadUserData()"></app-address>
+			</div>
+
 			<div class="order_inf">
 				<h2>Obras</h2>
 				<div *ngFor="let artwork of artworks" class="product">
@@ -86,12 +90,11 @@
 
 
 <!-- ADDRESS MODAL -->
-<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-	<div class="modal-dialog">
+<!-- <div class="modal fade" id="addressModal" tabindex="-1" aria-labelledby="addressModalLabel" aria-hidden="true">
+	<div class="modal-dialog modal-lg">
 		<div class="modal-content">
 			<div class="modal-header">
-				<h1 class="modal-title fs-5" id="exampleModalLabel">{{ user?.address ? 'Editar dirección' : 'Añadir
-					dirección'}}</h1>
+				<h1 class="modal-title fs-5" id="addressModalLabel">{{ user?.address ? 'Cambiar dirección' : 'Añadir dirección'}}</h1>
 				<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
 			</div>
 			<div class="modal-body">
@@ -99,4 +102,4 @@
 			</div>
 		</div>
 	</div>
-</div>
+</div> -->

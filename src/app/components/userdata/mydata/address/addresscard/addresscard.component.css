@@ -1,0 +1,33 @@
+.address {
+   border: 1px solid gainsboro;
+margin: 0 15px 30px 15px;
+   padding: 20px;
+   min-width: fit-content;
+   width: 250px;
+}
+
+p {
+   margin-bottom: 0px;
+}
+
+.card_header {
+   padding-bottom: 15px;
+}
+
+.card_body {
+   border-top: 1px solid gainsboro;
+   border-bottom: 1px solid gainsboro;
+   padding: 15px 0;
+}
+
+.card_body>p {
+   margin-bottom: 5px;
+}
+
+.card_footer {
+   display: flex;
+   flex-direction: row;
+   width: 100%;
+   justify-content: space-between;
+   padding-top: 15px;
+}

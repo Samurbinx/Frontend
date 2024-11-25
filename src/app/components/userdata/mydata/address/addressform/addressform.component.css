@@ -1,0 +1,47 @@
+
+#addressForm {
+   display: flex;
+   flex-direction: column;
+}
+#addressForm > div {
+   display: flex;
+   flex-direction: column;
+   min-width: 100%;
+   width: 100%;
+}
+#addressForm p {
+   font-size: 15px;
+   font-weight: 500;
+   margin: 0px;
+   color: var(--neutral-900);
+}
+
+#addressForm input {
+   padding: 5px 10px;
+   margin-top: 5px;
+   border-radius: 5px;
+   border: 1px solid var(--neutral-500);
+}
+.form-group {
+   margin-bottom: 25px;
+   height: 75px;
+}
+
+.doble {
+   display: flex;
+   flex-direction: row !important;
+   justify-content: space-between;
+}
+.doble > div {
+   display: flex;
+   flex-direction: column;
+   width: 48% !important;
+}
+
+.btn-primary {
+   background-color: var(--primary-400);
+   border-color: var(--primary-700);
+}
+.btn-primary:hover {
+   background-color: var(--primary-700);
+}

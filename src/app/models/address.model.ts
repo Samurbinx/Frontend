@@ -1,7 +1,7 @@
 
 export class AddressModel {
     constructor(
-        public id: string,
+        public id: number,
         public street: string,
         public details: string,
         public zipcode: string, 

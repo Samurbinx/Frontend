@@ -107,6 +107,10 @@ export class CheckoutComponent implements OnInit {
     this.loadUserData();
   }
 
+  reload() {
+    this.loadUserData();
+  }
+
   // Carga los datos del usuario, cuando termina, llama a cargar los datos del carrito
   loadUserData() {
     this.user_id = this.authService.getUserId();

@@ -15,11 +15,18 @@ export class AddressService {
   addAddress(address: AddressModel, user_id: string): any {
     return this.http.post(`${this.URL_API}/${user_id}/new`, address);
   }
-
-  delAddress(address_id: string): any {
-    return this.http.post(`${this.URL_API}/${address_id}/del`, address_id);
+  editAddress(address:AddressModel): any {
+    return this.http.post(`${this.URL_API}/${address.id}/edit`, address);
   }
 
+
+  delAddress(address_id: number): any {
+    return this.http.post(`${this.URL_API}/${address_id}/del`, address_id);
+  }
  
+  setDefault(address_id: number, user_id: string): any {
+    return this.http.post(`${this.URL_API}/setdefault`, { address_id, user_id });
+  }
+
 
 }

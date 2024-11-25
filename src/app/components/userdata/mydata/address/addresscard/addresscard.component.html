@@ -1,18 +1,17 @@
 <div class="address">
-   <div class="card_header">
-     <b *ngIf="isDefault">Dirección predeterminada</b>
-     <p *ngIf="!isDefault" (click)="setDefault()">Elegir como predeterminada</p>
-   </div>
-   <div class="card_body">
-     <p><b>{{ address?.recipient }}</b></p>
-     <p>{{ address?.street }}</p>
-     <p>{{ address?.details }}</p>
-     <p>{{ address?.city }}, {{ address?.province }} {{ address?.zipcode }}</p>
-     <p>{{ address?.phone }}</p>
-   </div>
-   <div class="card_footer">
-     <p (click)="onEdit()">Editar</p>
-     <p (click)="delAddress()">Eliminar</p>
-   </div>
- </div>
-
+  <div class="card_header">
+    <b *ngIf="isDefault">Dirección predeterminada</b>
+    <p *ngIf="!isDefault" (click)="setDefault()" class="click default">Elegir como predeterminada</p>
+  </div>
+  <div class="card_body">
+    <p><b>{{ address?.recipient }}</b></p>
+    <p>{{ address?.street }}</p>
+    <p>{{ address?.details }}</p>
+    <p>{{ address?.city }}, {{ address?.province }} {{ address?.zipcode }}</p>
+    <p>{{ address?.phone }}</p>
+  </div>
+  <div class="card_footer">
+    <p (click)="onEdit()" class="click edit"><i class="bi bi-pencil"></i></p>
+    <p (click)="delAddress()" class="click del"><i class="bi bi-trash"></i></p>
+  </div>
+</div>

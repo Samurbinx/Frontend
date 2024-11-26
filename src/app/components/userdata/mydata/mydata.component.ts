@@ -4,6 +4,7 @@ import { AuthService } from '../../../services/auth.service';
 import { CommonModule } from '@angular/common';
 
 import { Router, RouterModule, RouterOutlet } from '@angular/router';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 @Component({
   selector: 'app-mydata',
@@ -17,12 +18,16 @@ export class MydataComponent implements OnInit{
   user: UserModel | null = null;
   userId: string | null = null;
 
-  constructor(private authService: AuthService) { }
+  constructor(private authService: AuthService, private snackBar: MatSnackBar) { }
 
   ngOnInit(): void {
     this.loadData();
   }
 
+  reload(){
+    this.loadData()
+    this.snackBar.open('Datos de usuario actualizados correctamente.', '', { duration: 3000, });
+  }
   private async loadData() {
     this.authService.getUserSubject().subscribe((user) => {
       this.user = user;

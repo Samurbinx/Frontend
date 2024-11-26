@@ -1,5 +1,5 @@
 import { UserService } from '../../../../services/user.service';
-import { Component } from '@angular/core';
+import { Component, EventEmitter, Output } from '@angular/core';
 import { AbstractControl, FormBuilder, FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { AuthService } from '../../../../services/auth.service';
 import { UserModel } from '../../../../models/user.model';
@@ -19,6 +19,8 @@ export class DataFormComponent {
 
   user: UserModel | null = null;
   userId: string | null = null;
+
+  @Output() reload = new EventEmitter<void>(); // Evento para editar la dirección
 
   form: FormGroup = new FormGroup({
     name: new FormControl(''),
@@ -82,8 +84,7 @@ export class DataFormComponent {
       this.authService.updateUser(user, this.userId).subscribe({
         next: (response: any) => {
           this.onReset();
-          this.snackBar.open('Datos de usuario actualizados correctamente.', '', { duration: 3000, });
-          window.location.reload();
+          this.reload.emit();
         },
         error: (error: any) => {
           this.form.get('email')?.setErrors(Validators.nullValidator);
@@ -99,6 +100,7 @@ export class DataFormComponent {
   onReset(): void {
     this.form.reset();
     this.submitted = false
+    window.location.reload();
   }
 
 }

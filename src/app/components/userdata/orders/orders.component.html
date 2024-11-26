@@ -13,6 +13,10 @@
             <p>{{order.address.street}} {{order.address.details}},  {{order.address.zipcode}} - {{order.address.city}}, {{order.address.province}}</p>
          </div>
          <div>
+            <h3>DESTINATARIO</h3>
+            <p>{{order.address.recipient}}</p>
+         </div>
+         <div>
             <h3>PEDIDO REALIZADO</h3>
             <p>{{this.getDate(order)[0]}} / {{this.getDate(order)[1]}}</p>
          </div>

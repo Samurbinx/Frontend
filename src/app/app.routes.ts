@@ -29,11 +29,12 @@ export const routes: Routes = [
     { path: 'carrito', component: CartComponent },
     { path: 'checkout', component: CheckoutComponent },
     {
-        path: 'userdata', component: UserDataComponent,
+        path: 'userdata', component: UserDataComponent, 
         children: [
             {
                 path: 'mydata', component: MydataComponent,
                 children: [
+                    // { path: '', redirectTo: 'data', pathMatch: 'full' },
                     { path: 'address', component: AddressComponent },
                     { path: 'data', component: DataFormComponent },
                     { path: 'pwd', component: PwdFormComponent },

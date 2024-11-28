@@ -63,6 +63,10 @@ export class WorkdetailComponent implements OnInit, AfterViewInit {
       this.route.fragment.subscribe(fragment => {
          this.fragment = fragment;
       });
+   
+       
+       
+       
 
    }
    ngAfterViewInit(): void {
@@ -75,7 +79,9 @@ export class WorkdetailComponent implements OnInit, AfterViewInit {
          }, 3000);
       }
    }
-
+   isMouseDevice = () => {
+      return window.matchMedia('(pointer: fine)').matches;
+    };
    // Divide el texto en palabras y une hasta el máximo permitido
    get truncatedStatement(): string {
       return this.work.statement.split(' ').slice(0, this.maxWords).join(' ') + '...';

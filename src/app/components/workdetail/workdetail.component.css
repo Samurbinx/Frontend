@@ -233,23 +233,26 @@ video {
 .mobile {
     display: none;
 }
+
 #mobile_piece_inf {
     text-align: center;
     padding: 0px;
     margin: 5px 0px;
 }
-#mobile_piece_inf > p {
+
+#mobile_piece_inf>p {
     margin: 0;
 
 }
 
-#mobile_piece_inf > p:last-child {
+#mobile_piece_inf>p:last-child {
     color: var(--neutral-800);
 }
+
 .sticky_inf {
     background-color: white;
     position: sticky;
-    padding: 15px 0;
+    padding: 15px 20px;
     top: 0px;
     z-index: 10;
     height: 60px;
@@ -289,8 +292,8 @@ video {
 
 @media (width <=1238px) {}
 
-/* Estilo para tablets */
-@media (max-width: 1025px) {
+/* Para dispositivos con puntero táctil */
+@media (pointer: coarse) {
     .artwork:hover .hidden {
         display: none;
     }
@@ -300,16 +303,23 @@ video {
     }
 
     img {
-        margin: 0px;
+        margin: 20px;
     }
 
-    .artwork,
+
+}
+
+/* Estilo para móviles */
+@media (max-width: 767px) {
+    .sticky_inf {
+        padding: 15px 0px;
+    }
+    img {
+        margin: 0px;
+    }
     .pieces,
     .piece,
     .images {
         width: 100%;
     }
 }
-
-/* Estilo para móviles */
-@media (max-width: 767px) {}

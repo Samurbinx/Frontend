@@ -1,12 +1,17 @@
 #body {
     width: 100vw !important;
-    margin: 50px 0;
+    min-height: 80vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
 }
+
 #content {
     display: flex;
     flex-wrap: nowrap;
     justify-content: center;
     padding: 0 50px;
+    margin: 50px 0;
 }
 
 #aboutImg {
@@ -24,7 +29,7 @@
     height: fit-content;
 }
 
-#aboutTxt > pre {
+#aboutTxt>pre {
     width: 100%;
     font-size: large;
     margin: 25px 0 0 0;
@@ -32,38 +37,79 @@
 
     overflow: hidden;
     text-wrap: wrap;
-
-
+    text-align: justify;
 }
 
-.a_ltr{
+.a_ltr {
     animation: ltr 2s forwards;
 }
 
 @keyframes ltr {
     0% {
-        transform: translateX(20%); /* El texto está fuera del área visible, a la derecha */
+        transform: translateX(20%);
+        /* El texto está fuera del área visible, a la derecha */
     }
+
     100% {
-        transform: translateX(0); /* El texto se mueve hacia la izquierda, hasta su posición original */
+        transform: translateX(0);
+        /* El texto se mueve hacia la izquierda, hasta su posición original */
     }
 }
+
 @keyframes rtl {
     0% {
         transform: translateX(-20%);
     }
+
     100% {
-        transform: translateX(0); 
+        transform: translateX(0);
     }
 }
 
-/* La pantalla es demasiado pequeña como para mostrar la imagen */
-@media (width <= 720px) {
+@media (width >=2000px) {
     #body {
-        margin-top: 40px;
+        margin: 0px;
+        max-width: 2000px;
     }
+}
+
+@media (width <=900px) {
+    #body {
+        margin: 25px 0;
+    }
+}
+/* La pantalla es demasiado pequeña como para mostrar la imagen */
+@media (width <=850px) {
+
+    #aboutImg,
+    .a_ltr {
+        animation: none;
+    }
+
+    #content {
+        display: flex;
+        flex-wrap: wrap;
+        flex-direction: column-reverse;
+        margin: 0 auto;
+    }
+#aboutTxt {
+    width: 80vw;
+}
     #aboutImg {
-        display: none;
-        
+        width: 80vw;
+
+        height: 90vh;
+        margin: 50px 0px;
+    }
+}
+
+@media (width <=450px) {
+    #content {
+        padding: 25px;
+    }
+    #aboutTxt, #aboutImg {
+    width: 100%;
+    padding: 0px;
+
     }
 }

@@ -72,6 +72,9 @@
 }
 
 @media (width >= 2000px){
+    #body {
+        max-width: 2000px;
+    }
     #work, .img {
         width: 350px;
         height: 350px;

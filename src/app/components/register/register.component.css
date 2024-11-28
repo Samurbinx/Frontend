@@ -1,7 +1,8 @@
 #body {
    flex: 1;
-   min-width: 100vw !important;
- }
+   min-height: 80vh !important;
+}
+
 .content {
    width: 500px;
    margin: 30px auto;
@@ -12,6 +13,7 @@ form {
    padding: 25px;
    border-radius: 10px;
 }
+
 .form-group {
    margin-bottom: 25px;
    height: 50px;
@@ -58,17 +60,32 @@ button {
    color: var(--primary-600);
    border-color: var(--primary-700);
 }
+
 .error-message {
    color: var(--error-500);
    font-size: 14px;
-   margin-bottom: 10px; 
- }
+   margin-bottom: 10px;
+}
 
 @media (width <=620px) {
    .body {
       margin: 40px auto;
-      padding: 0px 50px;
+      padding: 0px;
       width: fit-content;
+   }
+
+   .content {
+      width: 100%;
+      min-width: none;
+   }
+
+   form {
+      border-radius: 0px;
+
+   }
+
+   .header-text {
+      padding: 0 15px;
    }
 
 }

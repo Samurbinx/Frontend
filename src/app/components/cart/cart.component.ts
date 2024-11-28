@@ -13,6 +13,9 @@ import { UserService } from '../../services/user.service';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { Inject, PLATFORM_ID } from '@angular/core';
 import { isPlatformBrowser } from '@angular/common';
+import { MatDialog } from '@angular/material/dialog';
+import { ConfirmationdialogComponent } from '../commons/confirmationdialog/confirmationdialog.component';
+import { AlertdialogComponent } from '../commons/alertdialog/alertdialog.component';
 
 
 @Component({
@@ -31,7 +34,7 @@ export class CartComponent {
   selectedProduct = "";
   modal: any;
 
-  constructor(private authService: AuthService, @Inject(PLATFORM_ID) private platformId: Object, private artworkService: ArtworkService, private storageService: StorageService, private snackBar: MatSnackBar, private cartService: CartService, private router: Router, private userService: UserService) { }
+  constructor(private authService: AuthService, public dialog: MatDialog, @Inject(PLATFORM_ID) private platformId: Object, private artworkService: ArtworkService, private storageService: StorageService, private snackBar: MatSnackBar, private cartService: CartService, private router: Router, private userService: UserService) { }
   ngOnInit(): void {
 
     this.loadData();
@@ -88,23 +91,29 @@ export class CartComponent {
     }
   }
 
-  delArtwork(artworkId: number) {
-    if (this.cartId) {
-      this.cartService.delFromCart(this.cartId, artworkId).subscribe(
-        (response) => {
-          this.loadArtworks();
-          this.snackBar.open(`Obra eliminada del carrito`, "", { duration: 3000 });
-        })
-    } else {
-      let cart = this.storageService.getOfflineCart();
-      let i = cart.indexOf(artworkId)
-      if (i > -1) {
-        cart.splice(i, 1);
-        this.storageService.setOfflineCart(cart);
-        this.loadOfflineArtworks();
-        this.snackBar.open(`Obra eliminada del carrito`, "", { duration: 3000 });
+  delArtwork(artwork: ArtworkModel) {
+    const message = `Seguro que desea eliminar "${artwork.title}"?`;
+    const dialogRef = this.dialog.open(ConfirmationdialogComponent, { data: { message } });
+    dialogRef.afterClosed().subscribe(result => {
+      if (result) {
+        if (this.cartId) {
+          this.cartService.delFromCart(this.cartId, artwork.id).subscribe(
+            (response) => {
+              this.loadArtworks();
+              this.snackBar.open(`Obra eliminada del carrito`, "", { duration: 3000 });
+            })
+        } else {
+          let cart = this.storageService.getOfflineCart();
+          let i = cart.indexOf(artwork.id)
+          if (i > -1) {
+            cart.splice(i, 1);
+            this.storageService.setOfflineCart(cart);
+            this.loadOfflineArtworks();
+            this.snackBar.open(`Obra eliminada del carrito`, "", { duration: 3000 });
+          }
+        }
       }
-    }
+    })
   }
 
   getBackgroundImageUrl(image: string, piece: PieceModel): string {
@@ -205,17 +214,24 @@ export class CartComponent {
     } else {
       // OFFLINECART
       if (isPlatformBrowser(this.platformId)) {
-        const button = document.getElementById('offLineModalBtn');
-        button?.click();
+        const message = `Para tramitar un pedido, porfavor inicie sesión`;
+        const dialogRef = this.dialog.open(AlertdialogComponent, { data: { message } });
+        dialogRef.afterClosed().subscribe(result => {
+          window.open('/login', '_blank');
+        })
       }
     }
   }
 
   // Acciones del soldModal
   openSoldModal() {
-    const button = document.getElementById('soldModalBtn');
-    button?.click();
+    const message = `Lo sentimos, una de las obras que tenías en el carrito ha sido vendida`;
+    const dialogRef = this.dialog.open(AlertdialogComponent, { data: { message } });
+    dialogRef.afterClosed().subscribe(result => {
+      this.reload();
+    })
   }
+
   reload() {
     window.location.reload();
   }

@@ -135,3 +135,10 @@ button:hover {
         transform: translateX(0);
     }
 }
+
+@media (width >= 2000px){
+    #content {
+        margin: 50px 0;
+        max-width: 2000px;
+    }
+}

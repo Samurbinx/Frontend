@@ -85,7 +85,9 @@ li.nav-item {
     flex-direction: row;
     align-items: center;
 }
-
+li.nav-item.logout > a.nav-link {
+    margin: 0px !important;
+}
 .navbar-toggler {
     border: none;
     padding: 0px;

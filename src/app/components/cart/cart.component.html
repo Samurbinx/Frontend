@@ -10,7 +10,7 @@
          </ng-template>
 
          <div class="product" *ngFor="let artwork of carted">
-            <div class="product_cover" *ngIf="artwork.sold" (click)="delArtwork(artwork.id)">
+            <div class="product_cover" *ngIf="artwork.sold" (click)="delArtwork(artwork)">
                <h1 class="sold">VENDIDO</h1>
                <p class="sold material-symbols-outlined">delete</p>
             </div>
@@ -51,38 +51,17 @@
                         [(ngModel)]="checkedArtworks[artwork.id]" (change)="toggleSelected(artwork.id)"
                         [disabled]="artwork.sold">
                      <p class="l">|</p>
-                     <p type="button" class="del" data-bs-toggle="modal" [attr.data-bs-target]="'#modal' + artwork.id">
+                     <p type="button" class="del" (click)="delArtwork(artwork)">
                         Eliminar</p>
                   </span>
                   <p id="price_{{artwork.id}}">{{artwork.price}}€</p>
-               </div>
-            </div>
-            <!-- MODAL -->
-            <div class="modal fade" id="modal{{artwork.id}}" tabindex="-1" aria-labelledby="exampleModalLabel"
-               aria-hidden="true">
-               <div class="modal-dialog">
-                  <div class="modal-content">
-                     <div class="modal-header">
-                        <h2 class="modal-title">¿Eliminar artículo de la cesta? <br>({{artwork.work_title}} -
-                           {{artwork.title}})</h2>
-                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                     </div>
-                     <div class="modal-footer">
-                        <p>¿Deseas continuar?</p>
-                        <div class="modal-buttons">
-                           <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
-                           <button type="button" class="btn btn-primary" data-bs-dismiss="modal"
-                              (click)="delArtwork(artwork.id)">Sí, eliminar</button>
-                        </div>
-                     </div>
-                  </div>
                </div>
             </div>
          </div>
       </div>
 
 
-      <div id="payment">
+      <div id="payment" class="PC">
          <div class="payment_inf">
             <span>
                <h1>Total</h1>
@@ -93,35 +72,12 @@
          <div>
          </div>
          <div class="payment_button">
-            <button class="btn" (click)="checkout()">Tramitar pedido</button>
+            <button class="btn" (click)="checkout()" [disabled]="count() === 0">Tramitar pedido</button>
          </div>
       </div>
-   </div>
-
-   <!-- SOLD MODAL -->
-   <!-- Este modal aparece cuando tienes en el carrito alguna obra vendida pero aún no has recargado la página -->
-   <button type="button" data-bs-toggle="modal" data-bs-target="#soldModal" id="soldModalBtn" hidden></button>
-   <div class="modal" tabindex="-1" id="soldModal">
-      <div class="modal-dialog">
-         <div class="modal-content">
-            <div class="modal-body">
-               <h2>Lo sentimos, una de las obras que tenías en el carrito ha sido vendida</h2>
-               <button type="button" class="btn btn-primary" data-bs-dismiss="modal">Aceptar</button>
-            </div>
-         </div>
-      </div>
-   </div>
-
-   <!-- OFFLINE CART MODAL -->
-   <button type="button" data-bs-toggle="modal" data-bs-target="#offLineModal" id="offLineModalBtn" hidden></button>
-   <div class="modal" tabindex="-1" id="offLineModal">
-      <div class="modal-dialog">
-         <div class="modal-content">
-            <div class="modal-body">
-               <h2>Para tramitar un pedido, porfavor inicie sesión</h2>
-               <a class="btn btn-primary" data-bs-dismiss="modal" [routerLink]="['/login']" >Iniciar sesión</a>
-            </div>
-         </div>
+      <div id="payment" class="mobile">
+            <h1>{{ getTotalAmount()}}€</h1>
+            <button class="btn" (click)="checkout()" [disabled]="count() === 0">Comprar ({{ count() }})</button>
       </div>
    </div>
 </div>

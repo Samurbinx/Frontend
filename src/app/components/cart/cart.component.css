@@ -1,10 +1,11 @@
+
 /* General */
 #body {
    flex: 1;
    min-width: 100vw !important;
 
    background-color: var(--neutral-100);
-   height: 100% !important;
+   min-height: 85vh !important;
 }
 
 #content {

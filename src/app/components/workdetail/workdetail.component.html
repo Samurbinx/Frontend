@@ -18,14 +18,44 @@
 
     <div id="body">
         <div id="inf">
-            <h1>{{ work.title }}</h1>
-            <pre *ngIf="work.statement">{{ work.statement }}</pre>
+            <h1 id="titleAnchor">{{ work.title }}</h1>
+            <pre *ngIf="work.statement">
+                {{ isExpanded ? work.statement : truncatedStatement }}
+            </pre>
+            <a href="#titleAnchor" *ngIf="this.wordsLength() > maxWords" (click)="toggleExpanded($event)">{{ isExpanded
+                ? "Leer menos" : "Leer más" }}</a>
         </div>
 
         <div id="artworks">
             <ng-container *ngFor="let artwork of work.artworks">
                 <div id="{{artwork.id}}" class="artwork"
                     *ngIf="artwork.display != 'covercarousel' && artwork.display != 'detail'">
+                    <div class="mobile sticky_inf">
+                        <div class="sticky_header" (click)="toggleCollapse(artwork.id)">
+                            <h1>{{artwork.title}}, {{artwork.creation_date}}</h1>
+                            <span class="material-symbols-outlined">keyboard_arrow_down</span>
+                        </div>
+                        <div [ngbCollapse]="isCollapsed[artwork.id]">
+                            <div class="sticky_collapse">
+                                <p *ngIf="artwork.sold;">
+                                    <ng-container *ngIf="artwork.sold;">Vendido</ng-container>
+                                </p>
+                                <p *ngIf="!artwork.sold;">
+                                    <ng-container *ngIf="artwork.price else noPrice">{{ artwork.price }}
+                                        €</ng-container>
+                                    <ng-template #noPrice>No aplica</ng-template>
+                                </p>
+                                <span>
+                                    <span *ngIf="!artwork.sold;" id="cart-icon{{artwork.id}}"
+                                        class="material-symbols-outlined"
+                                        (click)="addToCart(artwork.id)">add_shopping_cart</span>
+                                    <span id="fav-icon{{artwork.id}}" class="material-symbols-outlined"
+                                        (click)="logged ? favoriteToggle(artwork.id) : seeLogin()">favorite</span>
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- <h1 id="artworkheader" class="mobile">{{artwork.title}} ({{artwork.pieces.length}} piezas)</h1> -->
                     <div id="pieces">
                         <div id="piece" *ngFor="let piece of artwork.pieces">
                             <div id="images">
@@ -56,17 +86,18 @@
                                     <ng-template #noDimensions>No especificadas</ng-template>
                                 </p>
                             </div>
-
+                            <div id="mobile_piece_inf" class="mobile">
+                                <p>
+                                    <ng-container>{{ piece.title ? piece.title : 'Sin título' }}</ng-container>
+                                </p>
+                                <p>
+                                    <ng-container *ngIf="piece.materials">{{ piece.materials }}, </ng-container>
+                                    <ng-container *ngIf="piece.dimensions">{{ piece.dimensions }}</ng-container></p>
+                            </div>
                         </div>
                     </div>
-                    <!-- <div id="artwork_inf">
-                        <p>
-                            <ng-container *ngIf="work.title">{{ work.title }} - </ng-container>
-                            <ng-container *ngIf="artwork.title">{{ artwork.title }}, </ng-container>
-                            <ng-container *ngIf="artwork.creation_date">{{ artwork.creation_date }}. </ng-container>
-                            <ng-container *ngIf="artwork.dimensions">{{ artwork.dimensions }}</ng-container>
-                        </p>
-                    </div> -->
+
+
                     <div id="artwork_shop" class="hidden">
                         <h3>
                             <ng-container *ngIf="artwork.creation_date">{{ artwork.creation_date }}</ng-container>
@@ -90,11 +121,11 @@
                                 <ng-template #noPrice>No aplica</ng-template>
                             </p>
                             <div>
-                                <span *ngIf="!artwork.sold;">
-                                    <span id="cart-icon{{artwork.id}}" class="material-symbols-outlined" (click)="addToCart(artwork.id)">add_shopping_cart</span>
-                                </span>
-                                <span *ngIf="logged" id="fav-icon{{artwork.id}}" class="material-symbols-outlined" (click)="favoriteToggle(artwork.id)">favorite</span>
-                                <span *ngIf="!logged" id="fav-icon{{artwork.id}}" class="material-symbols-outlined" (click)="seeLogin()">favorite</span>
+                                <span id="cart-icon{{artwork.id}}" *ngIf="!artwork.sold;"
+                                    class="material-symbols-outlined"
+                                    (click)="addToCart(artwork.id)">add_shopping_cart</span>
+                                <span id="fav-icon{{artwork.id}}" class="material-symbols-outlined"
+                                    (click)="logged ? favoriteToggle(artwork.id) : seeLogin()"> favorite </span>
                             </div>
                         </div>
                     </div>

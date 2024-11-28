@@ -10,6 +10,7 @@ import { AuthService } from '../../../services/auth.service';
 import { StorageService } from '../../../services/storage.service';
 import { subscribe } from 'diagnostics_channel';
 import { MatBadgeModule } from '@angular/material/badge';
+import bootstrap from 'bootstrap';
 
 @Component({
   selector: 'app-navbar',
@@ -24,13 +25,22 @@ export class NavbarComponent implements OnInit {
   cart_length: number | null = 0;
   user_id: string | null = null;
 
+  pages = [
+    { label: 'Proyectos', link: '/proyectos', icon: 'dashboard' },
+    { label: 'Contacto', link: '/contacto', icon: 'contact_page' },
+    { label: 'Sobre mí', link: '/sobremi', icon: 'info' },
+    // { label: 'Carrito', link: '/carrito', icon: 'local_mall' }
+];
+
+
   constructor(
     private authService: AuthService,
     private router: Router,
     private storageService: StorageService,
     private userService: UserService,
   ) { }
-
+  
+  
   ngOnInit(): void {
     this.authService.isLoggedSubject().subscribe(
       (response) => {
@@ -67,6 +77,8 @@ export class NavbarComponent implements OnInit {
     )
   }
 
+
+  
   getCartLength() {
     this.user_id = this.storageService.getSessionItem('user_id');
     if (this.user_id) {

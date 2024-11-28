@@ -4,42 +4,29 @@
 
 		<div id="brand">
 			<a class="navbar-brand" href="/home">Ana Estrada Macías</a>
-			<!-- El botón para abrir el offcanvas -->
-			<button class="navbar-toggler" type="button" data-bs-toggle="offcanvas" data-bs-target="#mainPages"
+			<button id="menu1" class="navbar-toggler" type="button" data-bs-toggle="offcanvas" data-bs-target="#mainPages"
 				aria-controls="mainPages" aria-expanded="false" aria-label="Toggle navigation">
 				<span class="navbar-toggler-icon"></span>
 			</button>
 		</div>
 
 		<!-- Main pages -->
-		<div id="mainPages" class="offcanvas offcanvas-end" data-bs-backdrop="static" tabindex="-1"
-			aria-labelledby="offcanvasTopLabel">
+		<div id="mainPages" class="offcanvas offcanvas-end" tabindex="-1" aria-labelledby="offcanvasTopLabel">
 			<button type="button" class="btn-close offC" data-bs-dismiss="offcanvas" aria-label="Close"></button>
 			<ul class="navbar-nav">
-				<li *ngFor="let page of pages" class="nav-item">
-					<a class="offC"><span class="material-symbols-outlined shopping_bag">{{ page.icon }}</span></a>
-					<a class="nav-link" [routerLink]="page.link" routerLinkActive="active" data-bs-dismiss='offcanvas'>{{
-						page.label }}</a>
+				<li *ngFor="let page of mainPages" class="nav-item">
+					 <a class="offC"><span class="material-symbols-outlined shopping_bag">{{ page.icon }}</span></a>
+					 <a class="nav-link" [class.offC]="page.label == 'Carrito'" [routerLink]="page.link" routerLinkActive="active" data-bs-dismiss="offcanvas">{{ page.label }}</a>
 				</li>
-			</ul>
+		  </ul>
 
 			<!-- Extra elements for offcanvas menu -->
 			<div class="offC">
-				<ul class="navbar-nav">
-					<li class="nav-item">
-						<a><span class="material-symbols-outlined shopping_bag"
-								matBadge="{{this.cart_length}}">local_mall</span></a>
-						<a class="nav-link" href="/carrito">Carrito</a>
-					</li>
-				</ul>
-
 				<ul class="navbar-nav" *ngIf="logged; else notLoggedOffC">
 					<li class="nav-item">
 						<a><span class="material-symbols-outlined shopping_bag">favorite</span></a>
-						<a class="nav-link" href="/userdata/mydata">Mis datos</a>
-					</li>
-					<li class="nav-item logout" (click)="logout()"><a class="nav-link" href="/home">Cerrar sesión</a><span
-							class="material-symbols-outlined">logout</span></li>
+						<a class="nav-link" href="/userdata/mydata">Mis datos</a></li>
+					<li class="nav-item logout" (click)="logout()"><a class="nav-link" href="/home">Cerrar sesión</a><span class="material-symbols-outlined">logout</span></li>
 				</ul>
 
 				<ng-template #notLoggedOffC class="navbar-nav">
@@ -57,10 +44,15 @@
 			</div>
 		</div>
 
-		<!-- Secundary actions -->
+		<!-- Secondary actions, the elements with id="userDrop" dissapears in phones -->
 		<div id="secPages">
+			<button id="menu2" class="navbar-toggler" type="button" data-bs-toggle="offcanvas" data-bs-target="#mainPages"
+				aria-controls="mainPages" aria-expanded="false" aria-label="Toggle navigation">
+				<span class="navbar-toggler-icon"></span>
+			</button>
+
 			<!-- If is logged -->
-			<div *ngIf="logged; else notLogged" class="navbar-nav welcome userDrop PC">
+			<div *ngIf="logged; else notLogged" class="navbar-nav welcome userDrop PC" >
 				<p>Hola! {{user?.name}}</p>
 				<div>
 					<a href="/carrito" class="shopping_bag"><span class="material-symbols-outlined shopping_bag"
@@ -111,6 +103,5 @@
 				</div>
 			</ng-template>
 		</div>
-
 	</div>
 </nav>

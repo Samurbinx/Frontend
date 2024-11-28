@@ -91,50 +91,80 @@
     }
 
 }
-@media (width <= 1238px){
+
+
+@media (width <= 1500px){
     #work {
-        width: 25vw;
-        height: 25vw;
+        width: 35vw;
+        height: 35vw;
     }
     .img {
-        width: 25vw;
-        height: 25vw;
+        width: 35vw;
+        height: 35vw;
     }
     #work:hover .img{
-        height: 20vw;
+        height: 30vw;
+    }
+    #body {
+        width: 90%;
+    }
+    .title > h3 {
+        font-size: 2vw;
+        margin-bottom: 0.5vw;
+    }
+    .title > pre {
+        font-size: 1.5vw;
+    }
+    
+}
+
+@media (width <= 1238px){
+    #work {
+        width: 40vw;
+        height: 40vw;
+    }
+    .img {
+        width: 40vw;
+        height: 40vw;
+    }
+    #work:hover .img{
+        height: 34vw;
     }
     #body {
         width: 100vw;
-        margin: 0px;
+        margin: 0px 0px 100px;
         padding: 0px;
     }
+    .title > h3 {
+        font-size: 2.5vw;
+    }
+    .title > pre {
+        font-size: 2vw;
+    }
 }
-@media (width <= 900px){
+@media (width <= 935px){
     #work {
-        width: 40vw;
-        height: 40vw;
+        width: 45vw;
+        height: 45vw;
     }
     .img {
-        width: 40vw;
-        height: 40vw;
+        width: 45vw;
+        height: 45vw;
     }
     #work:hover .img{
-        height: 33vw;
+        height: 38vw;
     }
     #body {
         width: 100%;
-        padding: 0px;
-        margin: 0px;
     }
     .title > h3 {
         font-weight: bold;
-        font-size: 2.5vw;
-        margin: 0px;
+        font-size: 3vw;
         padding: 0px;
     }
     .title > pre {
         margin: 0px;
-        font-size: 1.8vw;
+        font-size: 2.5vw;
     }
 }
 @media (width <= 639px){
@@ -147,7 +177,7 @@
         margin: 5vw auto 5vw;
     }
     #work:hover .img{
-        height: 40vw;
+        height: 48vw;
     }
     .img {
         width: 70vw;
@@ -166,4 +196,3 @@
         font-size: 4.5vw;
     }
 }
-

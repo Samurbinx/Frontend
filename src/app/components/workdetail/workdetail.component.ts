@@ -12,25 +12,29 @@ import { isPlatformBrowser } from '@angular/common';
 import { ArtworkModel } from '../../models/artwork.model';
 import { MatIcon } from '@angular/material/icon';
 import { UserService } from '../../services/user.service';
+import { NgxImageZoomModule } from 'ngx-image-zoom';
+import { NgbCollapseModule } from '@ng-bootstrap/ng-bootstrap';
 
 @Component({
    selector: 'app-workdetail',
    standalone: true,
-   imports: [CommonModule, NgbModule],
+   imports: [CommonModule, NgbModule, NgxImageZoomModule, NgbCollapseModule],
    templateUrl: './workdetail.component.html',
    styleUrl: './workdetail.component.css'
 })
 
 export class WorkdetailComponent implements OnInit, AfterViewInit {
-   work: WorkModel;
    user_id: string = "";
    cart_id: number | null = null;
    favs: number[] = [];
    carted: ArtworkModel[] = [];
-
    logged: boolean = false;
 
    private fragment: string | null = null;
+
+   work: WorkModel;
+   maxWords = 250; // Máximo de palabras a mostrar
+   isExpanded = false; // Estado del texto (expandido o truncado)
 
    constructor(
       private router: Router,
@@ -46,7 +50,12 @@ export class WorkdetailComponent implements OnInit, AfterViewInit {
    ) {
       this.work = new WorkModel(0, "Sin título", "", "", "", []);
    }
+   isCollapsed: { [key: number]: boolean } = {};
 
+   toggleCollapse(id: number) {
+      // Alterna el estado del colapso para el artwork con el id dado
+      this.isCollapsed[id] = !this.isCollapsed[id];
+    }
 
    ngOnInit() {
       this.setWork();
@@ -54,6 +63,7 @@ export class WorkdetailComponent implements OnInit, AfterViewInit {
       this.route.fragment.subscribe(fragment => {
          this.fragment = fragment;
       });
+
    }
    ngAfterViewInit(): void {
       if (isPlatformBrowser(this.platformId)) {
@@ -66,6 +76,22 @@ export class WorkdetailComponent implements OnInit, AfterViewInit {
       }
    }
 
+   // Divide el texto en palabras y une hasta el máximo permitido
+   get truncatedStatement(): string {
+      return this.work.statement.split(' ').slice(0, this.maxWords).join(' ') + '...';
+   }
+   toggleExpanded(event: Event): void {
+      event.preventDefault(); // Evita que el enlace recargue la página
+      this.isExpanded = !this.isExpanded;
+      if (!this.isExpanded) {
+         // Scroll hacia el título cuando se colapse el texto
+         const anchor = document.getElementById('titleAnchor');
+         anchor?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      }
+   }
+   wordsLength(): number {
+      return this.work.statement.split(' ').length;
+   }
    public setWork() {
       const workID = this.route.snapshot.queryParams["id"];
 
@@ -78,13 +104,34 @@ export class WorkdetailComponent implements OnInit, AfterViewInit {
             if (response) {
                // Convierte el JSON recibido a una instancia de WorkModel
                this.work = WorkModel.fromJson(response);
-
+               this.setMaxWords()
+               if (this.wordsLength() < this.maxWords) {
+                  this.isExpanded = true;
+               }
+               this.work.artworks.forEach(artwork => {
+                  this.isCollapsed[artwork.id] = true; 
+                });
             }
          },
          (error) => {
             console.error('Error fetching work:', error);
          }
       );
+   }
+   setMaxWords() {
+      const screenWidth = window.innerWidth;
+      if (screenWidth > 1500) {
+         this.maxWords = 500;
+      }
+      else if (screenWidth > 1000) {
+         this.maxWords = 350;
+      }
+      else if (screenWidth > 500) {
+         this.maxWords = 200;
+      }
+      else if (screenWidth < 500) {
+         this.maxWords = 100;
+      }
    }
 
    public setUserData() {
@@ -201,21 +248,21 @@ export class WorkdetailComponent implements OnInit, AfterViewInit {
       }
    }
 
-   
+
 
    public seeLogin() {
       window.open('/login', '_blank');
    }
 
-// OFFLINE CART
-   addToOfflineCart(artwork_id: number){
+   // OFFLINE CART
+   addToOfflineCart(artwork_id: number) {
       let cart = this.storageService.getOfflineCart();
       if (!cart.includes(artwork_id)) {
          cart.push(artwork_id);
          this.storageService.setLocalItem('offlineCart', JSON.stringify(cart));
          this.userService.updateCartLength(cart.length);
          this.snackBar.open('Producto añadido al carrito', '', { duration: 3000 });
-       }
+      }
    }
 
 }

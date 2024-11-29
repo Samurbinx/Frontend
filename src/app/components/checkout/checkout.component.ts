@@ -20,6 +20,7 @@ import { ArtworkModel } from '../../models/artwork.model';
 import { PieceModel } from '../../models/piece.model';
 import { OrderService } from '../../services/order.service';
 import { response } from 'express';
+import Swal from 'sweetalert2';
 
 interface OrderResponse {
   success: boolean;
@@ -187,10 +188,9 @@ export class CheckoutComponent implements OnInit {
         .createToken(cardElement.element)
         .subscribe((result) => {
           if (result.token) {
-            console.log(result.token.id);
+            this.loading()
             this.createOrder(result.token.id);
           } else if (result.error) {
-            console.log(result.error.message);
             this.handleError(`${result.error.message}`);
           }
         });
@@ -199,7 +199,15 @@ export class CheckoutComponent implements OnInit {
       return;
     }
   }
-
+loading(){
+  Swal.fire({
+    text: 'El pedido se está tramitando',
+    timer: 2000, // Milisegundos
+    didOpen: () => {
+      Swal.showLoading(); // spinner de carga
+    },
+  });
+}
   // Recopila todos los datos necesarios y hace la petición al backend donde se termina de confirmar el pago
   createOrder(token: string) {
     const artworks_id = this.artworks.map(artwork => artwork.id);

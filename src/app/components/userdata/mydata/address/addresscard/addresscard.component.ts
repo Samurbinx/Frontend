@@ -31,7 +31,7 @@ export class AddresscardComponent {
   // Elimina la dirección y emite la señal de reload
   delAddress() {
     if (this.isDefault) {
-      this.snackbar.open('No puede eliminar su dirección predeterminada, para hacerlo, seleccione otra como predeterminada.', '', { duration: 5000 });
+      this.snackbar.open('No puede eliminar su dirección predeterminada, para hacerlo, seleccione otra como predeterminada.', '', { duration: 5000, verticalPosition: 'top'});
       this.reload.emit();
     } else if (this.address) {
       const message = `¿Está seguro de que desea eliminar "${this.address.recipient}"?`;

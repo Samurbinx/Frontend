@@ -1,8 +1,6 @@
 /* General */
 #body {
-   flex: 1;
-   min-width: 100vw !important;
-
+   width: 100%;
    background-color: var(--neutral-100);
    height: 100% !important;
    min-height: 85vh;
@@ -14,14 +12,15 @@
    flex-direction: row;
    margin: 0 auto;
    padding: 20px 0;
-   width: fit-content;
+   width: 95%;
    height: 100%;
    justify-content: space-between;
 }
+
 #left {
    margin-right: 70px;
-   min-width: fit-content;
-   width: 910px;
+   /* min-width: fit-content; */
+   width: 50%;
    max-width: 910px;
 }
 #left > div{
@@ -45,7 +44,7 @@ justify-content: space-between;
 
 #userdata{
    padding: 20px;
-   min-width: fit-content;
+   /* min-width: fit-content; */
    height: 165px;
 }
 #userdata > h2 {
@@ -94,15 +93,13 @@ max-width: 910px;
    padding: 35px;
    margin-bottom: 30px ;
    min-height: 165px;
-   min-width: fit-content;
 }
 
 #right {
-   width: 700px;
+   width: 45%;
+   min-width: 475px;
    display: flex;
    flex-direction: column;
-   min-width: fit-content;
-
 }
 #right h4 {
    margin: 0px;
@@ -139,8 +136,11 @@ max-width: 910px;
 .pieces>ul {
    list-style: none;
    padding-left: 10px;
+   color: rgb(65, 65, 65);
 }
-
+.pieces>ul b {
+   font-weight: 500;
+}
 .cover {
    height: 150px;
    width: 150px;
@@ -163,5 +163,26 @@ max-width: 910px;
    background-color: white;
    padding: 10px;
    border-radius: 5px;
+}
+
+@media (width < 1130px) {
+   #content {
+      flex-wrap: wrap;
+      width: 85%;
+   }
+   #content > div {
+      width: 100% !important;
+      max-width: none;
+      margin: 0px;
+   }
+   #left {
+      flex-direction: column-reverse !important;
+   }
+   #content > div > div {
+      width: 100% !important;
+      max-width: none;
+      margin: 0px;
+      margin-bottom: 15px;
+   }
 
 }

@@ -51,7 +51,10 @@ button {
   background-color: var(--primary-600);
   border-color: var(--primary-700);
 }
-
+button:disabled{
+  background-color: var(--primary-200);
+  border-color: var(--primary-400);
+}
 .account {
   text-align: center;
   color: var(--neutral-800);

@@ -9,27 +9,28 @@
    <div *ngFor="let order of orders" class="order">
       <div class="thead">
          <div>
-            <h3>DIRECCIÓN DE ENVÍO</h3>
-            <p>{{order.address.street}} {{order.address.details}},  {{order.address.zipcode}} - {{order.address.city}}, {{order.address.province}}</p>
+            <h5>DIRECCIÓN DE ENVÍO</h5>
+            <p>{{order.address.street}} - {{order.address.details}}</p>
+            <p>{{order.address.city}}, {{order.address.province}} - {{order.address.zipcode}}</p>
          </div>
          <div>
-            <h3>DESTINATARIO</h3>
+            <h5>DESTINATARIO</h5>
             <p>{{order.address.recipient}}</p>
          </div>
          <div>
-            <h3>PEDIDO REALIZADO</h3>
+            <h5>PEDIDO REALIZADO</h5>
             <p>{{this.getDate(order)[0]}} / {{this.getDate(order)[1]}}</p>
          </div>
          <div>
-            <h3>TOTAL</h3>
+            <h5>TOTAL</h5>
             <p>{{order.total_amount}} €</p>
          </div>
          <div>
-            <h3>Nº PEDIDO</h3>
+            <h5>Nº PEDIDO</h5>
             <p>{{order.id}}</p>
          </div>
          <div>
-            <h3>ESTADO</h3>
+            <h5>ESTADO</h5>
             <p>{{order.status}}</p>
          </div>
       </div>

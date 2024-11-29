@@ -3,7 +3,7 @@ import { UserModel } from '../../../models/user.model';
 import { AuthService } from '../../../services/auth.service';
 import { CommonModule } from '@angular/common';
 
-import { Router, RouterModule, RouterOutlet } from '@angular/router';
+import { Router, RouteReuseStrategy, RouterModule, RouterOutlet } from '@angular/router';
 import { MatSnackBar } from '@angular/material/snack-bar';
 
 @Component({
@@ -13,21 +13,22 @@ import { MatSnackBar } from '@angular/material/snack-bar';
   templateUrl: './mydata.component.html',
   styleUrl: './mydata.component.css'
 })
-export class MydataComponent implements OnInit{
+export class MydataComponent implements OnInit {
 
   user: UserModel | null = null;
   userId: string | null = null;
 
-  constructor(private authService: AuthService, private snackBar: MatSnackBar) { }
+  constructor(private authService: AuthService, private snackBar: MatSnackBar, private router: Router) { }
 
   ngOnInit(): void {
     this.loadData();
   }
 
-  reload(){
+  reload() {
     this.loadData()
     this.snackBar.open('Datos de usuario actualizados correctamente.', '', { duration: 3000, });
   }
+  
   private async loadData() {
     this.authService.getUserSubject().subscribe((user) => {
       this.user = user;
@@ -37,10 +38,5 @@ export class MydataComponent implements OnInit{
         this.userId = this.authService.getUserId();
       }
     });
-  }
-
-  openAllAddress(){
-    console.log("hola");
-    document.getElementById('')
   }
 }

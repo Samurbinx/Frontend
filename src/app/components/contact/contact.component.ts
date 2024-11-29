@@ -3,7 +3,8 @@ import { CommonModule } from '@angular/common';
 import { PageService } from '../../services/page.service';
 import { PageModel } from '../../models/page.model';
 import { MessageService } from '../../services/message.service';
-import swal from 'sweetalert';
+import Swal from 'sweetalert2';
+
 import { FormBuilder, FormControl, FormGroup, Validators, ReactiveFormsModule, AbstractControl, } from '@angular/forms';
 
 @Component({
@@ -75,7 +76,7 @@ export class ContactComponent implements OnInit {
 
       this._MessageService.sendMessage(data).subscribe(() => {
         this.form.reset(); 
-        swal('Formulario de contacto', 'Mensaje enviado correctamente', 'success');
+        Swal.fire('Formulario de contacto', 'Mensaje enviado correctamente', 'success');
         this.submitted = false
 
       });

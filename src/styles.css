@@ -82,7 +82,7 @@ body {
     --error-800: #68271B;
     --error-900: #3F1710;
 
-    --neutral-50: #F7F8F8;
+    /* --neutral-50: #F7F8F8;
     --neutral-100: #F3F5F5;
     --neutral-200: #EFF2F2;
     --neutral-300: #EBEEEE;
@@ -91,5 +91,16 @@ body {
     --neutral-600: #C7CFCF;
     --neutral-700: #AEBBBB;
     --neutral-800: #7D9191;
-    --neutral-900: #3E4949;
+    --neutral-900: #3E4949; */
+    --neutral-50: #f8f8f8;
+    --neutral-100: #F3F3F3;
+    --neutral-200: #EFEFEF;
+    --neutral-300: #EBEBEB;
+    --neutral-400: #E3E3E3;
+    --neutral-500: #DFDFDF;
+    --neutral-600: #C7C7C7;
+    --neutral-700: #AFAFAF;
+    --neutral-800: #7F7F7F;
+    --neutral-900: #3F3F3F;
+
 }

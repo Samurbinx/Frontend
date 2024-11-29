@@ -2,6 +2,8 @@
 #addressForm {
    display: flex;
    flex-direction: column;
+   justify-content: space-between;
+   height: 100%;
 }
 #addressForm > div {
    display: flex;
@@ -44,4 +46,18 @@
 }
 .btn-primary:hover {
    background-color: var(--primary-700);
+}
+
+@media (width < 500px) {
+   .doble {
+      display: flex;
+      flex-direction: column !important;
+      justify-content: space-between;
+      width: 100%;
+   }
+   .doble > div {
+      display: flex;
+      flex-direction: column;
+      width: 100% !important;
+   }
 }

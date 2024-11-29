@@ -1,0 +1,82 @@
+<div class="pageinf">
+   <span>
+      <div>
+         <h1>Mis datos</h1>
+         <p>Mira o cambia la información asociada a tu cuenta en cualquier momento.</p>
+      </div>
+   </span>
+</div>
+<div>
+   <a class="divopt" (click)="open(datamodal)">
+      <div>
+         <div class="icon">
+            <span class="material-symbols-outlined">person</span>
+         </div>
+         <div class="inf">
+            <h3>Datos de la cuenta</h3>
+            <p class="PC">Cambia los datos de tu cuenta como el número de teléfono o el gmail.</p>
+         </div>
+      </div>
+      <div class="icon chevron">
+         <span class="material-symbols-outlined">chevron_right</span>
+      </div>
+   </a>
+
+   <a class="divopt" (click)="open(pwdmodal)">
+      <div>
+         <div class="icon">
+            <span class="material-symbols-outlined">key</span>
+         </div>
+         <div class="inf">
+            <h3>Contraseña</h3>
+            <p class="PC">Cambia tu contraseña en cualquier momento.</p>
+         </div>
+      </div>
+      <div class="icon chevron">
+         <span class="material-symbols-outlined">chevron_right</span>
+      </div>
+   </a>
+
+   <a class="divopt" id="addressopt" href="/userdata/mydata/address">
+      <div>
+         <div class="icon">
+            <span class="material-symbols-outlined">send</span>
+         </div>
+         <div class="inf">
+            <h3>Dirección de envio</h3>
+            <p class="PC">Añade o cambia tus datos de dirección donde se enviarán tus pedidos.</p>
+         </div>
+      </div>
+      <div class="icon chevron">
+         <span class="material-symbols-outlined">chevron_right</span>
+      </div>
+   </a>
+</div>
+
+<!-- ADDRESS MODAL -->
+<ng-template #datamodal let-modal>
+   <div class="modal-content fullscreen-modal">
+      <div class="modal-header">
+         <h1 class="modal-title">Datos personales</h1>
+         <button type="button" class="btn-close" (click)="modal.dismiss('Cross click')"></button>
+      </div>
+      <div class="modal-body">
+         <app-dataform></app-dataform>
+         <!-- <app-addressform [address]="selectedAddress" [user_id]="userId" (reload)="reloadAddresses()"></app-addressform> -->
+      </div>
+   </div>
+</ng-template>
+
+<!-- ADDRESS MODAL -->
+<ng-template #pwdmodal let-modal>
+   <div class="modal-content fullscreen-modal">
+   <div class="modal-header">
+      <h1 class="modal-title">Cambiar contraseña</h1>
+      <button type="button" class="btn-close" (click)="modal.dismiss('Cross click')"></button>
+   </div>
+   <div class="modal-body">
+      <app-pwdform></app-pwdform>
+      <!-- <app-addressform [address]="selectedAddress" [user_id]="userId" (reload)="reloadAddresses()"></app-addressform> -->
+   </div>
+   </div>
+</ng-template>

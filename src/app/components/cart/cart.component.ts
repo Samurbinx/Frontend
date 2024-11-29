@@ -15,8 +15,7 @@ import { Inject, PLATFORM_ID } from '@angular/core';
 import { isPlatformBrowser } from '@angular/common';
 import { MatDialog } from '@angular/material/dialog';
 import { ConfirmationdialogComponent } from '../commons/confirmationdialog/confirmationdialog.component';
-import { AlertdialogComponent } from '../commons/alertdialog/alertdialog.component';
-
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-cart',
@@ -214,22 +213,30 @@ export class CartComponent {
     } else {
       // OFFLINECART
       if (isPlatformBrowser(this.platformId)) {
-        const message = `Para tramitar un pedido, porfavor inicie sesión`;
-        const dialogRef = this.dialog.open(AlertdialogComponent, { data: { message } });
-        dialogRef.afterClosed().subscribe(result => {
-          window.open('/login', '_blank');
-        })
+        Swal.fire({
+          text: 'Para tramitar un pedido, porfavor inicie sesión',
+          icon: 'warning',
+          confirmButtonText: 'Aceptar',
+          didClose: () => {
+            window.open('/login', '_blank');
+          },
+        });
       }
     }
   }
 
+
+
   // Acciones del soldModal
   openSoldModal() {
-    const message = `Lo sentimos, una de las obras que tenías en el carrito ha sido vendida`;
-    const dialogRef = this.dialog.open(AlertdialogComponent, { data: { message } });
-    dialogRef.afterClosed().subscribe(result => {
-      this.reload();
-    })
+    Swal.fire({
+      text: 'Lo sentimos, una de las obras que tenías en el carrito ha sido vendida',
+      icon: 'info',
+      confirmButtonText: 'Aceptar',
+      didClose: () => {
+        this.reload();
+      },
+    });
   }
 
   reload() {

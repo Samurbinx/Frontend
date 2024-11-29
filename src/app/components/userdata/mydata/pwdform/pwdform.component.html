@@ -1,10 +1,5 @@
-<div id="content">
-   <div id="header">
-      <h1>Cambiar contraseña</h1>
-   </div>
-   
-   <form [formGroup]="form" id="dataForm" (ngSubmit)="onSubmit()">
-
+<form [formGroup]="form" id="dataForm" (ngSubmit)="onSubmit()">
+   <span>
       <!-- CURRENT PASSWORD -->
       <div class="form-group">
          <p>Contraseña actual:</p>
@@ -42,7 +37,6 @@
          </div>
          }
       </div>
-
-      <button type="submit" class="btn btn-primary">Guardar Cambios</button>
-   </form>
-</div>
+   </span>
+   <button type="submit" class="btn btn-primary">Guardar Cambios</button>
+</form>

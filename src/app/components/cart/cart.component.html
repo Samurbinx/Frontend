@@ -35,7 +35,7 @@
                      <p><b>Contiene:</b></p>
                      <ul>
                         <li *ngFor="let piece of artwork.pieces">
-                           <ng-container *ngIf="piece.title; else noTitle">{{ piece.title }} - </ng-container>
+                           <ng-container *ngIf="piece.title; else noTitle"><b>{{ piece.title }} </b>- </ng-container>
                            <ng-template #noTitle>Sin título - </ng-template>
                            <ng-container *ngIf="piece.materials; else noMat">{{ piece.materials}} - </ng-container>
                            <ng-template #noMat>Materiales no registrados - </ng-template>

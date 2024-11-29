@@ -1,9 +1,9 @@
 .address {
-   border: 1px solid gainsboro;
-margin: 0 15px 30px 15px;
+   border: 1px solid var(--neutral-200);
+   /* margin: 0 20px 30px 20px; */
    padding: 20px;
-   min-width: fit-content;
    width: 250px;
+   background-color: #fff;
 }
 
 p {
@@ -31,7 +31,8 @@ p {
    justify-content: space-between;
    padding-top: 15px;
 }
-.card_footer > p {
+
+.card_footer>p {
    font-size: 16px;
    padding: 5px 8px;
    border-radius: 5px;
@@ -40,14 +41,17 @@ p {
 .click {
    cursor: pointer;
 }
+
 .click.edit {
    color: var(--success-500);
    border: 1px solid var(--success-500);
 }
+
 .click.del {
    color: var(--error-500);
    border: 1px solid var(--error-500);
 }
+
 .click.default {
    color: var(--primary-700);
    text-decoration: underline;

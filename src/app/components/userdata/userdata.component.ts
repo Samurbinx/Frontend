@@ -1,6 +1,6 @@
 import { subscribe } from 'diagnostics_channel';
 import { Component, OnInit } from '@angular/core';
-import { Router, RouterModule, RouterOutlet } from '@angular/router';
+import { ActivatedRoute, Router, RouterModule, RouterOutlet } from '@angular/router';
 import { MatSnackBar } from '@angular/material/snack-bar';
 
 import { UserModel } from '../../models/user.model';
@@ -22,10 +22,10 @@ import { CommonModule } from '@angular/common';
   styleUrls: ['./userdata.component.css']
 })
 
-export class UserDataComponent  implements OnInit{
+export class UserDataComponent implements OnInit {
   user: UserModel | null = null;
-  
-  constructor(private authService: AuthService){}
+
+  constructor(private authService: AuthService, private router: Router) {}
 
   ngOnInit(): void {
     this.authService.getUserSubject().subscribe(

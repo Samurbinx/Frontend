@@ -1,10 +1,5 @@
-<div id="content">
-   <div id="header">
-      <h1>Datos personales</h1>
-   </div>
-
-   <form [formGroup]="form" id="dataForm" (ngSubmit)="onSubmit()">
-
+<form [formGroup]="form" id="dataForm" (ngSubmit)="onSubmit()">
+   <span>
       <div class="form-group">
          <p>Nombre:</p>
          <input matInput formControlName="name" class="form-control"
@@ -48,7 +43,6 @@
          @if (submitted && f['phone'].errors) { <div class="invalid-feedback">
             @if (f['phone'].errors['required']) { <div>Campo obligatorio</div> } </div>}
       </div>
-
-      <button type="submit" class="btn btn-primary">Guardar Cambios</button>
-   </form>
-</div>
+   </span>
+   <button type="submit" class="btn btn-primary">Guardar Cambios</button>
+</form>

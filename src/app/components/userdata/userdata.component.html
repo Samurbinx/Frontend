@@ -1,21 +1,33 @@
 <div id="wrapper">
    <div id="content">
-   <div class="sidebar">
-      <a class="options nav-link" href="/userdata/mydata" routerLink="/userdata/mydata" routerLinkActive="active">
-         <h2>Mis datos</h2>
-         <i class="bi bi-chevron-right"></i>
-      </a>
-      <a class="options nav-link" href="/userdata/favoritos" routerLink="/userdata/favoritos" routerLinkActive="active">
-         <h2>Favoritos</h2>
-         <i class="bi bi-chevron-right"></i>
-      </a>
-      <a class="options nav-link" href="/userdata/pedidos" routerLink="/userdata/pedidos" routerLinkActive="active">
-         <h2>Pedidos</h2>
-         <i class="bi bi-chevron-right"></i>
-      </a>
+      <div id="sidebar">
+         <a class="options nav-link" href="/userdata/mydata" routerLink="/userdata/mydata" routerLinkActive="active">
+            <span>
+               <span class="material-symbols-outlined">person</span>
+               <h2>Mis datos</h2>
+            </span>
+            <span class="material-symbols-outlined">chevron_right</span>
+         </a>
+
+         <a class="options nav-link" href="/userdata/favoritos" routerLink="/userdata/favoritos" routerLinkActive="active">
+            <span>
+               <span class="material-symbols-outlined">favorite</span>
+               <h2>Favoritos</h2>
+            </span>
+            <span class="material-symbols-outlined">chevron_right</span>
+         </a>
+
+         <a class="options nav-link" href="/userdata/pedidos" routerLink="/userdata/pedidos" routerLinkActive="active">
+            <span>
+               <span class="material-symbols-outlined">package_2</span>
+               <h2>Pedidos</h2>
+            </span>
+            <span class="material-symbols-outlined">chevron_right</span>
+         </a>
+      </div>
+      
+      <div id="main-content">
+         <router-outlet></router-outlet>
+      </div>
    </div>
-   <div class="main-content">
-      <router-outlet></router-outlet>
-    </div>
-</div>
 </div>

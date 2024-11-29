@@ -10,6 +10,8 @@ import { StorageService } from '../../services/storage.service';
 import { ArtworkService } from '../../services/artwork.service';
 import { ArtworkModel } from '../../models/artwork.model';
 import { UserModel } from '../../models/user.model';
+import { MatDialog } from '@angular/material/dialog';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-login',
@@ -19,7 +21,7 @@ import { UserModel } from '../../models/user.model';
   styleUrl: './login.component.css',
 })
 export class LoginComponent implements OnInit {
-  constructor(private formBuilder: FormBuilder, private authService: AuthService, private userService: UserService, private router: Router, private cartService: CartService, private artworkService: ArtworkService, private snackBar: MatSnackBar, private storageService: StorageService) { }
+  constructor(private formBuilder: FormBuilder, private authService: AuthService, public dialog: MatDialog, private userService: UserService, private router: Router, private cartService: CartService, private artworkService: ArtworkService, private snackBar: MatSnackBar, private storageService: StorageService) { }
 
   form: FormGroup = new FormGroup({
     email: new FormControl(''),
@@ -27,9 +29,13 @@ export class LoginComponent implements OnInit {
   });
   submitted = false;
   loginError: string | null = null;
+  isLoading: boolean = false;  // Bandera para controlar el estado de carga
 
 
   ngOnInit(): void {
+ 
+
+    // });
     this.form = this.formBuilder.group({
       email: ['', [Validators.required, Validators.email]],
       pwd: [
@@ -48,7 +54,8 @@ export class LoginComponent implements OnInit {
     if (this.form.invalid) {
       return;
     }
-
+    this.isLoading = true;
+    this.loading();
     this.authService.login(this.form.value.email, this.form.value.pwd).subscribe(
       (response) => {
         this.loadData()
@@ -58,9 +65,21 @@ export class LoginComponent implements OnInit {
         this.loginError = 'Error al iniciar sesión. Por favor, verifica tus credenciales.';
         console.error('Error al iniciar sesión:', error);
         this.snackBar.open(this.loginError, '', { duration: 3000 });
+      this.isLoading = false;
       }
-    );
+    ).add(()=>{
+      this.isLoading = false;
+    })
   }
+loading(){
+  Swal.fire({
+    text: 'Iniciando sesión',
+    timer: 2000, // Milisegundos
+    didOpen: () => {
+      Swal.showLoading(); // spinner de carga
+    },
+  });
+}
 
   loadData() {
     let userId = this.authService.getUserId()
@@ -81,7 +100,7 @@ export class LoginComponent implements OnInit {
                 });
               }
               this.router.navigate(['/carrito']);
-                this.loginError = null;
+              this.loginError = null;
 
             }
           )

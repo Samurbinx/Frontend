@@ -25,6 +25,7 @@ export class AddressComponent implements OnInit {
 
   @Output() reload = new EventEmitter<void>(); // Evento para editar la dirección
   
+  
   constructor(private addressService: AddressService, private authService: AuthService, private userService: UserService,private modalService: NgbModal) { }
 
   user: UserModel | null = null;
@@ -34,6 +35,8 @@ export class AddressComponent implements OnInit {
   alladdress: AddressModel[] | null = null;
   selectedAddress: AddressModel | null = null;
 
+  display = 'flex-start';
+
   ngOnInit(): void {
     this.loadData();
   }
@@ -41,6 +44,8 @@ export class AddressComponent implements OnInit {
   reloadAddresses() {
     this.loadData();
     this.reload.emit();
+    if (this.alladdress && this.alladdress.length >= 2) {
+      this.display = 'space-between' } else { this.display = 'flex-start'; }
   }
 
   onEditAddress(address: any, content: any) {
@@ -69,6 +74,7 @@ export class AddressComponent implements OnInit {
               if (this.userId) {
                 this.userService.getAllAddress(this.userId).subscribe(
                   (addresses) => {
+                    if (addresses.length >= 3) { this.display = 'space-between' } else { this.display = 'flex-start' }
                     this.alladdress = addresses
                       .map((address) => AddressModel.fromJson(address))
                       .filter((address) => address.id !== this.myaddress?.id); // Exclude the default address

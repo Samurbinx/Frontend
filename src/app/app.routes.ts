@@ -16,6 +16,7 @@ import { MydataComponent } from './components/userdata/mydata/mydata.component';
 import { DataFormComponent } from './components/userdata/mydata/dataform/dataform.component';
 import { PwdFormComponent } from './components/userdata/mydata/pwdform/pwdform.component';
 import { AddressComponent } from './components/userdata/mydata/address/address.component';
+import { MenuComponent } from './components/userdata/mydata/menu/menu.component';
 
 // Configuración de rutas
 export const routes: Routes = [
@@ -31,10 +32,12 @@ export const routes: Routes = [
     {
         path: 'userdata', component: UserDataComponent, 
         children: [
+            { path: '', redirectTo: 'mydata', pathMatch: 'full' },
             {
                 path: 'mydata', component: MydataComponent,
                 children: [
-                    // { path: '', redirectTo: 'data', pathMatch: 'full' },
+                    { path: '', redirectTo: 'menu', pathMatch: 'full' },
+                    { path: 'menu', component: MenuComponent },
                     { path: 'address', component: AddressComponent },
                     { path: 'data', component: DataFormComponent },
                     { path: 'pwd', component: PwdFormComponent },

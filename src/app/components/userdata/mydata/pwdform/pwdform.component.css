@@ -1,11 +1,10 @@
 #dataForm {
    display: flex;
    flex-direction: column;
-   width: 350px;
-   background: var(--neutral-300);
-   padding: 20px;
+   justify-content: space-between;
+   height: 100%;
 }
-#dataForm > div {
+#dataForm  div {
    display: flex;
    flex-direction: column;
    min-width: 100%;

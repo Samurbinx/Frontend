@@ -1,31 +1,34 @@
 <div id="content">
    <div id="header">
-      <h1>Mis direcciones</h1>
+      <span>
+         <a href="/userdata/mydata/menu"><span class="material-symbols-outlined">arrow_back</span></a>
+         <h1>Direcciones de envío</h1>
+      </span>
       <p class="btn" (click)="open(content)"><span class="material-symbols-outlined">add</span> Añadir dirección</p>
    </div>
+
    <!-- For direccion in direcciones -->
-   <div id="alladdress">
-      <app-addresscard *ngIf="myaddress" 
-         [address]="myaddress" [isDefault]="true"
+   <div id="alladdress" [ngStyle]="{'justify-content': display}">
+      <app-addresscard *ngIf="myaddress" [address]="myaddress" [isDefault]="true"
          (editAddress)="onEditAddress(myaddress, content)" (reload)="reloadAddresses()">
       </app-addresscard>
 
-      <app-addresscard *ngFor="let address of alladdress" 
-         [address]="address" [isDefault]="false" [user_id]="this.userId" 
-         (editAddress)="onEditAddress(address, content)" (reload)="reloadAddresses()">
+      <app-addresscard *ngFor="let address of alladdress" [address]="address" [isDefault]="false"
+         [user_id]="this.userId" (editAddress)="onEditAddress(address, content)" (reload)="reloadAddresses()">
       </app-addresscard>
-
    </div>
 </div>
 
 
 <!-- ADDRESS MODAL -->
 <ng-template #content let-modal>
+   <div class="modal-content fullscreen-modal">
    <div class="modal-header">
-      <h4 class="modal-title">Modal de edición</h4>
+      <h1 class="modal-title">{{ selectedAddress ? 'Editar dirección' : 'Añadir dirección' }}</h1>
       <button type="button" class="btn-close" (click)="modal.dismiss('Cross click')"></button>
    </div>
    <div class="modal-body">
       <app-addressform [address]="selectedAddress" [user_id]="userId" (reload)="reloadAddresses()"></app-addressform>
    </div>
+</div>
 </ng-template>

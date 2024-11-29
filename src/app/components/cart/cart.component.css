@@ -1,8 +1,7 @@
 
 /* General */
 #body {
-   flex: 1;
-   min-width: 100vw !important;
+   width: 100%;
 
    background-color: var(--neutral-100);
    min-height: 90vh;
@@ -102,6 +101,10 @@ p.sold {
 .pieces>ul {
    list-style: none;
    padding-left: 10px;
+   color: rgb(65, 65, 65);
+}
+.pieces>ul b {
+   font-weight: 500;
 }
 
 .inf h2,

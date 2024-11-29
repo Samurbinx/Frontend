@@ -1,9 +1,8 @@
 #dataForm {
    display: flex;
    flex-direction: column;
-   width: 350px;
-   background: var(--neutral-300);
-   padding: 20px;
+   justify-content: space-between;
+   height: 100%;
 }
 #dataForm > div {
    display: flex;
@@ -36,3 +35,16 @@
 .btn-primary:hover {
    background-color: var(--primary-700);
 }
+
+/* @media (width < 550px) {
+   #content {
+      width: 100% !important;
+      flex: 1;
+   }
+   #dataForm {
+      min-width: 0px;
+      width: 300px;
+   }
+   h1 {
+display: none;   }
+} */

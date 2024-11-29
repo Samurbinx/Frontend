@@ -1,12 +1,14 @@
 <div class="pageinf">
-	<h1>Lista de favoritos</h1>
-	<p>Añade obras de arte que te gusten incluso si están vendidas y te recomendaremos obras a la venta basada en tus gustos</p>
+   <h1>Lista de favoritos</h1>
+   <p class="PC">Añade obras de arte que te gusten incluso si están vendidas y te recomendaremos obras a la venta basada en tus
+      gustos</p>
 </div>
 <div id="favorites">
    <p *ngIf="favorites.length == 0" id="nofavs">Aún no has seleccionado ninguna obra como favorita</p>
    <div *ngFor="let artwork of favorites">
       <div class="artwork_card">
-         <div class="piece_images"  [routerLink]="['/proyecto']" [queryParams]="{id: artwork.work_id}" fragment="{{artwork.id}}">
+         <div class="piece_images" [routerLink]="['/proyecto']" [queryParams]="{id: artwork.work_id}"
+            fragment="{{artwork.id}}">
             <div *ngFor="let piece of artwork.pieces" class="images">
                <img *ngFor="let image of piece.images" [src]="'http://127.0.0.1:8080/piece/' + piece.id + '/' + image"
                   alt="">
@@ -14,7 +16,8 @@
          </div>
          <div class="card_body">
             <h5>{{artwork.creation_date}}</h5>
-            <h4 [routerLink]="['/proyecto']" [queryParams]="{id: artwork.work_id}" fragment="{{artwork.id}}">{{artwork.title}}</h4>
+            <h4 [routerLink]="['/proyecto']" [queryParams]="{id: artwork.work_id}" fragment="{{artwork.id}}">
+               {{artwork.title}}</h4>
          </div>
          <div class="card_bottom">
             <div class="sold_inf">
@@ -27,8 +30,10 @@
                </p>
             </div>
             <div class="icons_div">
-               <span *ngIf="!artwork.sold;"><span id="cart-icon{{artwork.id}}" class="material-symbols-outlined">add_shopping_cart</span></span>
-               <span id="fav-icon{{artwork.id}}" class="material-symbols-outlined fav-icon favorited" (click)="favoriteToggle(artwork.id)">favorite</span>
+               <span *ngIf="!artwork.sold;"><span id="cart-icon{{artwork.id}}"
+                     class="material-symbols-outlined">add_shopping_cart</span></span>
+               <span id="fav-icon{{artwork.id}}" class="material-symbols-outlined fav-icon favorited"
+                  (click)="favoriteToggle(artwork.id)">favorite</span>
             </div>
          </div>
       </div>

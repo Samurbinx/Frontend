@@ -13,8 +13,7 @@
 
 		<!-- Main pages -->
 		<!-- data-bs-backdrop="static" -->
-		<div id="mainPages" class="offcanvas offcanvas-end" tabindex="-1"
-			aria-labelledby="offcanvasTopLabel">
+		<div id="mainPages" class="offcanvas offcanvas-end" tabindex="-1" aria-labelledby="offcanvasTopLabel">
 			<button type="button" class="btn-close offC" data-bs-dismiss="offcanvas" aria-label="Close"></button>
 			<ul class="navbar-nav">
 				<li *ngFor="let page of pages" class="nav-item">
@@ -40,7 +39,8 @@
 						<a class="nav-link" href="/userdata">Mis datos</a>
 					</li>
 					<br><br>
-					<li class="nav-item logout" (click)="logout()"><a class="nav-link" href="/home">Cerrar sesión</a><span class="material-symbols-outlined">logout</span></li>
+					<li class="nav-item logout" (click)="logout()"><a class="nav-link" href="/home">Cerrar sesión</a><span
+							class="material-symbols-outlined">logout</span></li>
 				</ul>
 
 				<ng-template #notLoggedOffC class="navbar-nav">
@@ -63,29 +63,28 @@
 			<!-- If is logged -->
 			<div *ngIf="logged; else notLogged" class="navbar-nav welcome userDrop PC">
 				<p>Hola! {{user?.name}}</p>
-				<div>
-					<a href="/carrito" class="shopping_bag"><span class="material-symbols-outlined shopping_bag"
-							matBadge="{{this.cart_length}}">local_mall</span></a>
 
-					<!-- User dropdown -->
-					<ul class="navbar-nav">
-						<li class="nav-item dropdown">
-							<a id="dropicon" class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown"
-								aria-expanded="false">
-								<span aria-hidden="false" class="material-symbols-outlined fill">person</span>
-							</a>
+				<a href="/carrito" class="shopping_bag"><span class="material-symbols-outlined shopping_bag"
+						matBadge="{{this.cart_length}}">local_mall</span></a>
 
-							<!-- Dropdown actions -->
-							<ul class="dropdown-menu dropdown-menu-end">
-								<li class="mine"><a class="dropdown-item" href="/userdata/mydata">Mis datos</a></li>
-								<li class="mine"><a class="dropdown-item" href="/userdata/favoritos">Favoritos</a></li>
-								<li class="mine"><a class="dropdown-item" href="/userdata/pedidos">Pedidos</a></li>
-								<li class="mine logout" (click)="logout()"><a class="dropdown-item" href="/home">Cerrar
-										sesión</a><span class="material-symbols-outlined">logout</span></li>
-							</ul>
-						</li>
-					</ul>
-				</div>
+				<!-- User dropdown -->
+				<ul class="navbar-nav">
+					<li class="nav-item dropdown">
+						<a id="dropicon" class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown"
+							aria-expanded="false">
+							<span aria-hidden="false" class="material-symbols-outlined fill">person</span>
+						</a>
+
+						<!-- Dropdown actions -->
+						<ul class="dropdown-menu dropdown-menu-end">
+							<li class="mine"><a class="dropdown-item" href="/userdata/mydata">Mis datos</a></li>
+							<li class="mine"><a class="dropdown-item" href="/userdata/favoritos">Favoritos</a></li>
+							<li class="mine"><a class="dropdown-item" href="/userdata/pedidos">Pedidos</a></li>
+							<li class="mine logout" (click)="logout()"><a class="dropdown-item" href="/home">Cerrar
+									sesión</a><span class="material-symbols-outlined">logout</span></li>
+						</ul>
+					</li>
+				</ul>
 			</div>
 
 			<!-- If is not logged -->

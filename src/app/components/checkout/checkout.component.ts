@@ -70,6 +70,7 @@ export class CheckoutComponent implements OnInit {
   cart_id: number | null = null;
   total_amount: number | null = null;
   artworks: ArtworkModel[] = [];
+  isLoading: boolean = false;  // Bandera para controlar el estado de carga
 
   // STRIPE
   @ViewChild(StripeCardComponent) cardElement!: StripeCardComponent;
@@ -177,9 +178,12 @@ export class CheckoutComponent implements OnInit {
 
   // Confirma el pago, pasando los detalles del mismo y crea un pedido en la base de datos
   pay() {
+    this.isLoading = true;
+
     if (this.user_id && this.cart_id && this.artworks && this.total_amount && this.user?.address) {
       const cardElement = this.cardElement;
       if (!cardElement) {
+        this.isLoading = false;
         throw new Error('Card element is not available.');
       }
 
@@ -191,23 +195,26 @@ export class CheckoutComponent implements OnInit {
             this.loading()
             this.createOrder(result.token.id);
           } else if (result.error) {
+            this.isLoading = false;
             this.handleError(`${result.error.message}`);
           }
         });
     } else {
       if (!this.user?.address) this.snackBar.open('Por favor, añada una dirección de envío', 'Cerrar', { duration: 3000 });
+      this.isLoading = false;
+
       return;
     }
   }
-loading(){
-  Swal.fire({
-    text: 'El pedido se está tramitando',
-    timer: 2000, // Milisegundos
-    didOpen: () => {
-      Swal.showLoading(); // spinner de carga
-    },
-  });
-}
+  loading() {
+    Swal.fire({
+      text: 'El pedido se está tramitando',
+      timer: 2000, // Milisegundos
+      didOpen: () => {
+        Swal.showLoading(); // spinner de carga
+      },
+    });
+  }
   // Recopila todos los datos necesarios y hace la petición al backend donde se termina de confirmar el pago
   createOrder(token: string) {
     const artworks_id = this.artworks.map(artwork => artwork.id);
@@ -228,11 +235,13 @@ loading(){
       next: (response) => {
         console.log('Pedido completado:', response);
         if (response.message) {
+          this.isLoading = false;
           this.router.navigate(['/userdata/pedidos']);
           this.snackBar.open('Pedido realizado correctamente', '', { duration: 3000 });
         }
       },
       error: (error) => {
+        this.isLoading = false;
         console.error('Error al crear el pedido:', error);
         alert('Hubo un error al crear el pedido. Inténtalo de nuevo.');
         this.router.navigate(['/carrito']);
@@ -255,6 +264,7 @@ loading(){
   }
 
   handleError(message: string) {
+    this.isLoading = false;
     console.error(message);
     this.snackBar.open(message, 'Cerrar', { duration: 3000 });
   }

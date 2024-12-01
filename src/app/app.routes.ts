@@ -1,6 +1,6 @@
 import { CheckoutComponent } from './components/checkout/checkout.component';
 import { NgModule } from '@angular/core';
-import { RouterModule, Routes } from '@angular/router';
+import { RouterModule, Routes, CanActivate } from '@angular/router';
 import { HomeComponent } from './components/home/home.component';
 import { WorksComponent } from './components/works/works.component';
 import { ContactComponent } from './components/contact/contact.component';
@@ -17,6 +17,7 @@ import { DataFormComponent } from './components/userdata/mydata/dataform/datafor
 import { PwdFormComponent } from './components/userdata/mydata/pwdform/pwdform.component';
 import { AddressComponent } from './components/userdata/mydata/address/address.component';
 import { MenuComponent } from './components/userdata/mydata/menu/menu.component';
+import { AuthGuard } from './guards/auth.guard';
 
 // Configuración de rutas
 export const routes: Routes = [
@@ -30,7 +31,7 @@ export const routes: Routes = [
     { path: 'carrito', component: CartComponent },
     { path: 'checkout', component: CheckoutComponent },
     {
-        path: 'userdata', component: UserDataComponent, 
+        path: 'userdata', component: UserDataComponent, canActivate: [AuthGuard],
         children: [
             { path: '', redirectTo: 'mydata', pathMatch: 'full' },
             {

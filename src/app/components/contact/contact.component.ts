@@ -74,11 +74,17 @@ export class ContactComponent implements OnInit {
         desc: this.form.value.desc,
       };
 
+      Swal.fire({
+        text: 'El mensaje se está enviando',
+        timer: 2000,
+        didOpen: () => {
+          Swal.showLoading();
+        },
+      });
       this._MessageService.sendMessage(data).subscribe(() => {
         this.form.reset(); 
         Swal.fire('Formulario de contacto', 'Mensaje enviado correctamente', 'success');
         this.submitted = false
-
       });
 
     }

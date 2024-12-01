@@ -170,21 +170,14 @@ li.nav-item.logout > a.nav-link {
 
 .welcome {
     display: flex;
-    flex-direction: column;
-    text-align: right;
-    align-items: end;
-}
-
-.welcome>p {
-    margin: 0px;
-}
-
-.welcome>div {
-    display: flex;
     flex-direction: row;
-    width: 100%;
-    justify-content: space-between;
-    align-items: baseline;
+    text-align: right;
+    align-items: center;
+    gap: 5px;
+}
+
+.welcome p {
+    margin: 0px;
 }
 
 .shopping_bag {

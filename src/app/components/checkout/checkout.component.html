@@ -82,7 +82,7 @@
 				</ngx-stripe-elements>
 				}
 				<div class="payment_button">
-					<button class="btn-primary btn" (click)="pay()">Pagar</button>
+					<button class="btn-primary btn" (click)="pay()" [disabled]="isLoading">Pagar</button>
 				</div>
 			</div>
 		</div>

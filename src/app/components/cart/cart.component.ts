@@ -248,17 +248,21 @@ export class CartComponent {
   loadOfflineArtworks() {
     let cart = this.storageService.getOfflineCart();
     this.carted = [];
-    cart.forEach(artwork_id => {
-      let art = this.artworkService.getArtwork(artwork_id).subscribe(
-        (response) => {
-          let artwork = ArtworkModel.fromJson(response);
-          this.checkedArtworks[artwork.id] = true; // Set default checked state to true     
-          this.carted.push(artwork)
-          console.log(this.carted);
-        }
-      );
-    });
+    if (cart.length == 0) {
+      this.userService.updateCartLength(0);
+    } else {
+      cart.forEach(artwork_id => {
+        this.artworkService.getArtwork(artwork_id).subscribe(
+          (response) => {
+            let artwork = ArtworkModel.fromJson(response);
+            this.checkedArtworks[artwork.id] = true; // Set default checked state to true     
+            this.carted.push(artwork)
+          }
+        );
+      });
+    }
   }
+
 
 
 }

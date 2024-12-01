@@ -1,11 +1,21 @@
 {
   "routes": [
+    "/carrito",
+    "/checkout",
     "/contacto",
     "/home",
     "/login",
+    "/proyecto",
     "/proyectos",
     "/registro",
     "/sobremi",
-    "/tienda"
+    "/userdata",
+    "/userdata/favoritos",
+    "/userdata/mydata",
+    "/userdata/mydata/address",
+    "/userdata/mydata/data",
+    "/userdata/mydata/menu",
+    "/userdata/mydata/pwd",
+    "/userdata/pedidos"
   ]
 }

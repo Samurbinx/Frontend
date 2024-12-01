@@ -20,7 +20,6 @@ footer :nth-child(2) > a {
 @media (width <= 500px) {
     footer {
         padding: 0px;
-        min-width: 325px;
     }
     span {
         display: flex;
@@ -28,6 +27,5 @@ footer :nth-child(2) > a {
         width: 100%;
         margin: 10px 0px;
         padding: 0px;
-        min-width: 325px;
     }
 }

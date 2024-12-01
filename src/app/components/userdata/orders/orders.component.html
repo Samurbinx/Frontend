@@ -1,55 +1,89 @@
 <div class="pageinf">
-   <h1>Tus pedidos</h1>
-   <p>Comprueba el estado de tus pedidos, cancela pedidos a tiempo o consulta pedidos antiguos.</p>
+   <div>
+      <h1>Tus pedidos</h1>
+      <p class="PC">Comprueba el estado de tus pedidos, cancela pedidos a tiempo o consulta pedidos antiguos.</p>
+   </div>
+   <p *ngIf="orders.length == 0">Aún no has realizado ningún pedido</p>
 </div>
 
 <div id="orders">
-   <p *ngIf="orders.length == 0">PONER AQUI ALGO de que no hay pedidos</p>
 
    <div *ngFor="let order of orders" class="order">
       <div class="thead">
          <div>
-            <h5>DIRECCIÓN DE ENVÍO</h5>
-            <p>{{order.address.street}} - {{order.address.details}}</p>
-            <p>{{order.address.city}}, {{order.address.province}} - {{order.address.zipcode}}</p>
+            <div>
+               <h5>PEDIDO REALIZADO</h5>
+               <p>{{this.getDate(order)[0]}}</p>
+            </div>
          </div>
          <div>
-            <h5>DESTINATARIO</h5>
-            <p>{{order.address.recipient}}</p>
-         </div>
-         <div>
-            <h5>PEDIDO REALIZADO</h5>
-            <p>{{this.getDate(order)[0]}} / {{this.getDate(order)[1]}}</p>
-         </div>
-         <div>
-            <h5>TOTAL</h5>
-            <p>{{order.total_amount}} €</p>
-         </div>
-         <div>
-            <h5>Nº PEDIDO</h5>
-            <p>{{order.id}}</p>
-         </div>
-         <div>
-            <h5>ESTADO</h5>
-            <p>{{order.status}}</p>
+            <div id="headid">
+               <h5>Nº PEDIDO</h5>
+               <p>{{order.id}}</p>
+            </div>
+            <div>
+               <h5>ESTADO</h5>
+               <p>{{order.status}}</p>
+            </div>
          </div>
       </div>
       <div id="artworks">
-         <div *ngFor="let artwork of order.artworks" class="artwork">
-            <div class="artwork_card">
-               <div class="piece_images" [routerLink]="['/proyecto']" [queryParams]="{id: artwork.work_id}"
-                  fragment="{{artwork.id}}">
-                  <div *ngFor="let piece of artwork.pieces" class="images">
-                     <img *ngFor="let image of piece.images"
-                        [src]="'http://127.0.0.1:8080/piece/' + piece.id + '/' + image" alt="">
+         <div *ngFor="let artwork of order.artworks" class="product">
+            <a *ngFor="let piece of artwork.pieces" class="piece">
+               <div class="images" *ngFor="let image of piece.images">
+                  <img class="img" *ngFor="let image of piece.images"
+                     [src]="'http://127.0.0.1:8080/piece/' + piece.id + '/' + image" alt="">
+               </div>
+            </a>
+            <div class="cover"></div>
+
+            <div class="inf">
+
+               <div class="inf_top">
+                  <div class="a">
+                     <span>
+                        <h2>{{artwork.title}} </h2>
+                        <h4>{{artwork.work_title}} - {{artwork.creation_date}}</h4>
+                     </span>
+                     <h2 id="price_{{artwork.id}}">{{artwork.price}}€</h2>
+                  </div>
+                  <div class="pieces" class="tablet">
+                     <p><b>Contiene:</b></p>
+                     <ul>
+                        <li *ngFor="let piece of artwork.pieces">
+                           <ng-container *ngIf="piece.title; else noTitle"><b>{{ piece.title }} </b></ng-container>
+                           <ng-template #noTitle>Sin título</ng-template>
+                           <span class="PC">
+                           <ng-container *ngIf="piece.materials; else noMat"> - {{ piece.materials}} - </ng-container>
+                           <ng-template #noMat>Materiales no registrados - </ng-template>
+                           <ng-container *ngIf="piece.dimensions; else noDim">{{ piece.dimensions }}
+                              cm</ng-container>
+                           <ng-template #noDim>Dimensiones no especificadas</ng-template>
+                        </span>
+                        </li>
+                     </ul>
                   </div>
                </div>
-               <div class="card_body">
-                  <h5>{{artwork.creation_date}}</h5>
-                  <h4 [routerLink]="['/proyecto']" [queryParams]="{id: artwork.work_id}" fragment="{{artwork.id}}">
-                     {{artwork.title}}</h4>
-                  <p>{{ artwork.price }} €</p>
-               </div>
+            </div>
+         </div>
+      </div>
+      <div class="tfooter">
+         <div>
+            <div>
+               <h5>DESTINATARIO: </h5>
+               <p>{{order.address.recipient}}</p>
+            </div>
+            <div>
+               <h5>DIRECCIÓN DE ENVÍO: </h5>
+               <p>{{order.address.street}} - {{order.address.details}}. {{order.address.city}},
+                  {{order.address.province}} - {{order.address.zipcode}}</p>
+            </div>
+            
+         </div>
+         <div>
+            <div id="footertotal">
+               <h5>TOTAL</h5>
+               <p>{{order.total_amount}}€</p>
             </div>
          </div>
       </div>

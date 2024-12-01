@@ -12,6 +12,7 @@ import { AddresscardComponent } from './addresscard/addresscard.component';
 import { AddressformComponent } from './addressform/addressform.component';
 import { ViewChild, ElementRef } from '@angular/core';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { ActivatedRoute, Router } from '@angular/router';
 
 @Component({
   selector: 'app-address',
@@ -24,9 +25,9 @@ export class AddressComponent implements OnInit {
   @ViewChild('editModal', { static: false }) editModal: ElementRef | undefined;
 
   @Output() reload = new EventEmitter<void>(); // Evento para editar la dirección
-  
-  
-  constructor(private addressService: AddressService, private authService: AuthService, private userService: UserService,private modalService: NgbModal) { }
+
+
+  constructor(private addressService: AddressService, private authService: AuthService, private router: Router, private userService: UserService, private modalService: NgbModal) { }
 
   user: UserModel | null = null;
   userId: string | null = null;
@@ -35,24 +36,21 @@ export class AddressComponent implements OnInit {
   alladdress: AddressModel[] | null = null;
   selectedAddress: AddressModel | null = null;
 
-  display = 'flex-start';
 
   ngOnInit(): void {
     this.loadData();
   }
-  
+
   reloadAddresses() {
     this.loadData();
     this.reload.emit();
-    if (this.alladdress && this.alladdress.length >= 2) {
-      this.display = 'space-between' } else { this.display = 'flex-start'; }
   }
 
   onEditAddress(address: any, content: any) {
     this.selectedAddress = address;
     this.modalService.open(content);
   }
- 
+
   open(content: any) {
     this.modalService.open(content);
   }
@@ -64,7 +62,6 @@ export class AddressComponent implements OnInit {
     this.authService.getUserSubject().subscribe((user) => {
       this.user = user;
       const token = this.authService.getToken();
-
       if (token) {
         this.userId = this.authService.getUserId();
         if (this.userId) {
@@ -74,7 +71,6 @@ export class AddressComponent implements OnInit {
               if (this.userId) {
                 this.userService.getAllAddress(this.userId).subscribe(
                   (addresses) => {
-                    if (addresses.length >= 3) { this.display = 'space-between' } else { this.display = 'flex-start' }
                     this.alladdress = addresses
                       .map((address) => AddressModel.fromJson(address))
                       .filter((address) => address.id !== this.myaddress?.id); // Exclude the default address
@@ -94,5 +90,9 @@ export class AddressComponent implements OnInit {
         }
       }
     });
+    if (this.router.url.split('/').pop() == 'checkout') {
+      let title = document.getElementById('headertitle') as HTMLElement
+      title.style.display = 'none';
+    }
   }
 }

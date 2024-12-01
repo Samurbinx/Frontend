@@ -44,14 +44,41 @@ export class AddressformComponent implements OnInit {
 
   private loadForm() {
     this.form = this.fb.group({
-      street: [this.address?.street ?? '', [Validators.required]],
-      details: [this.address?.details ?? '', [Validators.required]],
-      zipcode: [this.address?.zipcode ?? '', [Validators.required]],
-      city: [this.address?.city ?? '', [Validators.required]],
-      province: [this.address?.province ?? '', [Validators.required]],
-      recipient: [this.address?.recipient ?? '', [Validators.required]],
-      phone: [this.address?.phone ?? '', [Validators.required]],
+      street: [this.address?.street ?? '', [
+        Validators.required,
+        Validators.minLength(3),
+        Validators.maxLength(50)
+      ]],
+      details: [this.address?.details ?? '', [
+        Validators.required,
+        Validators.minLength(1),
+        Validators.maxLength(100)
+      ]],
+      zipcode: [this.address?.zipcode ?? '', [
+        Validators.required,
+        Validators.pattern(/^\d{5}(-\d{4})?$/) // Código postal válido (ej. 12345 o 12345-6789)
+      ]],
+      city: [this.address?.city ?? '', [
+        Validators.required,
+        Validators.minLength(2),
+        Validators.maxLength(50)
+      ]],
+      province: [this.address?.province ?? '', [
+        Validators.required,
+        Validators.minLength(2),
+        Validators.maxLength(50)
+      ]],
+      recipient: [this.address?.recipient ?? '', [
+        Validators.required,
+        Validators.minLength(2),
+        Validators.maxLength(50)
+      ]],
+      phone: [this.address?.phone ?? '', [
+        Validators.required,
+        Validators.pattern(/^\+?\d{1,3}\s?\d{9,15}$/)
+      ]]
     });
+    
   }
 
   //To access form controls using -> (ex: f.username)

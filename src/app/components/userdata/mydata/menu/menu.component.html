@@ -1,10 +1,6 @@
 <div class="pageinf">
-   <span>
-      <div>
-         <h1>Mis datos</h1>
-         <p>Mira o cambia la información asociada a tu cuenta en cualquier momento.</p>
-      </div>
-   </span>
+   <h1>Mis datos</h1>
+   <p>Mira o cambia la información asociada a tu cuenta en cualquier momento.</p>
 </div>
 <div>
    <a class="divopt" (click)="open(datamodal)">
@@ -62,7 +58,6 @@
       </div>
       <div class="modal-body">
          <app-dataform></app-dataform>
-         <!-- <app-addressform [address]="selectedAddress" [user_id]="userId" (reload)="reloadAddresses()"></app-addressform> -->
       </div>
    </div>
 </ng-template>
@@ -70,13 +65,12 @@
 <!-- ADDRESS MODAL -->
 <ng-template #pwdmodal let-modal>
    <div class="modal-content fullscreen-modal">
-   <div class="modal-header">
-      <h1 class="modal-title">Cambiar contraseña</h1>
-      <button type="button" class="btn-close" (click)="modal.dismiss('Cross click')"></button>
-   </div>
-   <div class="modal-body">
-      <app-pwdform></app-pwdform>
-      <!-- <app-addressform [address]="selectedAddress" [user_id]="userId" (reload)="reloadAddresses()"></app-addressform> -->
-   </div>
+      <div class="modal-header">
+         <h1 class="modal-title">Cambiar contraseña</h1>
+         <button type="button" class="btn-close" (click)="modal.dismiss('Cross click')"></button>
+      </div>
+      <div class="modal-body">
+         <app-pwdform></app-pwdform>
+      </div>
    </div>
 </ng-template>

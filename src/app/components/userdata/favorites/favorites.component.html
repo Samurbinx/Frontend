@@ -1,10 +1,13 @@
 <div class="pageinf">
-   <h1>Lista de favoritos</h1>
-   <p class="PC">Añade obras de arte que te gusten incluso si están vendidas y te recomendaremos obras a la venta basada en tus
-      gustos</p>
+   <div>
+      <h1>Lista de favoritos</h1>
+      <p class="PC">Añade obras de arte que te gusten incluso si están vendidas y te recomendaremos obras a la venta
+         basada en tus
+         gustos</p>
+   </div>
+   <p *ngIf="favorites.length == 0" id="nofavs">Aún no has seleccionado ninguna obra como favorita</p>
 </div>
 <div id="favorites">
-   <p *ngIf="favorites.length == 0" id="nofavs">Aún no has seleccionado ninguna obra como favorita</p>
    <div *ngFor="let artwork of favorites">
       <div class="artwork_card">
          <div class="piece_images" [routerLink]="['/proyecto']" [queryParams]="{id: artwork.work_id}"

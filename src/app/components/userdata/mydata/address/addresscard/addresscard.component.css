@@ -2,8 +2,10 @@
    border: 1px solid var(--neutral-200);
    /* margin: 0 20px 30px 20px; */
    padding: 20px;
-   width: 250px;
    background-color: #fff;
+   width: 250px;
+   min-width: none;
+
 }
 
 p {
@@ -55,4 +57,12 @@ p {
 .click.default {
    color: var(--primary-700);
    text-decoration: underline;
+}
+
+@media (width < 350px) {
+   .address {
+      min-width: fit-content;
+      width: 100%;
+   }
+
 }

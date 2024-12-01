@@ -40,8 +40,11 @@
          <p>Teléfono:</p>
          <input matInput formControlName="phone" class="form-control"
             [ngClass]="{ 'is-invalid': submitted && f['phone'].errors }" />
-         @if (submitted && f['phone'].errors) { <div class="invalid-feedback">
-            @if (f['phone'].errors['required']) { <div>Campo obligatorio</div> } </div>}
+         @if (submitted && f['phone'].errors) {
+         <div class="invalid-feedback">
+            @if (f['phone'].errors['required']) { <div>Campo obligatorio</div> }
+            @if (f['phone'].errors['pattern']) { <div>Campo obligatorio</div> }
+         </div>}
       </div>
    </span>
    <button type="submit" class="btn btn-primary">Guardar Cambios</button>

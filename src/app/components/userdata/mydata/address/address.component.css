@@ -5,7 +5,6 @@
 #header {
    display: flex;
    flex-direction: row;
-   flex-wrap: wrap;
    align-items: center;
    justify-content: space-between;
    margin-bottom: 20px;
@@ -54,12 +53,12 @@ a {
    flex-direction: row;
    flex-wrap: wrap;
    gap: 20px;
-   justify-content: flex-start;
    padding: 0 15px;
 }
 
 .modal-content {
    border: 1px solid var(--neutral-500);
+   border-radius: 0;
 }
 
 .modal-header {
@@ -78,32 +77,44 @@ a {
 }
 
 
-@media (width < 670px){
+@media (width < 670px) {
    #header {
       min-width: 0;
       width: fit-content;
-      padding: 0 15px;
-      margin: 0;
    }
-   p.btn {
-      margin: 20px 0 10px;
-      display: flex;
-      min-width: 250px;
+   .PC {
+      display: none;
    }
 }
 
 @media (width < 500px) {
    #content {
-      padding: 0;
+      padding: 0 15px;
+      width: fit-content;
    }
-   #alladdress, #header {
+
+   #header {
+      min-width: none;
       width: 100%;
       flex-direction: column;
-      align-items: center;
+      justify-content: baseline;
+      align-items: start;
+      margin: 0 0 20px;
+      gap: 20px;
    }
+   p.btn {
+      margin: 0;
+      min-width: 250px;
+   }
+   #alladdress {
+      flex-direction: column;
+      padding: 0;
+   }
+
    .mobile {
       display: flex;
    }
+
    .fullscreen-modal {
       position: fixed;
       top: 0;
@@ -111,14 +122,22 @@ a {
       width: 100vw;
       height: 100vh;
       background: white;
-      z-index: 1050; /* Asegúrate de usar un índice adecuado */
+      z-index: 1050;
+      /* Asegúrate de usar un índice adecuado */
       display: flex;
       flex-direction: column;
       border-radius: 0;
    }
+
    .fullscreen-modal .modal-body {
       flex-grow: 1;
       overflow: auto;
    }
-  
+
+}
+
+@media (width < 350px) {
+   p.btn {
+      min-width: 100% ;
+   }
 }

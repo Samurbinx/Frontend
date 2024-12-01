@@ -1,16 +1,5 @@
 .pageinf {
-   height: 50px;
    margin: 20px 30px 30px;
-}
-
-.pageinf>span {
-   display: flex;
-   flex-direction: row;
-   align-items: center;
-}
-
-.pageinf span.tablet {
-   margin-right: 20px;
 }
 
 h1 {
@@ -93,6 +82,7 @@ p {
 
 .modal-content {
    border: 1px solid var(--neutral-500);
+   border-radius: 0;
 }
 
 .modal-header {
@@ -114,6 +104,11 @@ p {
 }
 
 
+@media (width < 725px) {
+   div.icon {
+      width: fit-content;
+   }
+}
 
 @media (width < 500px) {
    .mobile {
@@ -121,6 +116,12 @@ p {
    }
    .PC {
       display: none;
+   }
+   .pageinf {
+      margin: 0 15px 20px;
+   }
+   .divopt {
+      padding: 10px;
    }
    .fullscreen-modal {
       position: fixed;

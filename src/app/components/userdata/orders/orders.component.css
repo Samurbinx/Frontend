@@ -1,36 +1,80 @@
 .pageinf {
    margin: 20px 30px 30px;
 }
+
+.pageinf>div {
+   margin-bottom: 25px;
+}
+
 h1 {
    font-weight: 500;
    margin: 0px;
 }
+
 #orders {
    display: flex;
    flex-direction: column-reverse;
+   gap: 30px;
 }
+
 .order {
    border: 1px solid var(--neutral-400);
-   margin: 0 30px 30px;
-   display: flex;
-   flex-direction: row;
-   width: fit-content;
+   width: 90%;
+   margin: 0 auto;
 }
+
 /* THEAD */
 .thead {
    background-color: var(--neutral-200);
+   display: flex;
+   flex-direction: row;
    justify-content: space-between;
-   padding: 5px 20px;
+   padding: 20px;
 }
-.thead > div {
-   margin: 15px 0;
+
+.thead>div {
+   display: flex;
+   flex-direction: row;
+   gap: 20px;
 }
-.thead h5, p{
+
+.thead h5,
+p {
    margin: 0px;
 }
+
 .thead h5 {
    font-weight: 600;
 }
+
+/* TFOOTER */
+.tfooter {
+   display: flex;
+   flex-direction: row;
+   padding: 20px;
+   justify-content: space-between;
+   gap: 20px;
+}
+
+.tfooter>div {
+   display: flex;
+   flex-direction: row;
+   gap: 25px;
+}
+
+#footertotal {
+   font-weight: 500;
+}
+
+.tfooter h5,
+p {
+   margin: 0px;
+}
+
+.tfooter h5 {
+   font-weight: 600;
+}
+
 
 /* TBODY */
 #artworks {
@@ -38,51 +82,148 @@ h1 {
    flex-direction: row;
    flex-wrap: wrap;
    align-items: center;
+   background-color: #fff;
 }
 
-.artwork_card {
-   background-color: var(--neutral-100);
+.product {
+   padding: 20px;
+   border-bottom: 1px solid var(--neutral-400);
+   display: flex;
+   flex-direction: row;
+   align-items: center;
+   width: 100%;
+}
+
+
+
+.piece {
+   position: absolute;
+}
+
+.pieces>ul {
+   list-style: none;
+   padding-left: 10px;
+   color: rgb(65, 65, 65);
+}
+
+.cover {
+   height: 150px;
    width: 150px;
-   max-width: 150px;
-   height: 280px;
-   max-height: 280px;
-   margin: 20px;
-   padding: 0;
-   display: flex;
-   flex-direction: column;
+   margin-right: 30px;
 }
 
-.piece_images {
-   height: 60%;
-   width: 100%;
-   overflow-x: auto;
-   scroll-snap-type: x mandatory;
-   display: flex;
-   cursor: pointer;
-}
-.images {
-   width: 100%;
-   height: 100%;
-   overflow-x: auto;
-   scroll-snap-type: x mandatory;
-   display: flex;
-}
-img {
-   width: 100%;
-   height: 100%;
-   min-height: 100% !important;
-   min-width: 100% !important;
+.img {
+   height: 150px;
+   width: 150px;
+   background-position: center;
+   background-size: cover;
+   position: relative;
    object-fit: cover;
    scroll-snap-align: start;
 }
 
-.card_body {
-   padding: 15px;
+.inf {
+   display: flex;
+   flex-direction: row;
+   flex: 1 !important;
 }
-.card_body > h4 {
-   cursor: pointer;
+
+.inf_top {
+   width: 100%;
 }
-h5, p, h4 {
+
+.a {
+   display: flex;
+   flex-direction: row;
+   justify-content: space-between;
+   width: 100%;
+   margin-bottom: 20px;
+}
+
+.a>span>h2 {
+   font-size: large;
    margin: 0px;
-   font-family: "Outfit", sans-serif;
+}
+
+.a>h2,
+.a h4 {
+   font-size: medium;
+   margin: 0px;
+}
+
+.pieces p,
+.pieces li {
+   font-size: small;
+   margin: 0px;
+}
+
+
+@media (width < 800px) {
+
+   .tfooter>div {
+      flex-direction: column;
+   }
+
+   .PC {
+      display: none;
+   }
+}
+
+@media (width < 600px) {
+   .cover {
+      height: 100px;
+      width: 100px;
+      margin-right: 10px;
+   }
+   .img {
+      height: 100px;
+      width: 100px;
+   }
+   .tablet {
+      display: none;
+   }
+}
+
+@media (width < 500px) {
+   .pageinf {
+      margin: 0 15px 25px;
+   }
+
+   .pageinf > div {
+      margin-bottom: 0px;
+   }
+
+   #favorites {
+      margin: 0px 15px 20px;
+      gap: 15px;
+   }
+   .thead, .product, .tfooter {
+      padding: 15px;
+   }
+   .thead, .thead > div {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+   }
+   .thead > div > div {
+      display: flex;
+      flex-direction: row;
+      width: 100%;
+      justify-content: space-between;
+   }
+   .inf_top,
+   .inf_top>.a {
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      margin: 0;
+   }
+   /* span > h4 {
+      margin: 0;
+   }
+   .product {
+      padding: 0 0 10px;
+   } */
+
+   
 }

@@ -1,14 +1,14 @@
 <div id="content">
    <div id="header">
-      <span>
+      <span id="headertitle">
          <a href="/userdata/mydata/menu"><span class="material-symbols-outlined">arrow_back</span></a>
          <h1>Direcciones de envío</h1>
       </span>
-      <p class="btn" (click)="open(content)"><span class="material-symbols-outlined">add</span> Añadir dirección</p>
+      <p class="btn" (click)="open(content)"><span class="material-symbols-outlined">add</span>Añadir dirección</p>
    </div>
 
    <!-- For direccion in direcciones -->
-   <div id="alladdress" [ngStyle]="{'justify-content': display}">
+   <div id="alladdress">
       <app-addresscard *ngIf="myaddress" [address]="myaddress" [isDefault]="true"
          (editAddress)="onEditAddress(myaddress, content)" (reload)="reloadAddresses()">
       </app-addresscard>

@@ -13,11 +13,14 @@
 			</div>
 
 			<div class="collapse multi-collapse" id="addressCollapse">
+				<div id="app-address">
 				<app-address (reload)="loadUserData()"></app-address>
+			</div>
 			</div>
 
 			<div class="order_inf">
 				<h2>Obras</h2>
+				
 				<div *ngFor="let artwork of artworks" class="product">
 					<a *ngFor="let piece of artwork.pieces" class="piece">
 						<div class="images" *ngFor="let image of piece.images">
@@ -27,13 +30,14 @@
 					<div class="cover"></div>
 
 					<div class="inf">
+						
 						<div class="inf_top">
 							<div class="a">
 								<span>
 									<h2>{{artwork.title}} </h2>
-									<h2 id="price_{{artwork.id}}">{{artwork.price}}€</h2>
-								</span>
 								<h4>{{artwork.work_title}} - {{artwork.creation_date}}</h4>
+								</span>
+						<h2 id="price_{{artwork.id}}">{{artwork.price}}€</h2>
 							</div>
 							<div class="pieces">
 								<p><b>Contiene:</b></p>
@@ -50,7 +54,6 @@
 								</ul>
 							</div>
 						</div>
-
 					</div>
 				</div>
 			</div>

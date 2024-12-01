@@ -333,6 +333,11 @@ li.nav-item.logout > a.nav-link {
     }
 
 }
+@media (width < 300px) {
+    a.navbar-brand {
+        text-wrap: wrap;
+    }
+}
 
 @media (max-height: 477px) {
     #Log {
@@ -348,3 +353,4 @@ li.nav-item.logout > a.nav-link {
         min-width: fit-content !important;
     }
 }
+

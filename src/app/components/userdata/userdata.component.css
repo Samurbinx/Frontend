@@ -75,6 +75,24 @@ a.active  h2 {
    }
 }
 @media (width < 500px){
+   #content {
+      flex-direction: column;
+   }
+   #sidebar {
+      display: flex;
+      flex-direction: row;
+      padding: 0;
+      border-right: 0;
+      width: 100%;
+      justify-content: center;
+      gap: 15px;
+      border-bottom: 1px solid var(--neutral-700);
+   }
+   a.active {
+      background-color: var(--neutral-200);
+      border-right: 0;
+      border-bottom: 1px solid var(--primary-500);
+   }
    a > span:last-child {
       display: none;
    }

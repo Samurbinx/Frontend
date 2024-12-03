@@ -1,28 +1,23 @@
+# Stage 1: Build Angular app
 FROM node:18 AS builder
 
-# Configuración de directorio de trabajo
 WORKDIR /app
 
-# Copiar archivos necesarios para instalar dependencias
 COPY package*.json ./
-
-# Instalar dependencias
 RUN npm install
 
-# Copiar el resto del código fuente
 COPY . .
+RUN npm run build   # Esto genera los archivos estáticos en /app/dist/frontend
 
-# Compilar el proyecto en modo de producción
-RUN npm run build
-
-# Etapa 2: Servir la aplicación con Nginx
+# Stage 2: Serve Angular app with Nginx
 FROM nginx:alpine
 
-# Copiar los archivos compilados al servidor Nginx
-COPY --from=builder /app/dist/Frontend /usr/share/nginx/html
+COPY ./nginx.conf /etc/nginx/conf.d/default.conf
 
-# Exponer el puerto 80 para el acceso al contenedor
+# Copiar los archivos generados por Angular a la ubicación de Nginx
+COPY --from=builder /app/dist/frontend/browser /usr/share/nginx/html
+
 EXPOSE 80
 
-# Comando por defecto para iniciar Nginx
 CMD ["nginx", "-g", "daemon off;"]
+

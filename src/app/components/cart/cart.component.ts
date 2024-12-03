@@ -220,7 +220,7 @@ export class CartComponent {
           icon: 'warning',
           confirmButtonText: 'Aceptar',
           didClose: () => {
-            window.open('/login', '_blank');
+            window.open(environment.apiUrlFront + '/login', '_blank');
           },
         });
       }

@@ -3,7 +3,7 @@
 	<div class="container-fluid" id="header">
 
 		<div id="brand">
-			<a class="navbar-brand" href="/home">Ana Estrada Macías</a>
+			<a class="navbar-brand" routerLink="/home">Ana Estrada Macías</a>
 			<!-- El botón para abrir el offcanvas -->
 			<button class="navbar-toggler" type="button" data-bs-toggle="offcanvas" data-bs-target="#mainPages"
 				aria-controls="mainPages" aria-expanded="false" aria-label="Toggle navigation">
@@ -29,30 +29,30 @@
 					<li class="nav-item">
 						<a><span class="material-symbols-outlined shopping_bag"
 								matBadge="{{this.cart_length}}">local_mall</span></a>
-						<a class="nav-link" href="/carrito">Carrito</a>
+						<a class="nav-link" routerLink="/carrito" data-bs-dismiss='offcanvas'>Carrito</a>
 					</li>
 				</ul>
 
 				<ul class="navbar-nav" *ngIf="logged; else notLoggedOffC">
 					<li class="nav-item">
 						<a><span class="material-symbols-outlined shopping_bag fill">person</span></a>
-						<a class="nav-link" href="/userdata">Mis datos</a>
+						<a class="nav-link" routerLink="/userdata" data-bs-dismiss='offcanvas'>Mis datos</a>
 					</li>
 					<br><br>
-					<li class="nav-item logout" (click)="logout()"><a class="nav-link" href="/home">Cerrar sesión</a><span
+					<li class="nav-item logout" (click)="logout()"><a class="nav-link" routerLink="/home">Cerrar sesión</a><span
 							class="material-symbols-outlined">logout</span></li>
 				</ul>
 
 				<ng-template #notLoggedOffC class="navbar-nav">
 					<div id="Log">
-						<a class="nav-link" href="/registro" routerLink="/registro" data-bs-dismiss='offcanvas'>Regístrate</a>
+						<a class="nav-link" routerLink="/registro" data-bs-dismiss='offcanvas'>Regístrate</a>
 						<p>o</p>
-						<a class="nav-link" href="/login" routerLink="/login" data-bs-dismiss='offcanvas'>Inicia sesión</a>
+						<a class="nav-link" routerLink="/login" data-bs-dismiss='offcanvas'>Inicia sesión</a>
 					</div>
 					<p class="rrss">¡Sígueme en mis redes sociales!</p>
 					<div id="RRSS">
-						<a href=""><img src="../../assets/Icons/X.png" alt=""></a>
-						<a href=""><img src="../../assets/Icons/Instagram.png" alt=""></a>
+						<a href="https://www.x.com"><img src="../../assets/Icons/X.png" alt=""></a>
+						<a href="https://www.instagram.com"><img src="../../assets/Icons/Instagram.png" alt=""></a>
 					</div>
 				</ng-template>
 			</div>
@@ -64,23 +64,23 @@
 			<div *ngIf="logged; else notLogged" class="navbar-nav welcome userDrop PC">
 				<p>Hola! {{user?.name}}</p>
 
-				<a href="/carrito" class="shopping_bag"><span class="material-symbols-outlined shopping_bag"
+				<a routerLink="/carrito" class="shopping_bag"><span class="material-symbols-outlined shopping_bag"
 						matBadge="{{this.cart_length}}">local_mall</span></a>
 
 				<!-- User dropdown -->
 				<ul class="navbar-nav">
 					<li class="nav-item dropdown">
-						<a id="dropicon" class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown"
+						<a id="dropicon" class="nav-link dropdown-toggle" routerLink="#" role="button" data-bs-toggle="dropdown"
 							aria-expanded="false">
 							<span aria-hidden="false" class="material-symbols-outlined fill">person</span>
 						</a>
 
 						<!-- Dropdown actions -->
 						<ul class="dropdown-menu dropdown-menu-end">
-							<li class="mine"><a class="dropdown-item" href="/userdata/mydata">Mis datos</a></li>
-							<li class="mine"><a class="dropdown-item" href="/userdata/favoritos">Favoritos</a></li>
-							<li class="mine"><a class="dropdown-item" href="/userdata/pedidos">Pedidos</a></li>
-							<li class="mine logout" (click)="logout()"><a class="dropdown-item" href="/home">Cerrar
+							<li class="mine"><a class="dropdown-item" routerLink="/userdata/mydata">Mis datos</a></li>
+							<li class="mine"><a class="dropdown-item" routerLink="/userdata/favoritos">Favoritos</a></li>
+							<li class="mine"><a class="dropdown-item" routerLink="/userdata/pedidos">Pedidos</a></li>
+							<li class="mine logout" (click)="logout()"><a class="dropdown-item" routerLink="/home">Cerrar
 									sesión</a><span class="material-symbols-outlined">logout</span></li>
 						</ul>
 					</li>
@@ -90,21 +90,21 @@
 			<!-- If is not logged -->
 			<ng-template #notLogged>
 				<div class="userDrop PC" id="notLogged">
-					<a href="/carrito" class="shopping_bag"><span class="material-symbols-outlined shopping_bag"
+					<a routerLink="/carrito" class="shopping_bag"><span class="material-symbols-outlined shopping_bag"
 							matBadge="{{this.cart_length}}">local_mall</span></a>
 
 					<ul class="navbar-nav">
 						<!-- User dropdown -->
 						<li class="nav-item dropdown">
-							<a id="dropicon" class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown"
+							<a id="dropicon" class="nav-link dropdown-toggle" routerLink="#" role="button" data-bs-toggle="dropdown"
 								aria-expanded="false">
 								<span aria-hidden="false" class="material-symbols-outlined fill">person</span>
 							</a>
 
 							<!-- Dropdown actions -->
 							<ul class="dropdown-menu dropdown-menu-end">
-								<li><a class="dropdown-item logOptions" href="/registro">Registrarse</a></li>
-								<li><a class="dropdown-item logOptions" href="/login">Iniciar sesión</a></li>
+								<li><a class="dropdown-item logOptions" routerLink="/registro">Registrarse</a></li>
+								<li><a class="dropdown-item logOptions" routerLink="/login">Iniciar sesión</a></li>
 							</ul>
 						</li>
 					</ul>

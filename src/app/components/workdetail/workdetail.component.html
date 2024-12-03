@@ -9,7 +9,7 @@
             <ngb-carousel *ngIf="piece.display === 'covercarousel'">
                 <ng-template ngbSlide *ngFor="let image of piece.images">
                     <div class="picsum-img-wrapper" 
-                        [style.backgroundImage]="'url(http://127.0.0.1:8080/piece/' + piece.id + '/' + image + ')'">
+                        [style.backgroundImage]="'url(http://192.168.1.135:8080/piece/' + piece.id + '/' + image + ')'">
                     </div>
                 </ng-template>
             </ngb-carousel>
@@ -59,7 +59,7 @@
                         <div id="piece" *ngFor="let piece of artwork.pieces">
                             <div id="images">
                                 <img *ngFor="let image of piece.images"
-                                    [src]="'http://127.0.0.1:8080/piece/' + piece.id + '/' + image" alt="">
+                                    [src]="'http://192.168.1.135:8080/piece/' + piece.id + '/' + image" alt="">
                             </div>
                             <!-- Información oculta de las piezas -->
                             <div id="piece_inf" class="hidden">
@@ -137,7 +137,7 @@
 <!-- <div id="pieces">
             <div id="piece" *ngFor="let piece of work.pieces">
                 <div *ngIf="piece.display != 'covercarousel' && piece.display != 'detail'" id="images">
-                    <img *ngFor="let image of piece.images" [src]="'http://127.0.0.1:8080/piece/' + piece.id + '/' + image" alt="">
+                    <img *ngFor="let image of piece.images" [src]="'http://192.168.1.135:8080/piece/' + piece.id + '/' + image" alt="">
                 </div>
                 <div *ngIf="piece.display != 'covercarousel' && piece.display != 'detail'" id="desc">
                     <p>
@@ -157,7 +157,7 @@
             <ngb-carousel *ngIf="piece.display === 'detail'">
                 <ng-template ngbSlide *ngFor="let image of piece.images">
                     <div class="picsum-img-wrapper"
-                        [style.backgroundImage]="'url(http://127.0.0.1:8080/piece/' + piece.id + '/' + image + ')'">
+                        [style.backgroundImage]="'url(http://192.168.1.135:8080/piece/' + piece.id + '/' + image + ')'">
                     </div>
                      <div class="carousel-caption">
                         <h3>Detalle</h3>

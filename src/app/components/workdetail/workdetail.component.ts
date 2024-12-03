@@ -14,6 +14,7 @@ import { MatIcon } from '@angular/material/icon';
 import { UserService } from '../../services/user.service';
 import { NgxImageZoomModule } from 'ngx-image-zoom';
 import { NgbCollapseModule } from '@ng-bootstrap/ng-bootstrap';
+import { environment } from '../../../environments/environment.prod';
 
 @Component({
    selector: 'app-workdetail',
@@ -257,7 +258,7 @@ export class WorkdetailComponent implements OnInit, AfterViewInit {
 
 
    public seeLogin() {
-      window.open('/login', '_blank');
+      window.open(environment.apiUrlFront + '/login', '_blank');
    }
 
    // OFFLINE CART

@@ -16,6 +16,7 @@ import { isPlatformBrowser } from '@angular/common';
 import { MatDialog } from '@angular/material/dialog';
 import { ConfirmationdialogComponent } from '../commons/confirmationdialog/confirmationdialog.component';
 import Swal from 'sweetalert2';
+import { environment } from '../../../environments/environment.prod';
 
 @Component({
   selector: 'app-cart',
@@ -32,6 +33,7 @@ export class CartComponent {
   checkedArtworks: { [id: number]: boolean } = {};
   selectedProduct = "";
   modal: any;
+  private URL_API = `${environment.apiUrl}`;
 
   constructor(private authService: AuthService, public dialog: MatDialog, @Inject(PLATFORM_ID) private platformId: Object, private artworkService: ArtworkService, private storageService: StorageService, private snackBar: MatSnackBar, private cartService: CartService, private router: Router, private userService: UserService) { }
   ngOnInit(): void {
@@ -116,7 +118,7 @@ export class CartComponent {
   }
 
   getBackgroundImageUrl(image: string, piece: PieceModel): string {
-    return `url('http://127.0.0.1:8080/piece/${piece.id}/${image}')`;
+    return `url('${this.URL_API}/piece/${piece.id}/${image}')`;
   }
 
   toggleSelected(artworkId: number) {

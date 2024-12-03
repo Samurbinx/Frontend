@@ -21,6 +21,7 @@ import { PieceModel } from '../../models/piece.model';
 import { OrderService } from '../../services/order.service';
 import { response } from 'express';
 import Swal from 'sweetalert2';
+import { environment } from '../../../environments/environment.prod';
 
 interface OrderResponse {
   success: boolean;
@@ -71,6 +72,7 @@ export class CheckoutComponent implements OnInit {
   total_amount: number | null = null;
   artworks: ArtworkModel[] = [];
   isLoading: boolean = false;  // Bandera para controlar el estado de carga
+  private URL_API = `${environment.apiUrl}`;
 
   // STRIPE
   @ViewChild(StripeCardComponent) cardElement!: StripeCardComponent;
@@ -271,7 +273,7 @@ export class CheckoutComponent implements OnInit {
 
   // Recoge la imagen de las obras
   getBackgroundImageUrl(image: string, piece: PieceModel): string {
-    return `url('http://127.0.0.1:8080/piece/${piece.id}/${image}')`;
+    return `url('${this.URL_API}/piece/${piece.id}/${image}')`;
   }
 
 }

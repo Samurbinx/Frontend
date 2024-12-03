@@ -5,12 +5,14 @@ import { BehaviorSubject, Observable, of, tap, throwError } from 'rxjs';
 import { catchError } from 'rxjs/operators';
 import { error } from 'console';
 import { ArtworkModel } from '../models/artwork.model';
+import { environment } from '../../environments/environment.prod';
 
 @Injectable({
   providedIn: 'root'
 })
 export class CartService {
-  private URL_API = 'http://localhost:8080/cart';
+   private URL_API = `${environment.apiUrl}/cart`;
+  // private URL_API = 'http://localhost:8080/cart';
   public StripePublicKey = 'pk_test_51QL60A01qslkTUypDH7HjcBn7G0E22306bHTsSjDqsGNsK3LT04ipA6PeGp4IajYdwNcIqce2Fi8hgHf4oFCtfMA006sUUYNnq';
 
  

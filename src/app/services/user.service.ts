@@ -4,12 +4,14 @@ import { BehaviorSubject, Observable } from 'rxjs';
 import { ArtworkModel } from '../models/artwork.model';
 import { AddressModel } from '../models/address.model';
 import { OrderModel } from '../models/order.model';
+import { environment } from '../../environments/environment.prod';
 
 @Injectable({
   providedIn: 'root'
 })
 export class UserService {
-  private URL_API = 'http://localhost:8080';
+  // private URL_API = 'http://localhost:8080';
+  private URL_API = `${environment.apiUrl}`;
   
   private cartLengthSource = new BehaviorSubject<number>(0);
   cartLength$ = this.cartLengthSource.asObservable();

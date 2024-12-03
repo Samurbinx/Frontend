@@ -5,12 +5,14 @@ import { Observable } from 'rxjs';
 import { catchError } from 'rxjs/operators';
 import { of, tap } from 'rxjs';
 import { AuthService } from './auth.service';
+import { environment } from '../../environments/environment.prod';
 
 @Injectable({
   providedIn: 'root'
 })
 export class WorkService {
-  private URL_API = 'http://localhost:8080/work';
+  // private URL_API = 'http://localhost:8080/work';
+  private URL_API = `${environment.apiUrl}/work`;
 
   constructor(private _http: HttpClient, private authService: AuthService) { }
 

@@ -6,6 +6,7 @@ import { StorageService } from './storage.service';
 import { BehaviorSubject, Observable, of, throwError } from 'rxjs';
 import { catchError, filter, switchMap, tap } from 'rxjs/operators';
 import { ArtworkModel } from '../models/artwork.model';
+import { environment } from '../../environments/environment.prod';
 
 
 
@@ -19,7 +20,8 @@ interface LoginResponse {
   providedIn: 'root'
 })
 export class AuthService {
-  private URL_API = 'http://localhost:8080/user';
+  private URL_API = `${environment.apiUrl}/user`;
+  // private URL_API = 'http://localhost:8080/user';
   private user: UserModel | null = null;
 
   private userSubject = new BehaviorSubject<UserModel | null>(null);

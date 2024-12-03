@@ -2,13 +2,15 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { ArtworkModel } from '../models/artwork.model';
+import { environment } from '../../environments/environment.prod';
 
 @Injectable({
    providedIn: 'root'
 })
 export class ArtworkService {
 
-   private URL_API = 'http://localhost:8080/artwork';
+   private URL_API = `${environment.apiUrl}/artwork`;
+   // private URL_API = 'http://localhost:8080/artwork';
 
    constructor(private http: HttpClient) { }
 

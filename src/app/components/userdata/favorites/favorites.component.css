@@ -99,6 +99,9 @@ h4 {
 .material-symbols-outlined {
    font-size: 22px;
 }
+#nofavs {
+   text-align: center;
+}
 
 @media (width < 500px) {
    h1 {

@@ -10,7 +10,10 @@ h1 {
    font-weight: 500;
    margin: 0px;
 }
-
+a {
+   text-decoration: none;
+   color: black;
+}
 #orders {
    display: flex;
    flex-direction: column-reverse;
@@ -156,6 +159,14 @@ p {
    font-size: small;
    margin: 0px;
 }
+ul {
+   list-style: none;
+   padding-left: 10px;
+   color: rgb(65, 65, 65);
+}
+ul b {
+   font-weight: 500;
+}
 
 
 @media (width < 800px) {
@@ -185,6 +196,9 @@ p {
 }
 
 @media (width < 500px) {
+   h1 {
+      text-align: center;
+   }
    .pageinf {
       margin: 0 15px 25px;
    }
@@ -192,10 +206,16 @@ p {
    .pageinf > div {
       margin-bottom: 0px;
    }
-
-   #favorites {
-      margin: 0px 15px 20px;
-      gap: 15px;
+   #orders {
+      padding: 0px 15px 20px;
+      gap: 20px;
+      width: 100%;
+      display: flex;
+      flex-direction: column;
+   }
+   .order {
+      margin: 0 auto;
+      width: 100%;
    }
    .thead, .product, .tfooter {
       padding: 15px;

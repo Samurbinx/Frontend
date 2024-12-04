@@ -8,7 +8,6 @@ export class WorkModel {
         public description: string = '',
         public image: string = '',
         public artworks: ArtworkModel[] = [],
-        public url: string = ''
     ) {}
 
     // Método para inicializar una instancia desde un objeto recibido
@@ -20,7 +19,6 @@ export class WorkModel {
             data.description,
             data.image,
             data.artworks ? data.artworks.map((a: any) => ArtworkModel.fromJson(a)) : [],
-            data.url
         );
     }
 }

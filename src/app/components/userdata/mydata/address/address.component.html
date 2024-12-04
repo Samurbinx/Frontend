@@ -10,11 +10,11 @@
    <!-- For direccion in direcciones -->
    <div id="alladdress">
       <app-addresscard *ngIf="myaddress" [address]="myaddress" [isDefault]="true"
-         (editAddress)="onEditAddress(myaddress, content)" (reload)="reloadAddresses()">
+         (editAddress)="onEditAddress(myaddress, content)" (reload)="reloadAddresses()" class="address_card">
       </app-addresscard>
 
       <app-addresscard *ngFor="let address of alladdress" [address]="address" [isDefault]="false"
-         [user_id]="this.userId" (editAddress)="onEditAddress(address, content)" (reload)="reloadAddresses()">
+         [user_id]="this.userId" (editAddress)="onEditAddress(address, content)" (reload)="reloadAddresses()" class="address_card">
       </app-addresscard>
    </div>
 </div>

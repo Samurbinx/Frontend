@@ -119,6 +119,7 @@ p {
    }
    .pageinf {
       margin: 0 15px 20px;
+      text-align: center;
    }
    .divopt {
       padding: 10px;

@@ -90,7 +90,7 @@ a {
 @media (width < 500px) {
    #content {
       padding: 0 15px;
-      width: fit-content;
+      width: 100%;
    }
 
    #header {
@@ -98,7 +98,7 @@ a {
       width: 100%;
       flex-direction: column;
       justify-content: baseline;
-      align-items: start;
+      align-items: center;
       margin: 0 0 20px;
       gap: 20px;
    }
@@ -107,10 +107,17 @@ a {
       min-width: 250px;
    }
    #alladdress {
-      flex-direction: column;
       padding: 0;
+      gap: 20px;
+      width: 100%;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
    }
-
+   .address_card {
+      margin: 0;
+   }
    .mobile {
       display: flex;
    }
@@ -137,7 +144,17 @@ a {
 }
 
 @media (width < 350px) {
+   #header > span {
+      display: flex;
+      flex-direction: row;
+      width: 100%;
+      justify-content: baseline;
+   }
    p.btn {
-      min-width: 100% ;
+      min-width: 100%;
+      width: 100%;
+   }
+   .address_card {
+      width: 100%;
    }
 }

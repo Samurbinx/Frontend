@@ -1,6 +1,6 @@
 <div id="body" > <!-- for work in works-->
     <a [routerLink]="['/proyecto']" [queryParams]="{id: work.id}" id="work" *ngFor="let work of works">
-        <span class="img" [ngStyle]="{'background-image': 'url(' + work.url + ')'}"></span>
+        <span class="img" [ngStyle]="{'background-image':  'url(' + URL_API + 'work/' + work.id + '/img)'}"></span>
         <span class="title">
             <h3>{{ work.title }}</h3>
             <pre>{{ work.description }}</pre>

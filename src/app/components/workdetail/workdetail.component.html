@@ -1,7 +1,7 @@
 <div id="content" *ngIf="work">
 
     <div class="headerImg">
-        <div id="workImg" [ngStyle]="{'background-image': 'url(' + work.url + ')'}"></div>
+        <div id="workImg" [ngStyle]="{'background-image': 'url(' + URL_API + 'work/' + work.id + '/img)'}"></div>
     </div>
 
     <!-- <div class="headerImg" *ngIf="hasdetails">

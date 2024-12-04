@@ -6,6 +6,7 @@ import { MessageService } from '../../services/message.service';
 import Swal from 'sweetalert2';
 
 import { FormBuilder, FormControl, FormGroup, Validators, ReactiveFormsModule, AbstractControl, } from '@angular/forms';
+import { environment } from '../../../environments/environment.prod';
 
 @Component({
   selector: 'app-contact',
@@ -16,6 +17,7 @@ import { FormBuilder, FormControl, FormGroup, Validators, ReactiveFormsModule, A
 })
 export class ContactComponent implements OnInit {
   contactPage: PageModel | undefined;
+  URL_API = `${environment.apiUrl}/`;
 
   constructor(
     private pageService: PageService,

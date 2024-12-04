@@ -59,7 +59,7 @@
                         <div id="piece" *ngFor="let piece of artwork.pieces">
                             <div id="images">
                                 <img *ngFor="let image of piece.images"
-                                    [src]="'http://192.168.1.135:8080/piece/' + piece.id + '/' + image" alt="">
+                                    [src]="URL_API + 'piece/' + piece.id + '/' + image" alt="">
                             </div>
                             <!-- Información oculta de las piezas -->
                             <div id="piece_inf" class="hidden">
@@ -137,7 +137,7 @@
 <!-- <div id="pieces">
             <div id="piece" *ngFor="let piece of work.pieces">
                 <div *ngIf="piece.display != 'covercarousel' && piece.display != 'detail'" id="images">
-                    <img *ngFor="let image of piece.images" [src]="'http://192.168.1.135:8080/piece/' + piece.id + '/' + image" alt="">
+                    <img *ngFor="let image of piece.images" [src]="URL_API + 'piece/' + piece.id + '/' + image" alt="">
                 </div>
                 <div *ngIf="piece.display != 'covercarousel' && piece.display != 'detail'" id="desc">
                     <p>

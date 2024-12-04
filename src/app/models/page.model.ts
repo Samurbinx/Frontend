@@ -6,6 +6,5 @@ export class PageModel {
         public image: string,
         public title: string,
         public subtitle: string,
-        public url: string,
     ){  }
 }

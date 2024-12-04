@@ -13,7 +13,7 @@
          <div class="piece_images" [routerLink]="['/proyecto']" [queryParams]="{id: artwork.work_id}"
             fragment="{{artwork.id}}">
             <div *ngFor="let piece of artwork.pieces" class="images">
-               <img *ngFor="let image of piece.images" [src]="'http://192.168.1.135:8080/piece/' + piece.id + '/' + image"
+               <img *ngFor="let image of piece.images" [src]="URL_API + 'piece/' + piece.id + '/' + image"
                   alt="">
             </div>
          </div>

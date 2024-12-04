@@ -1,6 +1,6 @@
 <div id="body">
 <div id="content" *ngIf="contactPage">
-    <div id="contactImg" [ngStyle]="{'background-image': 'url(' + contactPage.url + ')'}">
+    <div id="contactImg" [ngStyle]="{'background-image': 'url(' + URL_API + 'page/' + contactPage.id + '/img)'}">
     </div>
 
     <div id="contactForm">

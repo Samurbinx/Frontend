@@ -7,6 +7,7 @@ import { Component, Input, OnInit } from '@angular/core';
 import { RouterLink } from '@angular/router';
 import { WorkService } from '../../../services/work.service';
 import { UserService } from '../../../services/user.service';
+import { environment } from '../../../../environments/environment.prod';
 
 @Component({
   selector: 'app-orders',
@@ -19,6 +20,7 @@ export class OrdersComponent {
   user: UserModel | null = null;
   userId: string | null = null;
   orders: OrderModel[] = [];
+  URL_API = `${environment.apiUrl}/`;
 
   constructor(private authService: AuthService, private workService: WorkService,private userService: UserService) { }
 

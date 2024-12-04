@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { PageService } from '../../services/page.service';
 import { PageModel } from '../../models/page.model';
+import { environment } from '../../../environments/environment.prod';
 
 @Component({
   selector: 'app-about',
@@ -12,6 +13,7 @@ import { PageModel } from '../../models/page.model';
 })
 export class AboutComponent implements OnInit{
   aboutPage: PageModel | undefined;
+  URL_API = `${environment.apiUrl}/`;
 
   constructor(private pageService: PageService) { }
 

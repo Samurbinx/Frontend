@@ -32,7 +32,7 @@
             <a *ngFor="let piece of artwork.pieces" class="piece">
                <div class="images" *ngFor="let image of piece.images">
                   <img class="img" *ngFor="let image of piece.images"
-                     [src]="'http://192.168.1.135:8080/piece/' + piece.id + '/' + image" alt="">
+                     [src]="URL_API + 'piece/' + piece.id + '/' + image" alt="">
                </div>
             </a>
             <div class="cover"></div>

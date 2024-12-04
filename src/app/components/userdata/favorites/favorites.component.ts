@@ -19,6 +19,7 @@ export class FavoritesComponent implements OnInit {
   user: UserModel | null = null;
   userId: string | null = null;
   favorites: ArtworkModel[] = [];
+  URL_API = `${environment.apiUrl}/`;
 
   constructor(private authService: AuthService, private workService: WorkService,private userService: UserService) { }
 

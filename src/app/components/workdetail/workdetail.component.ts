@@ -30,6 +30,7 @@ export class WorkdetailComponent implements OnInit, AfterViewInit {
    favs: number[] = [];
    carted: ArtworkModel[] = [];
    logged: boolean = false;
+   URL_API = `${environment.apiUrl}/`;
 
    private fragment: string | null = null;
 

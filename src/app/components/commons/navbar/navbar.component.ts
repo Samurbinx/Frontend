@@ -11,6 +11,7 @@ import { StorageService } from '../../../services/storage.service';
 import { subscribe } from 'diagnostics_channel';
 import { MatBadgeModule } from '@angular/material/badge';
 import bootstrap from 'bootstrap';
+import { environment } from '../../../../environments/environment.prod';
 
 @Component({
   selector: 'app-navbar',
@@ -24,13 +25,14 @@ export class NavbarComponent implements OnInit {
   user: UserModel | null = null;
   cart_length: number | null = 0;
   user_id: string | null = null;
+  isAdmin: boolean = false;
+  URL_API = `${environment.apiUrl}/`;
 
   pages = [
     { label: 'Proyectos', link: '/proyectos', icon: 'dashboard' },
     { label: 'Contacto', link: '/contacto', icon: 'contact_page' },
     { label: 'Sobre mí', link: '/sobremi', icon: 'info' },
-    // { label: 'Carrito', link: '/carrito', icon: 'local_mall' }
-];
+  ];
 
 
   constructor(
@@ -39,8 +41,8 @@ export class NavbarComponent implements OnInit {
     private storageService: StorageService,
     private userService: UserService,
   ) { }
-  
-  
+
+
   ngOnInit(): void {
     this.authService.isLoggedSubject().subscribe(
       (response) => {
@@ -50,6 +52,7 @@ export class NavbarComponent implements OnInit {
             (response) => {
               this.user = response
               this.getCartLength();
+              this.setadmin();
             }
           )
         }
@@ -60,25 +63,26 @@ export class NavbarComponent implements OnInit {
               (response) => {
                 this.user = response.user;
                 this.logged = true;
+                this.setadmin();
               },
               (error) => {
                 console.error('Error during login', error);
               }
             );
-          } 
+          }
           let cart = this.storageService.getOfflineCart().length;
           this.userService.updateCartLength(cart)
           this.userService.cartLength$.subscribe(length => {
             this.cart_length = length;
           });
         }
-        
+
       }
     )
   }
 
 
-  
+
   getCartLength() {
     this.user_id = this.storageService.getSessionItem('user_id');
     if (this.user_id) {
@@ -91,7 +95,17 @@ export class NavbarComponent implements OnInit {
       });
     }
   }
-  
+
+  setadmin() {
+    if (this.user_id) {
+      this.authService.isAdmin(this.user_id).subscribe(
+        (response: boolean) => {
+          this.isAdmin = response;
+        }
+      )
+    }
+  }
+
   logout(): void {
     this.authService.logout();
   }

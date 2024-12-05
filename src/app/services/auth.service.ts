@@ -123,7 +123,9 @@ export class AuthService {
   islogged(){
     return !!this.storageService.getSessionItem('logged');
   }
- 
+  isAdmin(id: any): Observable<boolean>{
+    return this.http.get<boolean>(`${this.URL_API}/isadmin/${id}`);
+  }
  
 
   // Centralized error handling

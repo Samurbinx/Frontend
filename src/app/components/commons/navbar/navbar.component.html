@@ -38,9 +38,12 @@
 						<a><span class="material-symbols-outlined shopping_bag fill">person</span></a>
 						<a class="nav-link" routerLink="/userdata" data-bs-dismiss='offcanvas'>Mis datos</a>
 					</li>
-					<br><br>
-					<li class="nav-item logout" (click)="logout()"><a class="nav-link" routerLink="/home">Cerrar sesión</a><span
-							class="material-symbols-outlined">logout</span></li>
+					<br>
+					<br>
+
+					<li class="nav-item" *ngIf="isAdmin"><span class="material-symbols-outlined">folder_managed</span><a class="nav-link" href="{{this.URL_API}}" target="_blank">Administración</a></li>
+					<li class="nav-item" (click)="logout()"><span
+						class="material-symbols-outlined">logout</span><a class="nav-link" routerLink="/home">Cerrar sesión</a></li>
 				</ul>
 
 				<ng-template #notLoggedOffC class="navbar-nav">
@@ -80,6 +83,7 @@
 							<li class="mine"><a class="dropdown-item" routerLink="/userdata/mydata">Mis datos</a></li>
 							<li class="mine"><a class="dropdown-item" routerLink="/userdata/favoritos">Favoritos</a></li>
 							<li class="mine"><a class="dropdown-item" routerLink="/userdata/pedidos">Pedidos</a></li>
+							<li class="mine" *ngIf="isAdmin"><a class="dropdown-item" href="{{this.URL_API}}" target="_blank">Administración</a></li>
 							<li class="mine logout" (click)="logout()"><a class="dropdown-item" routerLink="/home">Cerrar
 									sesión</a><span class="material-symbols-outlined">logout</span></li>
 						</ul>

@@ -71,7 +71,7 @@ export class AddressformComponent implements OnInit {
       ]],
       phone: [this.address?.phone ?? '', [
         Validators.required,
-        Validators.pattern(/^\+?\d{1,3}\s?\d{9,15}$/)
+        Validators.pattern(/^\+?\d{1,3}?\s?\d{9,15}$/)
       ]]
     });
     

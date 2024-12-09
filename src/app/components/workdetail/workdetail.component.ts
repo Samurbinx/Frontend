@@ -172,8 +172,10 @@ export class WorkdetailComponent implements OnInit, AfterViewInit {
       this.work.artworks.forEach(artwork => {
          this.favs.forEach(id => {
             if (artwork.id == id) {
-               let favicon = document.getElementById("fav-icon" + id);
-               favicon?.classList.toggle('favorited');
+               let favicon1 = document.getElementById("fav-icon" + id);
+               let favicon2 = document.getElementById("favicon" + id);
+               favicon1?.classList.toggle('favorited');
+               favicon2?.classList.toggle('favorited');
             }
          })
       });

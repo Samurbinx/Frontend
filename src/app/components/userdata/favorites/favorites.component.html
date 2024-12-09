@@ -33,8 +33,6 @@
                </p>
             </div>
             <div class="icons_div">
-               <span *ngIf="!artwork.sold;"><span id="cart-icon{{artwork.id}}"
-                     class="material-symbols-outlined">add_shopping_cart</span></span>
                <span id="fav-icon{{artwork.id}}" class="material-symbols-outlined fav-icon favorited"
                   (click)="favoriteToggle(artwork.id)">favorite</span>
             </div>

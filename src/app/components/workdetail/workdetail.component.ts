@@ -179,11 +179,13 @@ export class WorkdetailComponent implements OnInit, AfterViewInit {
       });
    }
    public favoriteToggle(artwork_id: number) {
-      let favicon = document.getElementById("fav-icon" + artwork_id);
-      favicon?.classList.toggle('favorited');
+      let favicon1 = document.getElementById("fav-icon" + artwork_id);
+      let favicon2 = document.getElementById("favicon" + artwork_id);
+      favicon1?.classList.toggle('favorited');
+      favicon2?.classList.toggle('favorited');
 
       let shouldAdd;
-      if (favicon?.classList.contains('favorited')) {
+      if (favicon1?.classList.contains('favorited')) {
          shouldAdd = true;
       } else {
          shouldAdd = false;

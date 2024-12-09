@@ -57,7 +57,7 @@ export class DataFormComponent {
       surname: [this.user?.surname ?? '', [Validators.required]],
       email: [this.user?.email ?? '', [Validators.required, Validators.email, Validators.nullValidator]],
       nick: [this.user?.nick ?? '', [Validators.required, Validators.minLength(6), Validators.maxLength(20)]],
-      phone: [this.user?.phone ?? '', [Validators.required, Validators.pattern(/^\+?\d{1,3}?\s?\d{9,15}$/)]],
+      phone: [this.user?.phone ?? '', [Validators.required, Validators.pattern(/^\+?\d{1,3}?\s?\d{8,15}$/)]],
     });
   }
 

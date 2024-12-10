@@ -244,8 +244,11 @@ export class CheckoutComponent implements OnInit {
       },
       error: (error) => {
         this.isLoading = false;
-        console.error('Error al crear el pedido:', error);
-        alert('Hubo un error al crear el pedido. Inténtalo de nuevo.');
+        Swal.fire({
+          text: 'Hubo un error al tramitar el pedido. Inténtalo de nuevo.',
+          icon: 'error',
+          timer: 2000, // Milisegundos
+        });
         this.router.navigate(['/carrito']);
       }
     });

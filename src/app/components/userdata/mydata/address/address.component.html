@@ -8,6 +8,7 @@
    </div>
 
    <!-- For direccion in direcciones -->
+   <p *ngIf="!myaddress">Parece que no has configurado ninguna dirección de envío, pulsa en <b>+ Añadir dirección</b></p>
    <div id="alladdress">
       <app-addresscard *ngIf="myaddress" [address]="myaddress" [isDefault]="true"
          (editAddress)="onEditAddress(myaddress, content)" (reload)="reloadAddresses()" class="address_card">

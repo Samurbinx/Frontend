@@ -98,7 +98,7 @@ export class RegisterComponent implements OnInit {
 					this.form.reset();
 					this.submitted = false;
 					// localStorage.setItem('registeredEmail', user.email);
-					let snackBarRef = this.snackBar.open('Usuario registrado correctamente');
+					let snackBarRef = this.snackBar.open('Usuario registrado correctamente', '', { duration: 3000 });
 					this.router.navigate(['/login']);
 				},
 				error: (error) => {

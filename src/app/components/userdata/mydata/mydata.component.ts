@@ -26,7 +26,7 @@ export class MydataComponent implements OnInit {
 
   reload() {
     this.loadData()
-    this.snackBar.open('Datos de usuario actualizados correctamente.', '', { duration: 3000, });
+    this.snackBar.open('Datos de usuario actualizados correctamente.', '', { duration: 3000 });
   }
   
   private async loadData() {

@@ -3,7 +3,7 @@
       <div id="cart">
          <div *ngIf="carted.length == 0; else hascart">
             <h1>Tu cesta está vacía</h1>
-            <a href="">Ver obras</a>
+            <a [routerLink]="['/proyectos']">Ver obras</a>
          </div>
          <ng-template #hascart>
             <h1>Cesta</h1>
